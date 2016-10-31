@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Meet Sports</string>
+
+    <string name="btn_createEvent">Create</string>
+    <string name="btn_submit">Submit</string>
+
+    <string name="category_prompt">Select a category</string>
+    <string name="type_prompt">Select a type</string>
+    <string name="participants_prompt">Select the number of participants</string>
+
+    <string-array name="category_array">
+        <item>Football</item>
+        <item>Running</item>
+        <item>Tennis</item>
+    </string-array>
+
+    <string-array name="type_array">
+        <item>For the fun</item>
+        <item>Match</item>
+        <item>Practice</item>
+    </string-array>
+
+    <string-array name="participants_array">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>10+</item>
+    </string-array>
+
+    <string name="btn_datePicker">Select date</string>
+    <string name="btn_timePicker">Select time</string>
+    <string name="btn_durationPicker">Select duration</string>
+</resources>

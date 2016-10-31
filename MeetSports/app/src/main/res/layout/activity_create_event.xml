@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create_event"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="gti350.lab.meetsports.CreateEventActivity">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:text="Create a new event"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:text="Category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_category"
+            tools:ignore="HardcodedText" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_category"
+            android:entries="@array/category_array"
+            android:prompt="@string/category_prompt" />
+
+        <TextView
+            android:text="Type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_type"
+            tools:ignore="HardcodedText" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_type"
+            android:entries="@array/type_array"
+            android:prompt="@string/type_prompt" />
+
+        <TextView
+            android:text="Date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_date"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:text="@string/btn_datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_datePicker"
+            android:onClick="showDatePickerDialog" />
+
+        <TextView
+            android:text="Time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_time"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:text="@string/btn_timePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_timePicker"
+            android:onClick="showTimePickerDialog" />
+
+        <TextView
+            android:text="Participants (minimum)"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_participants"
+            tools:ignore="HardcodedText" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_participants"
+            android:entries="@array/participants_array"
+            android:prompt="@string/participants_prompt" />
+
+        <TextView
+            android:text="Age range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_age"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:text="Contribution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_contribution"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:text="Level"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_level"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:text="@string/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_submit"
+            android:textAlignment="center"
+            android:onClick="submitCreateEvent" />
+
+    </LinearLayout>
+
+</RelativeLayout>
