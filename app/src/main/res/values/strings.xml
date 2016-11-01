@@ -2,11 +2,10 @@
     <string name="app_name">Meet Sports</string>
 
     <string name="btn_createEvent">Create</string>
-    <string name="btn_submit">Submit</string>
 
     <string name="category_prompt">Select a category</string>
     <string name="type_prompt">Select a type</string>
-    <string name="participants_prompt">Select the number of participants</string>
+    <string name="level_prompt">Select a level</string>
 
     <string-array name="category_array">
         <item>Football</item>
@@ -15,7 +14,7 @@
     </string-array>
 
     <string-array name="type_array">
-        <item>For the fun</item>
+        <item>For fun</item>
         <item>Match</item>
         <item>Practice</item>
     </string-array>
@@ -33,7 +32,22 @@
         <item>10+</item>
     </string-array>
 
-    <string name="btn_datePicker">Select date</string>
-    <string name="btn_timePicker">Select time</string>
-    <string name="btn_durationPicker">Select duration</string>
+    <string-array name="level_array">
+        <item>Any</item>
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Expert</item>
+    </string-array>
+
+    <string name="btn_datePicker">Set date</string>
+    <string name="btn_timePicker">Set time</string>
+
+    <string name="date_result">textView_participants_result</string>
+    <string name="time_result">textView_participants_result</string>
+    <string name="duration_result">textView_duration_result</string>
+    <string name="participants_result">textView_participants_result</string>
+    <string name="age_result">textView_participants_result</string>
+    <string name="contribution_result">textView_participants_result</string>
+    <string name="level_result">textView_participants_result</string>
+    
 </resources>

@@ -2,5 +2,13 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#c54ba6ff</color>
+    <color name="colorWhite">#ffffff</color>
+
+    <!-- Range Bar -->
+    <color name="colorConnectingLine">#de5f9ef1</color>
+    <color name="colorPin">#80b7fc</color>
+    <color name="colorRangebar">#b2183c69</color>
+    <color name="colorSelector">#c6225aa3</color>
+
 </resources>
