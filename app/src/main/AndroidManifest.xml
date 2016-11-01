@@ -25,8 +25,8 @@
         <activity
             android:name=".CreateEventActivity"
             android:label="Create a new event" />
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".SignUpActivity" />
+        <activity android:name=".SignInActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name=".SignUpActivity" android:theme="@style/AppTheme.Dark"/>
         <activity android:name=".FindEventActivity" />
         <activity android:name=".SetAccountActivity" />
 

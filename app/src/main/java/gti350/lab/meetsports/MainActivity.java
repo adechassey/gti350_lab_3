@@ -7,6 +7,12 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String user_Email = new String();
+    public static String user_Password = new String();
+    public static String user_Name = new String();
+    public static String user_Surname = new String();
+    public static String user_Age = new String();
+
     private final String TAG = "MainActivity";
 
     @Override

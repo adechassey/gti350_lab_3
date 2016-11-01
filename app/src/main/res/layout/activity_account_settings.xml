@@ -113,7 +113,7 @@
         android:layout_alignStart="@+id/textView6" />
 
     <Button
-        android:text="Update settings"
+        android:text="Update profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView9"
