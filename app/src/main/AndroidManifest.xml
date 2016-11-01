@@ -16,6 +16,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateEventActivity" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".SignUpActivity" />
+        <activity android:name=".FindEventActivity" />
+        <activity android:name=".SetAccountActivity" />
     </application>
 
 </manifest>

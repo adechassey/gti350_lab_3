@@ -11,8 +11,44 @@
     tools:context="gti350.lab.meetsports.MainActivity">
 
     <Button
+        android:text="log off"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_createEvent"
-        android:onClick="createEvent" />
+        android:layout_above="@+id/button2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="18dp"
+        android:layout_marginEnd="18dp"
+        android:id="@+id/btn_log_off"
+        android:onClick="logOff"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Event"
+        android:onClick="createEvent"
+        android:layout_marginTop="56dp"
+        android:layout_below="@+id/btn_log_off"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Event"
+        android:onClick="findEvent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="160dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Account Settings"
+        android:onClick="setAccount"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
