@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_SIGN_UP = 1;
     public static final int REQUEST_CREATE_EVENT = 2;
 
+    public static boolean SESSION_ON = false;
+
     public static String user_Email = new String();
     public static String user_Password = new String();
     public static String user_Name = new String();
@@ -36,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(this, SignInActivity.class);
-        startActivityForResult(intent, REQUEST_SIGN_IN);
+        if(!SESSION_ON) {
+            Intent intent = new Intent(this, SignInActivity.class);
+            startActivityForResult(intent, REQUEST_SIGN_IN);
+        }
 
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);

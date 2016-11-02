@@ -133,6 +133,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void LoginSuccess() {
+        MainActivity.SESSION_ON = true;
         Btn_signIn.setEnabled(true);
         finish();
     }

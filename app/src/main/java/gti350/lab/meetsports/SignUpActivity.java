@@ -39,7 +39,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 public class SignUpActivity extends AppCompatActivity {
-    private static final String TAG = "SignupActivity";
+    private static final String TAG = "SignUpActivity";
     public static int SIGN_UP_SUCCESS = 0;
 
     @InjectView(R.id.sign_up_name) EditText input_Name;
@@ -49,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
     @InjectView(R.id.sign_up_pw) EditText input_Password;
     @InjectView(R.id.sign_up_pw_confirm) EditText input_Password_confirm;
     @InjectView(R.id.btn_confirm_sign_up) Button Btn_sign_up;
-    @InjectView(R.id.sign_up_cancel_link) TextView cancel_sign_up;
+    @InjectView(R.id.cancel_sign_up) TextView cancel_sign_up_link;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,13 +64,14 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        cancel_sign_up.setOnClickListener(new View.OnClickListener() {
+        cancel_sign_up_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // End registration and return to the sign in activity
                 finish();
             }
         });
+
+
     }
 
     public void Sign_up() {
@@ -187,20 +188,4 @@ public class SignUpActivity extends AppCompatActivity {
         return valid;
     }
 }
-/*
-public class SignUpActivity extends FragmentActivity{
-
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
-    }
-
-    public void createAccount(View view) {
-        // TODO: save user infos
-        finish();
-    }
-
-}
-*/
 

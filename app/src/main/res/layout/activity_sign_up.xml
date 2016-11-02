@@ -14,29 +14,30 @@
         android:paddingRight="15dp"
         android:gravity="center">
 
-        <TextView
-            android:id="@+id/sign_up_cancel_link"
+        <TextView android:id="@+id/cancel_sign_up"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:textColor="@color/colorWhite"
-            android:fontFamily="Cooper Black"
-            android:textSize="16dip"
             android:gravity="right"
-            android:textStyle="normal|bold"
-            />
-
-        <TextView android:id="@+id/logo_sign_up"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:gravity="center"
-            android:text="Meet\nSports"
-            android:textSize="36sp"
+            android:text="Cancel"
+            android:textSize="14sp"
             android:fontFamily="Cooper Black"
             android:textColor="@color/colorWhite"
+            android:layout_weight="0.19" />
+
+
+        <TextView android:id="@+id/logo_sign_in"
+            android:text="Meet\nSports"
+            android:fontFamily="Cooper Black"
+            android:layout_below="@+id/cancel_login"
+            android:layout_width="fill_parent"
+            android:layout_marginBottom="24dp"
+            android:gravity="center_horizontal"
+            android:textSize="36sp"
             android:layout_weight="0.19"
-            android:textStyle="normal|bold" />
+            android:layout_height="wrap_content"
+            android:textStyle="normal|bold"
+            android:textColor="@color/colorWhite" />
+
 
     </RelativeLayout>
 
@@ -54,8 +55,20 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="24dp"
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
+
+            <TextView android:id="@+id/text_sign_up"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:gravity="center"
+                android:text="Please fill the fields below"
+                android:textSize="16sp"
+                android:fontFamily="Cooper Black"
+                android:textColor="@color/colorWhite"
+                android:layout_weight="0.19" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

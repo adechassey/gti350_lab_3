@@ -36,28 +36,46 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".CreateEventActivity"
-            android:label="Create a new event">
-
+            android:label="Create an event">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="gti350.lab.meetsports.MainActivity"/>
         </activity>
+
         <activity
             android:name=".SignInActivity"
             android:theme="@style/AppTheme.Dark" />
+
         <activity
             android:name=".SignUpActivity"
-            android:theme="@style/AppTheme.Dark" />
+            android:label="Meet Sports"
+            android:theme="@style/AppTheme.Dark" >
+        </activity>
 
-        <activity android:name=".FindEventActivity">
+        <activity
+            android:name=".FindEventActivity"
+            android:label="Find an event">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="gti350.lab.meetsports.MainActivity"/>
         </activity>
+
         <activity
             android:name=".SetAccountActivity"
-            android:theme="@style/AppTheme.Dark" />
+            android:label="Profile" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="gti350.lab.meetsports.MainActivity"/>
+        </activity>
+
     </application>
 </manifest>
