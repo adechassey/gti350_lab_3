@@ -15,35 +15,49 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Providers -->
+        <provider
+            android:name=".CitySuggestionProvider"
+            android:authorities="meetsports.citysuggestion"
+            android:enabled="true"
+            android:exported="true" />
+
+        <!-- Global Meta Data -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAKS8p5wWtvFF3LxvVLZjYt3g8aPMFzen4" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".CreateEventActivity"
-            android:label="Create a new event" />
+            android:label="Create a new event">
+
+        </activity>
         <activity
             android:name=".SignInActivity"
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".SignUpActivity"
-            android:theme="@style/AppTheme.Dark"/>
-        <activity
-            android:name=".FindEventActivity"
             android:theme="@style/AppTheme.Dark" />
+
+        <activity android:name=".FindEventActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity
             android:name=".SetAccountActivity"
-            android:theme="@style/AppTheme.Dark"/>
-
-        <!-- Meta Data -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAKS8p5wWtvFF3LxvVLZjYt3g8aPMFzen4" />
+            android:theme="@style/AppTheme.Dark" />
     </application>
-
 </manifest>

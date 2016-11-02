@@ -49,5 +49,6 @@
     <string name="age_result">textView_participants_result</string>
     <string name="contribution_result">textView_participants_result</string>
     <string name="level_result">textView_participants_result</string>
-    
+
+    <string name="hint_search">A place, a date, a sport...</string>
 </resources>

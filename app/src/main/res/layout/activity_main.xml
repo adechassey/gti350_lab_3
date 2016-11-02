@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
@@ -14,56 +13,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:paddingTop="10dp"
+        android:gravity="center"
         android:paddingRight="15dp"
-        android:gravity="center">
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/log_off_link"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="Cooper Black"
             android:gravity="right"
             android:text="Log Off"
-            android:fontFamily="Cooper Black"
-            android:textSize="16dip"
             android:textColor="@color/colorWhite"
-            android:textStyle="normal|bold"
-            />
+            android:textSize="16dip"
+            android:textStyle="normal|bold" />
 
-        <TextView android:id="@+id/logo_main"
+        <TextView
+            android:id="@+id/logo_main"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="150dp"
-            android:text="Meet\nSports"
-            android:textSize="36sp"
-            android:fontFamily="Cooper Black"
             android:layout_weight="0.19"
-            android:textStyle="normal|bold"
-            android:textColor="@color/colorWhite" />
+            android:fontFamily="Cooper Black"
+            android:gravity="center"
+            android:text="Meet\nSports"
+            android:textColor="@color/colorWhite"
+            android:textSize="36sp"
+            android:textStyle="normal|bold" />
 
     </RelativeLayout>
-
 
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:fitsSystemWindows="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/main_activity_header">
+        android:layout_below="@+id/main_activity_header"
+        android:fitsSystemWindows="true">
 
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            android:paddingTop="56dp"
+            android:orientation="vertical"
             android:paddingLeft="24dp"
-            android:paddingRight="24dp">
+            android:paddingRight="24dp"
+            android:paddingTop="56dp">
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_create_event"
@@ -75,7 +73,7 @@
                 android:id="@+id/btn_find_event"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Find a event"/>
+                android:text="Find a event" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_profile"

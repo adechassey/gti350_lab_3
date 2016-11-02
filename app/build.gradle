@@ -27,24 +27,18 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.jakewharton:butterknife:6.1.0'
+
+    // Rangebar
+    compile 'com.appyvet:materialrangebar:1.3'
+    // Viewpager
+    compile 'com.github.paolorotolo:appintro:4.1.0'
+    // Google map
+    compile 'com.google.android.gms:play-services-maps:9.8.0'
+    // Searchbar
+    compile 'com.squareup.okhttp3:okhttp:3.0.1'
+
     testCompile 'junit:junit:4.12'
 }
-
-// Rangebar
-dependencies {
-    compile 'com.appyvet:materialrangebar:1.3'
-}
-
-// Viewpager
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    compile 'com.github.paolorotolo:appintro:4.1.0'
-}
-
-// Google map
-dependencies {
-    compile 'com.google.android.gms:play-services-maps:9.8.0'
 }
