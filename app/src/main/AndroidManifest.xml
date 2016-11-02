@@ -15,7 +15,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +27,18 @@
         <activity
             android:name=".CreateEventActivity"
             android:label="Create a new event" />
-        <activity android:name=".SignInActivity" android:theme="@style/AppTheme.Dark" />
-        <activity android:name=".SignUpActivity" android:theme="@style/AppTheme.Dark"/>
-        <activity android:name=".FindEventActivity" />
-        <activity android:name=".SetAccountActivity" />
+        <activity
+            android:name=".SignInActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".SignUpActivity"
+            android:theme="@style/AppTheme.Dark"/>
+        <activity
+            android:name=".FindEventActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".SetAccountActivity"
+            android:theme="@style/AppTheme.Dark"/>
 
         <!-- Meta Data -->
         <meta-data

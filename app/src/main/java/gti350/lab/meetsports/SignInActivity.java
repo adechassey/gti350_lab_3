@@ -38,51 +38,15 @@ import butterknife.InjectView;
  * Created by VMabille on 31/10/2016.
  */
 
-/*
-public class SignInActivity extends FragmentActivity {
-
-    private Button Btn_sign_in, Btn_sign_up;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
-
-
-    }
-
-    public void SignIn(View view) {
-        // TODO : check for user infos
-        finish();
-        // -> returns to main activity
-    }
-
-    public void SignUp(View view) {
-        Intent intent_sign_up = new Intent(this, SignUpActivity.class);
-        startActivity(intent_sign_up);
-        finish(); // -> returns to main activity
-    }
-
-
-
-}
-
-
-*/
-
-
 
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-    private static final int REQUEST_SIGNUP = 0;
 
 
     @InjectView(R.id.sign_in_email) EditText input_Email;
     @InjectView(R.id.sign_in_pw) EditText input_Password;
     @InjectView(R.id.btn_login) Button Btn_signIn;
-    @InjectView(R.id.sign_up_link) TextView Btn_signUp;
+    @InjectView(R.id.sign_up_link) TextView sign_up_link;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,14 +62,13 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
-        Btn_signUp.setOnClickListener(new View.OnClickListener() {
+        sign_up_link.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivityForResult(intent, REQUEST_SIGNUP);
-                finish();
+                startActivityForResult(intent, MainActivity.REQUEST_SIGN_UP);
             }
         });
     }
@@ -113,7 +76,7 @@ public class SignInActivity extends AppCompatActivity {
     public void login() {
         Log.d(TAG, "Login");
 
-        if (!validate_input()) {
+        if (!validate_input_sign_in()) {
             LoginFailed();
             return;
         }
@@ -138,8 +101,8 @@ public class SignInActivity extends AppCompatActivity {
                         String email = input_Email.getText().toString();
                         String password = input_Password.getText().toString();
 
-                        if ( email.toLowerCase().contains(MainActivity.user_Email.toLowerCase()) && password.toLowerCase().contains(MainActivity.user_Password.toLowerCase())
-                                ||  email.toLowerCase().contains("user@ms.com".toLowerCase()) && password.toLowerCase().contains("user".toLowerCase())){
+                        if ( email.equals(MainActivity.user_Email) && password.equals(MainActivity.user_Password)
+                                ||  email.equals("user@ms.com") && password.equals("user")){
                             LoginSuccess();
                         } else {
                             LoginFailed();
@@ -152,12 +115,13 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SIGNUP) {
+        if (requestCode == MainActivity.REQUEST_SIGN_UP) {
             if (resultCode == RESULT_OK) {
 
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
-                this.finish();
+                if(SignUpActivity.SIGN_UP_SUCCESS == 1){
+                    // automatically loggs in the new user
+                    this.finish();
+                }
             }
         }
     }
@@ -179,25 +143,25 @@ public class SignInActivity extends AppCompatActivity {
         Btn_signIn.setEnabled(true);
     }
 
-    public boolean validate_input() {
-        boolean valid_input = true;
+    public boolean validate_input_sign_in() {
+        boolean valid = true;
         String email = input_Email.getText().toString();
         String password = input_Password.getText().toString();
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             input_Email.setError("enter a valid email address");
-            valid_input = false;
+            valid = false;
         } else {
             input_Email.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
             input_Password.setError("between 4 and 10 alphanumeric characters");
-            valid_input = false;
+            valid = false;
         } else {
             input_Password.setError(null);
         }
 
-        return valid_input;
+        return valid;
     }
 }

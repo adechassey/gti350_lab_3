@@ -19,8 +19,24 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Cancel"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="Cooper Black"
+            android:textSize="16dip"
             android:gravity="right"
-            android:textSize="16dip"/>
+            android:textStyle="normal|bold"
+            />
+
+        <TextView android:id="@+id/logo_sign_up"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:text="Meet\nSports"
+            android:textSize="36sp"
+            android:fontFamily="Cooper Black"
+            android:textColor="@color/colorWhite"
+            android:layout_weight="0.19"
+            android:textStyle="normal|bold" />
 
     </RelativeLayout>
 
@@ -38,22 +54,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="56dp"
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
-
-
-            <TextView android:id="@+id/logo_sign_up"
-                android:text="Meet\nSports"
-                android:fontFamily="Cooper Black"
-                android:layout_width="129dp"
-                android:layout_marginBottom="24dp"
-                android:layout_gravity="center_horizontal"
-                android:textSize="36sp"
-                android:layout_weight="0.19"
-                android:layout_height="92dp"
-                android:textStyle="normal|bold"
-                android:textColor="@color/colorWhite" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -139,140 +141,3 @@
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
-
-    <!--
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="gti350.lab.meetsports.SignUpActivity">
-
-    <TextView
-        android:text="Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:id="@+id/sign_up_1"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/sign_up_name"
-        android:layout_below="@+id/sign_up_1"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Surname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_up_2"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/sign_up_name"
-        android:layout_marginTop="75dp"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/sign_up_surname"
-        android:layout_below="@+id/sign_up_2"
-        android:layout_centerHorizontal="true" />
-
-
-    <TextView
-        android:text="Age"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_up_3"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/sign_up_surname"
-        android:layout_marginTop="135dp"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/sign_up_age"
-        android:layout_below="@+id/sign_up_3"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_up_4"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/sign_up_age"
-        android:layout_marginTop="195dp"/>
-
-
-    <Button
-        android:text="Confirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/btn_confirm_signup"
-        android:layout_marginBottom="75dp"
-        android:onClick="createAccount"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:id="@+id/sign_up_email"
-        android:layout_below="@+id/sign_up_4"
-        android:layout_alignLeft="@+id/sign_up_pw"
-        android:layout_alignStart="@+id/sign_up_pw" />
-
-    <TextView
-        android:text="Password :"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_up_5"
-        android:layout_below="@+id/sign_up_email"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/sign_up_pw"
-        android:layout_below="@+id/sign_up_5"
-        android:layout_alignLeft="@+id/sign_up_age"
-        android:layout_alignStart="@+id/sign_up_age" />
-
-    <TextView
-        android:text="Confirm password :"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_up_6"
-        android:layout_below="@+id/sign_up_pw"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:id="@+id/sign_up_pw_confirm"
-        android:layout_below="@+id/sign_up_6"
-        android:layout_alignLeft="@+id/sign_up_pw"
-        android:layout_alignStart="@+id/sign_up_pw" />
-
-
-</RelativeLayout>
-
- -->
