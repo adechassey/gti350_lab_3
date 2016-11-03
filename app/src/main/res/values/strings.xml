@@ -3,6 +3,7 @@
 
     <string name="btn_createEvent">Create</string>
 
+    <!-- CreateEventActivity -->
     <string name="category_prompt">Select a category</string>
     <string name="type_prompt">Select a type</string>
     <string name="level_prompt">Select a level</string>
@@ -50,5 +51,19 @@
     <string name="contribution_result">textView_participants_result</string>
     <string name="level_result">textView_participants_result</string>
 
-    <string name="hint_search">A place, a date, a sport...</string>
+    <!-- FindEventActivity -->
+    <string name="selected_place">Last Selected Place:</string>
+    <string name="place_details">
+    <![CDATA[
+        <b>%1$s</b>
+        <br/>
+        <i>Place Id: %2$s</i>
+        <br/>
+        Address: %3$s
+        <br/>
+        Phone: %4$s
+        <br/>
+        Website: %5$s
+    ]]>
+    </string>
 </resources>

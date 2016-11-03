@@ -17,11 +17,6 @@
         android:theme="@style/AppTheme">
 
         <!-- Providers -->
-        <provider
-            android:name=".CitySuggestionProvider"
-            android:authorities="meetsports.citysuggestion"
-            android:enabled="true"
-            android:exported="true" />
 
         <!-- Global Meta Data -->
         <meta-data
@@ -42,7 +37,7 @@
             android:label="Create an event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity"/>
+                android:value="gti350.lab.meetsports.MainActivity" />
         </activity>
 
         <activity
@@ -52,29 +47,22 @@
         <activity
             android:name=".SignUpActivity"
             android:label="Meet Sports"
-            android:theme="@style/AppTheme.Dark" >
-        </activity>
+            android:theme="@style/AppTheme.Dark" />
 
         <activity
             android:name=".FindEventActivity"
             android:label="Find an event">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity"/>
+                android:value="gti350.lab.meetsports.MainActivity" />
         </activity>
 
         <activity
             android:name=".SetAccountActivity"
-            android:label="Profile" >
+            android:label="Profile">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity"/>
+                android:value="gti350.lab.meetsports.MainActivity" />
         </activity>
 
     </application>

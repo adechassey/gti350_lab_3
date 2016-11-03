@@ -1,16 +1,20 @@
 package gti350.lab.meetsports;
 
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.Html;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 /**
  * Created by Antoine on 02/10/2016.
@@ -19,51 +23,69 @@ import android.widget.TextView;
  * https://androidhub.intel.com/en/posts/nglauber/Android_Search.html
  */
 
-public class FindEventActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class FindEventActivity extends AppCompatActivity implements PlaceSelectionListener {
+    private static final String TAG = "FindEventActivity";
+
+    private TextView mPlaceDetailsText;
+    private TextView mPlaceAttribution;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_event);
-        TextView txt = (TextView)findViewById(R.id.textView);
 
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            txt.setText("Searching by: "+ query);
+        // Retrieve the PlaceAutocompleteFragment.
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
-        } else if (Intent.ACTION_VIEW.equals(intent.getAction())) {
-            String uri = intent.getDataString();
-            txt.setText("Suggestion: "+ uri);
+        // Register a listener to receive callbacks when a place has been selected or an error has
+        // occurred.
+        autocompleteFragment.setOnPlaceSelectedListener(this);
+
+        // Retrieve the TextViews that will display details about the selected place.
+        mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
+        mPlaceAttribution = (TextView) findViewById(R.id.place_attribution);
+    }
+
+    /**
+     * Callback invoked when a place has been selected from the PlaceAutocompleteFragment.
+     */
+    @Override
+    public void onPlaceSelected(Place place) {
+        Log.i(TAG, "Place Selected: " + place.getName());
+
+        // Format the returned place's details and display them in the TextView.
+        mPlaceDetailsText.setText(formatPlaceDetails(getResources(), place.getName(), place.getId(),
+                place.getAddress(), place.getPhoneNumber(), place.getWebsiteUri()));
+
+        CharSequence attributions = place.getAttributions();
+        if (!TextUtils.isEmpty(attributions)) {
+            mPlaceAttribution.setText(Html.fromHtml(attributions.toString()));
+        } else {
+            mPlaceAttribution.setText("");
         }
     }
 
+    /**
+     * Callback invoked when PlaceAutocompleteFragment encounters an error.
+     */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onError(Status status) {
+        Log.e(TAG, "onError: Status = " + status.toString());
 
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(this);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(
-                new ComponentName(this, FindEventActivity.class)));
-        searchView.setIconifiedByDefault(false);
-
-        return true;
+        Toast.makeText(this, "Place selection failed: " + status.getStatusMessage(),
+                Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        // User pressed the search button
-        return false;
-    }
+    /**
+     * Helper method to format information about a place nicely.
+     */
+    private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id,
+                                              CharSequence address, CharSequence phoneNumber, Uri websiteUri) {
+        Log.e(TAG, res.getString(R.string.place_details, name, id, address, phoneNumber,
+                websiteUri));
+        return Html.fromHtml(res.getString(R.string.place_details, name, id, address, phoneNumber,
+                websiteUri));
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        // User changed the text
-        return false;
     }
 }
