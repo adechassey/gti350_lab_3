@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/sign_up_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:orientation="vertical"
         android:paddingTop="10dp"
         android:paddingRight="15dp"
         android:gravity="center">
@@ -39,12 +40,12 @@
             android:textColor="@color/colorWhite" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
@@ -55,7 +56,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="24dp"
+            android:paddingTop="10dp"
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
 
@@ -86,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="18dp">
                 <EditText android:id="@+id/sign_up_surname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,10 +95,30 @@
                     android:hint="Surname" />
             </android.support.design.widget.TextInputLayout>
 
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp">
+                <TextView android:id="@+id/sign_up_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=" Gender"
+                    android:textSize="18dp"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:paddingBottom="50dp"
+                android:layout_marginLeft="3dp"
+                android:background="@android:color/white" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
                 android:layout_marginBottom="8dp">
                 <EditText android:id="@+id/sign_up_age"
                     android:layout_width="match_parent"

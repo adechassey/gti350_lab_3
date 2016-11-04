@@ -1,39 +1,16 @@
 package gti350.lab.meetsports;
 
 import android.os.Bundle;
-
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.TimePickerDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.Button;
-import android.widget.TimePicker;
 import android.widget.Toast;
-
-import java.util.Calendar;
-
-/**
- * Created by VMabille on 31/10/2016.
- */
-
-
 import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.graphics.Color;
+import gti350.lab.meetsports.GenderPickerDialogFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -50,6 +27,8 @@ public class SignUpActivity extends AppCompatActivity {
     @InjectView(R.id.sign_up_pw_confirm) EditText input_Password_confirm;
     @InjectView(R.id.btn_confirm_sign_up) Button Btn_sign_up;
     @InjectView(R.id.cancel_sign_up) TextView cancel_sign_up_link;
+    public static TextView Gender;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,6 +47,14 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        Gender = (TextView) findViewById(R.id.sign_up_gender);
+        Gender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GenderPickerDialogFragment.showAlertDialog(SignUpActivity.this, 1);
             }
         });
 
@@ -91,9 +78,6 @@ public class SignUpActivity extends AppCompatActivity {
         progressDialog.show();
 
 
-
-        // TODO: Implement  signup logic here.
-
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
@@ -108,11 +92,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void Create_Account() {
         String name = input_Name.getText().toString();
-        String surname = input_Name.getText().toString();
+        String surname = input_Surname.getText().toString();
         String age = input_Age.getText().toString();
         String email = input_Email.getText().toString();
         String password = input_Password.getText().toString();
-        String password_confirm = input_Password_confirm.getText().toString();
 
         Btn_sign_up.setEnabled(true);
         setResult(RESULT_OK, null);
@@ -186,6 +169,11 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    public static void Update_gender(String gender){
+        Gender.setText(" " + gender);
+        Gender.setTextColor(Color.rgb(255,255,255));
     }
 }
 
