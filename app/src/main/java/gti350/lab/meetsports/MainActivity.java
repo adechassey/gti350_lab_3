@@ -3,6 +3,8 @@ package gti350.lab.meetsports;
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static String user_Name = new String();
     public static String user_Surname = new String();
     public static String user_Age = new String();
+    public static String user_Gender = new String();
 
     private RelativeLayout relativeLayout;
 
@@ -50,24 +53,26 @@ public class MainActivity extends AppCompatActivity {
         relativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
         ButterKnife.inject(this);
 
+        clear_user_infos();
+
         Btn_Create_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createEvent(v);
+                createEvent();
             }
         });
 
         Btn_Find_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findEvent(v);
+                findEvent();
             }
         });
 
         Btn_Profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Profile(v);
+                Profile();
             }
         });
 
@@ -75,29 +80,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // End session and return to the sign in activity
-                logOff(v);
+                logOff();
             }
         });
     }
 
     // Called when the user clicks the create event button
-    public void createEvent(View view) {
+    public void createEvent() {
         Intent createEvent = new Intent(this, CreateEventActivity.class);
         startActivityForResult(createEvent, REQUEST_CREATE_EVENT);
     }
 
 
-    public void findEvent(View view) {
+    public void findEvent() {
         Intent intent = new Intent(this, FindEventActivity.class);
         startActivity(intent);
     }
 
-    public void Profile(View view) {
+    public void Profile() {
         Intent intent = new Intent(this, SetAccountActivity.class);
         startActivity(intent);
     }
 
-    public void logOff(View view) {
+    public void logOff() {
+        clear_user_infos();
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
     }
@@ -150,6 +156,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void clear_user_infos(){
+        user_Name = "";
+        user_Surname = "";
+        user_Gender = "";
+        user_Age = "";
+        user_Email = "";
+        user_Password = "";
+    }
+
+    public static void setGender(String gender) {
+        MainActivity.user_Gender = gender;
     }
 
 }
