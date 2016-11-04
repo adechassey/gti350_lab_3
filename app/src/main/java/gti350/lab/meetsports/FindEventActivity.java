@@ -1,14 +1,13 @@
 package gti350.lab.meetsports;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
-import android.text.TextUtils;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -18,16 +17,13 @@ import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 /**
  * Created by Antoine on 02/10/2016.
- *
+ * <p>
  * A big thanks to this tutorial:
  * https://androidhub.intel.com/en/posts/nglauber/Android_Search.html
  */
 
 public class FindEventActivity extends AppCompatActivity implements PlaceSelectionListener {
     private static final String TAG = "FindEventActivity";
-
-    private TextView mPlaceDetailsText;
-    private TextView mPlaceAttribution;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +37,6 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
         // Register a listener to receive callbacks when a place has been selected or an error has
         // occurred.
         autocompleteFragment.setOnPlaceSelectedListener(this);
-
-        // Retrieve the TextViews that will display details about the selected place.
-        mPlaceDetailsText = (TextView) findViewById(R.id.place_details);
-        mPlaceAttribution = (TextView) findViewById(R.id.place_attribution);
     }
 
     /**
@@ -54,16 +46,15 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
     public void onPlaceSelected(Place place) {
         Log.i(TAG, "Place Selected: " + place.getName());
 
-        // Format the returned place's details and display them in the TextView.
-        mPlaceDetailsText.setText(formatPlaceDetails(getResources(), place.getName(), place.getId(),
-                place.getAddress(), place.getPhoneNumber(), place.getWebsiteUri()));
-
-        CharSequence attributions = place.getAttributions();
-        if (!TextUtils.isEmpty(attributions)) {
-            mPlaceAttribution.setText(Html.fromHtml(attributions.toString()));
-        } else {
-            mPlaceAttribution.setText("");
-        }
+        // Saving results
+        Intent intent = new Intent();
+        intent.putExtra("place", place.getName());
+        intent.putExtra("address", place.getAddress());
+        intent.putExtra("id", place.getId());
+        intent.putExtra("phone", place.getPhoneNumber());
+        intent.putExtra("website", place.getWebsiteUri().toString());
+        setResult(MainActivity.RESULT_OK, intent);
+        finish();
     }
 
     /**

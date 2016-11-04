@@ -14,8 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
@@ -23,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_SIGN_IN = 0;
     public static final int REQUEST_SIGN_UP = 1;
     public static final int REQUEST_CREATE_EVENT = 2;
+    public static final int REQUEST_FIND_EVENT = 3;
 
     public static boolean SESSION_ON = false;
 
@@ -47,14 +46,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        //ButterKnife.inject(this);
 
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Initializing NavigationView
+        // Initializing NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        // Setting the Fragment to event
+        EventFragment fragment_event = new EventFragment();
+        FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+        fragmentTransaction_event.replace(R.id.frame, fragment_event);
+        fragmentTransaction_event.commit();
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.find_event:
                         Toast.makeText(getApplicationContext(), "Opening find event", Toast.LENGTH_SHORT).show();
                         Intent findEvent = new Intent(getApplicationContext(), FindEventActivity.class);
-                        startActivity(findEvent);
+                        startActivityForResult(findEvent, REQUEST_FIND_EVENT);
                         return true;
 
                     case R.id.create_event:
@@ -167,13 +172,12 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-
             case (0): {
                 String welcome_phrase = "Welcome " + MainActivity.user_Name + " " + MainActivity.user_Surname + ", you are now logged in";
                 Toast.makeText(getBaseContext(), welcome_phrase, Toast.LENGTH_LONG).show();
                 break;
             }
-
+            // From CreateEventActivity
             case (2): {
                 if (resultCode == CreateEventActivity.RESULT_OK) {
                     // TODO Extract the data returned from the child Activity.
@@ -206,6 +210,31 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             });
                     snackbar.show();
+                }
+                break;
+            }
+            // From FindEventActivity
+            case (3): {
+                if (resultCode == CreateEventActivity.RESULT_OK) {
+                    EventFragment fragment_event = new EventFragment();
+
+                    Bundle bundle = new Bundle();
+                    String place = data.getStringExtra("place");
+                    String address = data.getStringExtra("address");
+                    String id = data.getStringExtra("id");
+                    String phone = data.getStringExtra("phone");
+                    String website = data.getStringExtra("website");
+
+                    bundle.putString("place", place);
+                    bundle.putString("address", address);
+                    bundle.putString("id", id);
+                    bundle.putString("phone", phone);
+                    bundle.putString("website", website);
+                    fragment_event.setArguments(bundle);
+
+                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                    fragmentTransaction_event.commit();
                 }
                 break;
             }

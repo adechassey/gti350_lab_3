@@ -40,8 +40,8 @@
         <item>Expert</item>
     </string-array>
 
-    <string name="btn_datePicker">Set date</string>
-    <string name="btn_timePicker">Set time</string>
+    <string name="btn_datePicker">Pick date</string>
+    <string name="btn_timePicker">Pick time</string>
 
     <string name="date_result">textView_participants_result</string>
     <string name="time_result">textView_participants_result</string>

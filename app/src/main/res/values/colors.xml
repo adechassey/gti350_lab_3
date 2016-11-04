@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#c54ba6ff</color>
     <color name="colorWhite">#ffffff</color>
-    <color name="create_event">#43dfae</color>
+    <color name="create_event">#43b5df</color>
+
+    <color name="colorAppBackground">#183c69</color>
+    <color name="colorBackgroundSoft">#fffcf2</color>
+    <color name="colorDark">#1e5aa6</color>
 
     <!-- Range Bar -->
     <color name="colorConnectingLine">#de5f9ef1</color>

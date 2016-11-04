@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,8 +75,8 @@ public class CreateEventActivity extends AppIntro {
 
         // OPTIONAL METHODS
         // Override bar/separator color.
-        setBarColor(Color.parseColor("#3F51B5"));
-        setSeparatorColor(Color.parseColor("#2196F3"));
+        setBarColor(ContextCompat.getColor(this, R.color.colorDark));
+        setSeparatorColor(ContextCompat.getColor(this, R.color.colorPrimary));
 
         // Hide Skip/Done button.
         showSkipButton(false);
@@ -233,6 +234,7 @@ public class CreateEventActivity extends AppIntro {
             return view;
         }
     }
+
 
     public void onPickPlace(View view) {
         PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
