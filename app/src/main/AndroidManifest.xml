@@ -57,13 +57,5 @@
                 android:value="gti350.lab.meetsports.MainActivity" />
         </activity>
 
-        <activity
-            android:name=".SetAccountActivity"
-            android:label="Profile">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity" />
-        </activity>
-
     </application>
 </manifest>

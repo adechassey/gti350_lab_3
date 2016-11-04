@@ -1,87 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="gti350.lab.meetsports.MainActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/main_activity_header"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/tool_bar" />
+
+        <FrameLayout
+            android:id="@+id/frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <!--
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp">
+        android:orientation="vertical"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp">
 
-        <TextView
-            android:id="@+id/log_off_link"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="Cooper Black"
-            android:gravity="right"
-            android:text="Log Off"
-            android:textColor="@color/colorWhite"
-            android:textSize="16dip"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:id="@+id/logo_main"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:layout_weight="0.19"
-            android:fontFamily="Cooper Black"
-            android:gravity="center"
-            android:text="Meet\nSports"
-            android:textColor="@color/colorWhite"
-            android:textSize="36sp"
-            android:textStyle="normal|bold" />
-
-    </RelativeLayout>
-
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/main_activity_header"
-        android:fitsSystemWindows="true">
-
-
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:paddingTop="56dp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp">
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_find_event"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Find a event" />
+            <fragment
+                android:id="@+id/autocomplete_fragment"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_create_event"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Create an event" />
+        </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_profile"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Profile" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selected_place"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        </LinearLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/place_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/place_attribution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autoLink="all"
+            android:paddingTop="16dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
+-->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/drawer" />
+</android.support.v4.widget.DrawerLayout>
