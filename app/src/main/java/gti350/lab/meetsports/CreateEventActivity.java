@@ -8,14 +8,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -23,19 +24,17 @@ import android.widget.TimePicker;
 import com.appyvet.rangebar.IRangeBarFormatter;
 import com.appyvet.rangebar.RangeBar;
 import com.github.paolorotolo.appintro.AppIntro;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.Calendar;
 
 public class CreateEventActivity extends AppIntro {
     private static final String TAG = "CreateEventActivity";
+
+    private static int PLACE_PICKER_REQUEST = 1;
 
     private static String category;
     private static String type;
@@ -52,10 +51,14 @@ public class CreateEventActivity extends AppIntro {
     private static Integer minContribution;
     private static Integer maxContribution;
     private static String level;
+    private static String place;
+    private static String address;
 
-    private static TextView date_result, time_result, duration_result, participants_result, age_result, contribution_result, level_result;
+    private static TextView date_result, time_result, duration_result, participants_result, age_result, contribution_result, level_result, place_result, address_result;
     private static Spinner spinner_category, spinner_type, spinner_level;
     private static RangeBar rangebar_duration, rangebar_participants, rangebar_age, rangebar_contribution;
+
+    private static RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,6 +85,24 @@ public class CreateEventActivity extends AppIntro {
         // NOTE: you will probably need to ask VIBRATE permission in Manifest.
         setVibrate(true);
         setVibrateIntensity(30);
+
+        // Initialize inputs
+        duration = 1.0;
+        final Calendar c = Calendar.getInstance();
+        day = c.get(Calendar.DAY_OF_MONTH);
+        month = c.get(Calendar.MONTH);
+        year = c.get(Calendar.YEAR);
+        hour = c.get(Calendar.HOUR_OF_DAY);
+        minute = c.get(Calendar.MINUTE);
+        minParticipants = 1;
+        maxParticipants = 4;
+        minAge = 18;
+        maxAge = 25;
+        minContribution = 0;
+        maxContribution = 0;
+        level = "Any";
+        place = null;
+        address = null;
     }
 
     public static class FirstFragment extends Fragment {
@@ -97,7 +118,6 @@ public class CreateEventActivity extends AppIntro {
             rangebar_duration = (RangeBar) view.findViewById(R.id.rangebar_duration);
             rangebar_duration.setRangePinsByValue(0, 1);
             duration_result = (TextView) view.findViewById(R.id.textView_duration_result);
-            duration = 1.0;
             duration_result.setText(duration + "h");
             rangebar_duration.setOnRangeBarChangeListener(new CreateEventActivity.CustomOnRangeBarChangeListener());
             rangebar_duration.setFormatter(new IRangeBarFormatter() {
@@ -112,10 +132,7 @@ public class CreateEventActivity extends AppIntro {
             });
 
             date_result = (TextView) view.findViewById(R.id.textView_date_result);
-            final Calendar c = Calendar.getInstance();
-            day = c.get(Calendar.DAY_OF_MONTH);
-            month = c.get(Calendar.MONTH);
-            year = c.get(Calendar.YEAR);
+
             date_result.setText(day + "/" + month + "/" + year);
             time_result = (TextView) view.findViewById(R.id.textView_time_result);
             time_result.setText("At 17h 30min");
@@ -129,11 +146,9 @@ public class CreateEventActivity extends AppIntro {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             final View view = inflater.inflate(R.layout.activity_create_event_fragment_2, container, false);
             rangebar_participants = (RangeBar) view.findViewById(R.id.rangebar_participants);
-            rangebar_participants.setRangePinsByValue(0, 4);
+            rangebar_participants.setRangePinsByValue(1, 4);
             rangebar_participants.setOnRangeBarChangeListener(new CreateEventActivity.CustomOnRangeBarChangeListener());
             participants_result = (TextView) view.findViewById(R.id.textView_participants_result);
-            minParticipants = 0;
-            maxParticipants = 4;
             participants_result.setText(minParticipants + " to " + maxParticipants + " persons");
             rangebar_participants.setFormatter(new IRangeBarFormatter() {
                 @Override
@@ -141,10 +156,17 @@ public class CreateEventActivity extends AppIntro {
                     // Transform the String s here then return s
                     if (s.equals("11"))
                         return "10+";
+
                     if (minParticipants == maxParticipants)
                         participants_result.setText(minParticipants + " persons");
-                    else
+                    else if (minParticipants == 11 && maxParticipants == 11) {
+                        participants_result.setText("More than 10 persons");
+                    } else if (minParticipants != 11 && maxParticipants == 11) {
+                        participants_result.setText(minParticipants + " to more than 10 persons");
+                    } else {
                         participants_result.setText(minParticipants + " to " + maxParticipants + " persons");
+
+                    }
                     return s;
                 }
             });
@@ -153,8 +175,6 @@ public class CreateEventActivity extends AppIntro {
             rangebar_age.setRangePinsByValue(18, 25);
             rangebar_age.setOnRangeBarChangeListener(new CreateEventActivity.CustomOnRangeBarChangeListener());
             age_result = (TextView) view.findViewById(R.id.textView_age_result);
-            minAge = 18;
-            maxAge = 25;
             age_result.setText(minAge + " to " + maxAge + " years old");
             rangebar_age.setFormatter(new IRangeBarFormatter() {
                 @Override
@@ -174,7 +194,6 @@ public class CreateEventActivity extends AppIntro {
             rangebar_contribution.setRangePinsByValue(0, 0);
             rangebar_contribution.setOnRangeBarChangeListener(new CreateEventActivity.CustomOnRangeBarChangeListener());
             contribution_result = (TextView) view.findViewById(R.id.textView_contribution_result);
-            minContribution = 0;
             contribution_result.setText(minContribution + " $");
             rangebar_contribution.setFormatter(new IRangeBarFormatter() {
                 @Override
@@ -198,71 +217,44 @@ public class CreateEventActivity extends AppIntro {
     }
 
     public static class ThirdFragment extends Fragment {
-        MapView mMapView;
-        private GoogleMap googleMap;
-
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             final View view = inflater.inflate(R.layout.activity_create_event_fragment_3, container, false);
 
-            mMapView = (MapView) view.findViewById(R.id.mapView);
-            mMapView.onCreate(savedInstanceState);
+            // For snackbar
+            relativeLayout = (RelativeLayout) view.findViewById(R.id.activity_create_event);
 
-            mMapView.onResume(); // needed to get the map to display immediately
+            place_result = (TextView) view.findViewById(R.id.textView_place_result);
+            place_result.setText(place);
+            address_result = (TextView) view.findViewById(R.id.textView_address_result);
+            address_result.setText(address);
 
-            try {
-                MapsInitializer.initialize(getActivity().getApplicationContext());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            mMapView.getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap mMap) {
-                    googleMap = mMap;
-
-                    try {
-                        // For showing a move to my location button
-                        googleMap.setMyLocationEnabled(true);
-                    } catch (SecurityException e) {
-                        Log.d(TAG, "Could not set location");
-                    }
-
-                    // For dropping a marker at a point on the Map
-                    LatLng montreal = new LatLng(45.5087, -73.554);
-                    googleMap.addMarker(new MarkerOptions().position(montreal).title("Marker Title").snippet("Marker Description"));
-
-                    // For zooming automatically to the location of the marker
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(montreal).zoom(12).build();
-                    googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-                }
-            });
             // Inflate the layout for this fragment
             return view;
         }
+    }
 
-        @Override
-        public void onResume() {
-            super.onResume();
-            mMapView.onResume();
+    public void onPickPlace(View view) {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            Intent intent = builder.build(this);
+            startActivityForResult(intent, PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
         }
+    }
 
-        @Override
-        public void onPause() {
-            super.onPause();
-            mMapView.onPause();
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            mMapView.onDestroy();
-        }
-
-        @Override
-        public void onLowMemory() {
-            super.onLowMemory();
-            mMapView.onLowMemory();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
+            Place placePicked = PlacePicker.getPlace(this, data);
+            place = placePicked.getName().toString();
+            address = placePicked.getAddress().toString();
+            place_result.setText(place);
+            address_result.setText(address);
         }
     }
 
@@ -276,24 +268,31 @@ public class CreateEventActivity extends AppIntro {
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
-        Intent intent = new Intent();
-        intent.putExtra("category", category);
-        intent.putExtra("type", type);
-        intent.putExtra("year", year);
-        intent.putExtra("month", month);
-        intent.putExtra("day", day);
-        intent.putExtra("hour", hour);
-        intent.putExtra("minute", minute);
-        intent.putExtra("duration", duration);
-        intent.putExtra("minParticipants", minParticipants);
-        intent.putExtra("maxParticipants", minParticipants);
-        intent.putExtra("minAge", minAge);
-        intent.putExtra("maxAge", maxAge);
-        intent.putExtra("minContribution", minContribution);
-        intent.putExtra("maxContribution", maxContribution);
-        intent.putExtra("level", level);
-        setResult(MainActivity.RESULT_OK, intent);
-        finish();
+        if (address != null) {
+            Intent intent = new Intent();
+            intent.putExtra("category", category);
+            intent.putExtra("type", type);
+            intent.putExtra("year", year);
+            intent.putExtra("month", month);
+            intent.putExtra("day", day);
+            intent.putExtra("hour", hour);
+            intent.putExtra("minute", minute);
+            intent.putExtra("duration", duration);
+            intent.putExtra("minParticipants", minParticipants);
+            intent.putExtra("maxParticipants", minParticipants);
+            intent.putExtra("minAge", minAge);
+            intent.putExtra("maxAge", maxAge);
+            intent.putExtra("minContribution", minContribution);
+            intent.putExtra("maxContribution", maxContribution);
+            intent.putExtra("level", level);
+            intent.putExtra("place", place);
+            intent.putExtra("address", address);
+            setResult(MainActivity.RESULT_OK, intent);
+            finish();
+        } else {
+            // Show message on CreateEventActivity finished
+            Snackbar.make(relativeLayout, "Please pick a place first", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

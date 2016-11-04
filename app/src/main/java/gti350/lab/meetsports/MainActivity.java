@@ -1,10 +1,13 @@
 package gti350.lab.meetsports;
 
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
     public static String user_Surname = new String();
     public static String user_Age = new String();
 
+    private RelativeLayout relativeLayout;
 
-
-    @InjectView(R.id.btn_create_event) Button Btn_Create_event;
     @InjectView(R.id.btn_find_event) Button Btn_Find_event;
+    @InjectView(R.id.btn_create_event) Button Btn_Create_event;
     @InjectView(R.id.btn_profile) Button Btn_Profile;
     @InjectView(R.id.log_off_link) TextView Link_LogOff;
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
+        relativeLayout = (RelativeLayout) findViewById(R.id.activity_main);
         ButterKnife.inject(this);
 
         Btn_Create_event.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +131,20 @@ public class MainActivity extends AppCompatActivity {
                     data.getIntExtra("minContribution", 0);
                     data.getIntExtra("maxContribution", 0);
                     data.getStringExtra("level");
+                    data.getStringExtra("place");
+                    data.getStringExtra("address");
 
+                    // Show message on CreateEventActivity finished
+                    Snackbar snackbar = Snackbar
+                            .make(relativeLayout, "Event created successfully", Snackbar.LENGTH_LONG)
+                            .setAction("CANCEL", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Snackbar snackbar1 = Snackbar.make(relativeLayout, "Event has been deleted!", Snackbar.LENGTH_SHORT);
+                                    snackbar1.show();
+                                }
+                            });
+                    snackbar.show();
                 }
                 break;
             }

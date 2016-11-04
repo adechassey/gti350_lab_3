@@ -64,16 +64,16 @@
             android:paddingTop="56dp">
 
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_create_event"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Create an event" />
-
-            <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_find_event"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Find a event" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_create_event"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Create an event" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_profile"

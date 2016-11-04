@@ -42,7 +42,8 @@
             android:layout_height="wrap_content"
             android:entries="@array/category_array"
             android:prompt="@string/category_prompt"
-            android:textAlignment="textEnd" />
+            android:textAlignment="textEnd"
+            android:textColor="@color/create_event" />
 
         <TextView
             android:id="@+id/textView_type"
@@ -60,7 +61,8 @@
             android:layout_height="wrap_content"
             android:entries="@array/type_array"
             android:prompt="@string/type_prompt"
-            android:textAlignment="textEnd" />
+            android:textAlignment="textEnd"
+            android:textColor="@color/create_event" />
 
         <TextView
             android:id="@+id/textView_date"
@@ -78,7 +80,9 @@
             android:layout_height="wrap_content"
             android:text="@string/date_result"
             android:textAlignment="textEnd"
-            android:textStyle="normal|bold" />
+            android:textColor="@color/create_event"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btn_datePicker"
@@ -106,7 +110,9 @@
             android:layout_height="wrap_content"
             android:text="@string/time_result"
             android:textAlignment="textEnd"
-            android:textStyle="normal|bold" />
+            android:textColor="@color/create_event"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btn_timePicker"
@@ -132,7 +138,9 @@
             android:layout_height="wrap_content"
             android:text="@string/duration_result"
             android:textAlignment="textEnd"
-            android:textStyle="normal|bold" />
+            android:textColor="@color/create_event"
+            android:textStyle="normal|bold"
+            android:textSize="16sp" />
 
         <com.appyvet.rangebar.RangeBar xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/rangebar_duration"

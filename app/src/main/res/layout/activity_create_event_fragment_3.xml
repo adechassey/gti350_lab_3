@@ -11,11 +11,49 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="gti350.lab.meetsports.CreateEventActivity">
 
-    <com.google.android.gms.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/mapView"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Step 3/3"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="normal|bold"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="150dp" />
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/pickPlace"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onPickPlace"
+            android:text="Pick a place" />
+
+        <TextView
+            android:id="@+id/textView_place_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="textView_place_result"
+            android:textAlignment="center"
+            android:textColor="@color/create_event"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView_address_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="textView_address_result"
+            android:textColor="@color/create_event"
+            android:textSize="16sp"
+            android:textStyle="normal|bold" />
+
+    </LinearLayout>
 
 </RelativeLayout>
