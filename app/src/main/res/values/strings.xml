@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Meet Sports</string>
+    <string name="action_settings">My profile</string>
 
     <string name="btn_createEvent">Create</string>
 
@@ -66,4 +67,8 @@
         Website: %5$s
     ]]>
     </string>
+
+    <!-- Navigation view -->
+    <string name="closeDrawer">Navigation View</string>
+    <string name="openDrawer">Navigation View Closed</string>
 </resources>

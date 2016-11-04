@@ -4,12 +4,9 @@ package gti350.lab.meetsports;
  * Created by VMabille on 04/11/2016.
  */
 
-import android.os.Bundle;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 
 
 

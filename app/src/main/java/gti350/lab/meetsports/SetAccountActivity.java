@@ -132,10 +132,9 @@ public class SetAccountActivity extends AppCompatActivity {
 
     public static void display_user_infos(){
 
-
         profile_name.setText(MainActivity.user_Name);
         profile_surname.setText(MainActivity.user_Surname);
-        profile_gender.setText(MainActivity.user_Gender);
+        //profile_gender.setText(MainActivity.user_Gender);
         profile_age.setText(MainActivity.user_Age);
         profile_email.setText(MainActivity.user_Email);
 
