@@ -87,6 +87,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                         .customView(R.layout.event_details, true)
                         .positiveText("Close")
                         .negativeText("Delete")
+                        .titleColorRes(R.color.colorAppBackground)
                         .backgroundColorRes(R.color.colorWhite)
                         .show();
                 break;

@@ -104,6 +104,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
+                        .titleColorRes(R.color.colorAppBackground)
                         .backgroundColorRes(R.color.colorWhite)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
@@ -120,6 +121,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
+                        .titleColorRes(R.color.colorAppBackground)
                         .backgroundColorRes(R.color.colorWhite)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
@@ -136,6 +138,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
+                        .titleColorRes(R.color.colorAppBackground)
                         .backgroundColorRes(R.color.colorWhite)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override

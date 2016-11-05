@@ -36,7 +36,8 @@
             android:layout_marginEnd="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginStart="5dp">
+            android:layout_marginStart="5dp"
+            custom:cardBackgroundColor="@color/colorBackgroundSoft">
 
             <TextView
                 android:id="@+id/textView_category"
@@ -66,7 +67,8 @@
             android:layout_marginEnd="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginStart="5dp">
+            android:layout_marginStart="5dp"
+            custom:cardBackgroundColor="@color/colorBackgroundSoft">
 
             <TextView
                 android:id="@+id/textView_type"
@@ -96,7 +98,8 @@
             android:layout_marginEnd="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginStart="5dp">
+            android:layout_marginStart="5dp"
+            custom:cardBackgroundColor="@color/colorBackgroundSoft">
 
             <TextView
                 android:id="@+id/textView_date"
@@ -132,7 +135,8 @@
             android:layout_marginEnd="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginStart="5dp">
+            android:layout_marginStart="5dp"
+            custom:cardBackgroundColor="@color/colorBackgroundSoft">
 
             <TextView
                 android:id="@+id/textView_time"
@@ -168,7 +172,8 @@
             android:layout_marginEnd="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginStart="5dp">
+            android:layout_marginStart="5dp"
+            custom:cardBackgroundColor="@color/colorBackgroundSoft">
 
             <TextView
                 android:id="@+id/textView_duration"
