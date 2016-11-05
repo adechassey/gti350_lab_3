@@ -9,6 +9,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -60,6 +61,15 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
     }
 
     public void selectEvent(View view) {
+        TextView category = (TextView) findViewById(R.id.event_category);
+        TextView place = (TextView) findViewById(R.id.event_place);
+        TextView address = (TextView) findViewById(R.id.event_address);
+
+        Intent intent = new Intent();
+        intent.putExtra("category", category.getText());
+        intent.putExtra("place", place.getText());
+        intent.putExtra("address", address.getText());
+        setResult(MainActivity.RESULT_OK, intent);
         finish();
     }
 
