@@ -3,6 +3,7 @@ package gti350.lab.meetsports;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -289,7 +290,7 @@ public class CreateEventActivity extends AppIntro {
             intent.putExtra("level", level);
             intent.putExtra("place", place);
             intent.putExtra("address", address);
-            setResult(MainActivity.RESULT_OK, intent);
+            setResult(CreateEventActivity.RESULT_OK, intent);
             finish();
         } else {
             // Show message on CreateEventActivity finished

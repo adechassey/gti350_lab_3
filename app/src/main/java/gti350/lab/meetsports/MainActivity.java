@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
@@ -139,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
 
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
-
     }
 
     @Override
@@ -201,6 +202,36 @@ public class MainActivity extends AppCompatActivity {
                     data.getStringExtra("place");
                     data.getStringExtra("address");
 
+                    EventFragment fragment_event = new EventFragment();
+
+                    Bundle bundle = new Bundle();
+                    String category = data.getStringExtra("category");
+                    String type = data.getStringExtra("type");
+                    String date = "05/11/16";
+                    String duration = "1h";
+                    String distance = "1.2km";
+                    String place = data.getStringExtra("place");
+                    String address = data.getStringExtra("address");
+                    /*String id = data.getStringExtra("id");
+                    String phone = data.getStringExtra("phone");
+                    String website = data.getStringExtra("website");*/
+
+                    bundle.putString("category", category);
+                    bundle.putString("type", type);
+                    bundle.putString("date", date);
+                    bundle.putString("duration", duration);
+                    bundle.putString("distance", distance);
+                    bundle.putString("place", place);
+                    bundle.putString("address", address);
+                    /*bundle.putString("id", id);
+                    bundle.putString("phone", phone);
+                    bundle.putString("website", website);*/
+                    fragment_event.setArguments(bundle);
+
+                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                    fragmentTransaction_event.commit();
+
                     // Show message on CreateEventActivity finished
                     Snackbar snackbar = Snackbar
                             .make(drawerLayout, "Event created successfully", Snackbar.LENGTH_LONG)
@@ -217,21 +248,31 @@ public class MainActivity extends AppCompatActivity {
             }
             // From FindEventActivity
             case (3): {
-                if (resultCode == CreateEventActivity.RESULT_OK) {
+                if (resultCode == FindEventActivity.RESULT_OK) {
                     EventFragment fragment_event = new EventFragment();
 
                     Bundle bundle = new Bundle();
+                    String category = data.getStringExtra("category");
+                    String type = data.getStringExtra("type");
+                    String date = data.getStringExtra("date");
+                    String duration = data.getStringExtra("duration");
+                    String distance = data.getStringExtra("distance");
                     String place = data.getStringExtra("place");
                     String address = data.getStringExtra("address");
-                    String id = data.getStringExtra("id");
+                    /*String id = data.getStringExtra("id");
                     String phone = data.getStringExtra("phone");
-                    String website = data.getStringExtra("website");
+                    String website = data.getStringExtra("website");*/
 
+                    bundle.putString("category", category);
+                    bundle.putString("type", type);
+                    bundle.putString("date", date);
+                    bundle.putString("duration", duration);
+                    bundle.putString("distance", distance);
                     bundle.putString("place", place);
                     bundle.putString("address", address);
-                    bundle.putString("id", id);
+                    /*bundle.putString("id", id);
                     bundle.putString("phone", phone);
-                    bundle.putString("website", website);
+                    bundle.putString("website", website);*/
                     fragment_event.setArguments(bundle);
 
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
@@ -244,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void clear_user_infos(){
+    public void clear_user_infos() {
         user_Name = "";
         user_Surname = "";
         user_Gender = "";

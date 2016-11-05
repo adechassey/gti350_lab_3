@@ -7,7 +7,7 @@
             android:id="@+id/event"
             android:checked="true"
             android:icon="@drawable/ic_event"
-            android:title="My Event" />
+            android:title="My Events" />
 
         <item
             android:id="@+id/find_event"
