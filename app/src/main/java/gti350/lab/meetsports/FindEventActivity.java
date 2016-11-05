@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -51,9 +52,14 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
         intent.putExtra("place", place.getName());
         intent.putExtra("address", place.getAddress());
         intent.putExtra("id", place.getId());
-        intent.putExtra("phone", place.getPhoneNumber());
-        intent.putExtra("website", place.getWebsiteUri().toString());
+        if (place.getPhoneNumber() != null)
+            intent.putExtra("phone", place.getPhoneNumber());
+        if (place.getWebsiteUri() != null)
+            intent.putExtra("website", place.getWebsiteUri().toString());
         setResult(MainActivity.RESULT_OK, intent);
+    }
+
+    public void selectEvent(View view) {
         finish();
     }
 
