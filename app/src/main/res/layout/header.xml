@@ -17,10 +17,10 @@
         android:layout_height="85dp" />
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/header_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/email"
+        android:layout_above="@+id/header_email"
         android:layout_alignLeft="@+id/profile_image"
         android:layout_alignStart="@+id/profile_image"
         android:gravity="left"
@@ -31,12 +31,12 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/header_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/username"
+        android:layout_alignLeft="@+id/header_username"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/username"
+        android:layout_alignStart="@+id/header_username"
         android:layout_marginBottom="8dp"
         android:gravity="left"
         android:text="jchirac@mail.com"

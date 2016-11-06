@@ -30,7 +30,7 @@ public class GenderPickerDialogFragment{
                     SignUpActivity.Update_gender(list[item]);
                 } else if (parent_activity == EDIT_PROFILE_ACTIVITY){
                     MainActivity.setGender(list[item]);
-                    SetAccountActivity.display_user_infos();
+                    ProfileFragment.display_user_infos();
                 }
 
             }

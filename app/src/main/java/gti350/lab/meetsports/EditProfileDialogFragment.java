@@ -31,19 +31,16 @@ import android.widget.Toast;
  * Created by VMabille on 27/09/2016.
  */
 
-public class EditProfileDialogFragment extends DialogFragment {
+public class EditProfileDialogFragment {
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public static void showAlertDialog(final Context context, String Title, String Hint) {
         // Build the dialog and set up the button click handlers
 
+        final String title = Title ;
+        final String hint = Hint ;
 
-        final Bundle args = getArguments();
-        final String title = args.getString("edit_title");
-        final String hint = args.getString("edit_hint");
-
-        final EditText input = new EditText(getContext());
-        final EditText confirm_pw_input = new EditText(getContext());
+        final EditText input = new EditText(context);
+        final EditText confirm_pw_input = new EditText(context);
         confirm_pw_input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD);
         confirm_pw_input.setHint("Confirm password");
         confirm_pw_input.setPadding(0,100,0,30);
@@ -62,11 +59,11 @@ public class EditProfileDialogFragment extends DialogFragment {
         input.setHint(hint);
         input.setPadding(0,100,0,30);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(title);
         builder.setView(input);
         if (title == "Edit Password"){
-            LinearLayout layout = new LinearLayout(getContext());
+            LinearLayout layout = new LinearLayout(context);
             layout.setOrientation(LinearLayout.VERTICAL);
             layout.addView(input);
             layout.addView(confirm_pw_input);
@@ -94,17 +91,17 @@ public class EditProfileDialogFragment extends DialogFragment {
                             String confirm_password = confirm_pw_input.getText().toString();
 
                             if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-                                Toast.makeText(getContext(), "Passwords need to be between 4 and 10 alphanumeric characters" , Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Passwords need to be between 4 and 10 alphanumeric characters" , Toast.LENGTH_LONG).show();
                             }
 
                             if (!confirm_password.equals(password) ) {
-                                Toast.makeText(getContext(), "Passwords don't match" , Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Passwords don't match" , Toast.LENGTH_LONG).show();
                             } else {
-                                Toast.makeText(getContext(), "Password changed succesfully" , Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Password changed succesfully" , Toast.LENGTH_LONG).show();
                             }
 
                         }
-                        SetAccountActivity.display_user_infos();
+                        ProfileFragment.display_user_infos();
                     }
                 });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -112,7 +109,10 @@ public class EditProfileDialogFragment extends DialogFragment {
                         // Send the negative button event back to the host activity
                     }
                 });
-        return builder.create();
+        builder.show();
+
+
+
     }
 
 

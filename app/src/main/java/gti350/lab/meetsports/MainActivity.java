@@ -1,24 +1,36 @@
 package gti350.lab.meetsports;
 
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+import java.util.ArrayList;
+import java.util.List;
+
+import gti350.lab.meetsports.LogOutDialogFragment;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
+
+    public static List<Event> Events = new ArrayList<>();
 
     public static final int REQUEST_SIGN_IN = 0;
     public static final int REQUEST_SIGN_UP = 1;
@@ -27,17 +39,18 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean SESSION_ON = false;
 
-    public static String user_Email = new String();
+    public static String user_Email = "JChirac@ms.com";
     public static String user_Password = new String();
-    public static String user_Name = new String();
-    public static String user_Surname = new String();
-    public static String user_Age = new String();
-    public static String user_Gender = new String();
+    public static String user_Name = "Jacques";
+    public static String user_Surname = "Chirac";
+    public static String user_Age = "NA";
+    public static String user_Gender = "Male";
 
     // Defining Layout variables
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_main);
-        //ButterKnife.inject(this);
-        clear_user_infos();
+
 
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -104,11 +116,21 @@ public class MainActivity extends AppCompatActivity {
                         startActivityForResult(createEvent, REQUEST_CREATE_EVENT);
                         return true;
 
-                    case R.id.log_out:
-                        Toast.makeText(getApplicationContext(), "Logging out", Toast.LENGTH_SHORT).show();
-                        Intent logOut = new Intent(getApplicationContext(), SignInActivity.class);
-                        startActivity(logOut);
+                    case R.id.profile:
+                        ProfileFragment fragment_profile = new ProfileFragment();
+                        FragmentTransaction fragmentTransaction_profile = getFragmentManager().beginTransaction();
+                        fragmentTransaction_profile.replace(R.id.frame, fragment_profile);
+                        fragmentTransaction_profile.commit();
                         return true;
+
+                    case R.id.log_out:
+
+                        LogOutDialogFragment log_out_dialog = new LogOutDialogFragment();
+                        log_out_dialog.show(getFragmentManager(), "LogOutFragmentDialog");
+
+                        return true;
+
+
 
                     default:
                         Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
@@ -131,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-
                 super.onDrawerOpened(drawerView);
             }
         };
@@ -143,37 +164,12 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(getApplicationContext(), "Opening profile", Toast.LENGTH_SHORT).show();
-
-            ProfileFragment fragment_profile = new ProfileFragment();
-            FragmentTransaction fragmentTransaction_profile = getFragmentManager().beginTransaction();
-            fragmentTransaction_profile.replace(R.id.frame, fragment_profile);
-            fragmentTransaction_profile.commit();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         switch (requestCode) {
             case (0): {
                 String welcome_phrase = "Welcome " + MainActivity.user_Name + " " + MainActivity.user_Surname + ", you are now logged in";
@@ -249,9 +245,11 @@ public class MainActivity extends AppCompatActivity {
             // From FindEventActivity
             case (3): {
                 if (resultCode == FindEventActivity.RESULT_OK) {
-                    EventFragment fragment_event = new EventFragment();
 
+                    EventFragment fragment_event = new EventFragment();
+                    /*
                     Bundle bundle = new Bundle();
+
                     String category = data.getStringExtra("category");
                     String type = data.getStringExtra("type");
                     String date = data.getStringExtra("date");
@@ -259,9 +257,9 @@ public class MainActivity extends AppCompatActivity {
                     String distance = data.getStringExtra("distance");
                     String place = data.getStringExtra("place");
                     String address = data.getStringExtra("address");
-                    /*String id = data.getStringExtra("id");
+                    String id = data.getStringExtra("id");
                     String phone = data.getStringExtra("phone");
-                    String website = data.getStringExtra("website");*/
+                    String website = data.getStringExtra("website");
 
                     bundle.putString("category", category);
                     bundle.putString("type", type);
@@ -272,12 +270,13 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("address", address);
                     /*bundle.putString("id", id);
                     bundle.putString("phone", phone);
-                    bundle.putString("website", website);*/
-                    fragment_event.setArguments(bundle);
+                    bundle.putString("website", website);
+                    fragment_event.setArguments(bundle);*/
 
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
+
                 }
                 break;
             }
@@ -295,6 +294,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setGender(String gender) {
+
         MainActivity.user_Gender = gender;
     }
 

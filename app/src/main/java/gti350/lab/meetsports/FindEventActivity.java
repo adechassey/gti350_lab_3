@@ -104,8 +104,10 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
-                        .titleColorRes(R.color.colorAppBackground)
-                        .backgroundColorRes(R.color.colorWhite)
+                        .titleColor(-1)
+                        .positiveColor(-1)
+                        .negativeColor(-1)
+                        .backgroundColorRes(R.color.colorAppBackground)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -121,8 +123,10 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
-                        .titleColorRes(R.color.colorAppBackground)
-                        .backgroundColorRes(R.color.colorWhite)
+                        .titleColor(-1)
+                        .positiveColor(-1)
+                        .negativeColor(-1)
+                        .backgroundColorRes(R.color.colorAppBackground)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -138,8 +142,10 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
-                        .titleColorRes(R.color.colorAppBackground)
-                        .backgroundColorRes(R.color.colorWhite)
+                        .titleColor(-1)
+                        .positiveColor(-1)
+                        .negativeColor(-1)
+                        .backgroundColorRes(R.color.colorAppBackground)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
@@ -164,6 +170,10 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
         TextView address = (TextView) findViewById(getResources().getIdentifier("event_address_" + id, "id", getPackageName()));*/
 
         Intent intent = new Intent();
+        Event event = new Event(category.getText().toString(), type.getText().toString(), date.getText().toString(), duration.getText().toString(), distance.getText().toString(), "Chalet du Mont-Royal", "1196 Camillien-Houde Road, Montreal, Québec H3H 1A1" );
+        MainActivity.Events.add(event);
+
+
         intent.putExtra("category", category.getText());
         intent.putExtra("type", type.getText());
         intent.putExtra("date", date.getText());

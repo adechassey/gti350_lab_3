@@ -70,7 +70,7 @@
                     <View
                         android:layout_width="100dp"
                         android:layout_height="2dp"
-                        android:background="@android:color/holo_blue_dark" />
+                        android:background="@color/colorDark" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -85,14 +85,14 @@
                             android:layout_marginLeft="20dp"
                             android:gravity="center"
                             android:text="name"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/profile_edit_name"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="230dp"
+                            android:layout_marginLeft="180dp"
                             android:text="Edit name"
                             android:textColor="@color/aluminum"
                             android:textSize="12sp" />
@@ -112,7 +112,7 @@
                     <View
                         android:layout_width="100dp"
                         android:layout_height="2dp"
-                        android:background="@android:color/holo_blue_dark" />
+                        android:background="@color/colorDark" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -127,14 +127,14 @@
                             android:layout_marginLeft="20dp"
                             android:gravity="center"
                             android:text="surname"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/profile_edit_surname"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="230dp"
+                            android:layout_marginLeft="180dp"
                             android:text="Edit surname"
                             android:textColor="@color/aluminum"
                             android:textSize="12sp" />
@@ -153,7 +153,7 @@
                     <View
                         android:layout_width="100dp"
                         android:layout_height="2dp"
-                        android:background="@android:color/holo_blue_dark" />
+                        android:background="@color/colorDark" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -167,15 +167,14 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="20dp"
                             android:gravity="center"
-                            android:text="gender"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/profile_edit_gender"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="230dp"
+                            android:layout_marginLeft="180dp"
                             android:text="Edit gender"
                             android:textColor="@color/aluminum"
                             android:textSize="12sp" />
@@ -194,7 +193,7 @@
                     <View
                         android:layout_width="100dp"
                         android:layout_height="2dp"
-                        android:background="@android:color/holo_blue_dark" />
+                        android:background="@color/colorDark" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -209,14 +208,14 @@
                             android:layout_marginLeft="20dp"
                             android:gravity="center"
                             android:text="age"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/profile_edit_age"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="230dp"
+                            android:layout_marginLeft="180dp"
                             android:text="Edit age"
                             android:textColor="@color/aluminum"
                             android:textSize="12sp" />
@@ -236,7 +235,7 @@
                     <View
                         android:layout_width="100dp"
                         android:layout_height="2dp"
-                        android:background="@android:color/holo_blue_dark" />
+                        android:background="@color/colorDark" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -251,14 +250,14 @@
                             android:layout_marginLeft="20dp"
                             android:gravity="center"
                             android:text="email"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/profile_edit_email"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="230dp"
+                            android:layout_marginLeft="180dp"
                             android:text="Edit email"
                             android:textColor="@color/aluminum"
                             android:textSize="12sp" />
@@ -277,7 +276,7 @@
                     <View
                         android:layout_width="100dp"
                         android:layout_height="2dp"
-                        android:background="@android:color/holo_blue_dark" />
+                        android:background="@color/colorDark" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -290,7 +289,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="20dp"
                             android:text="*********"
-                            android:textColor="@color/black"
+                            android:textColor="@color/colorPrimaryDark"
                             android:textSize="14sp"
                             android:textStyle="normal|bold" />
 
@@ -298,156 +297,13 @@
                             android:id="@+id/profile_edit_pw"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="230dp"
+                            android:layout_marginLeft="180dp"
                             android:text="Edit Password"
                             android:textColor="@color/aluminum"
                             android:textSize="12sp" />
                     </RelativeLayout>
 
-                    <!--
 
-                    <RelativeLayout
-                        android:id="@+id/profile_name_entry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:paddingRight="15dp"
-                        android:gravity="center"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true">
-
-                        <TextView android:id="@+id/profile_name_textView"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="15dp"
-                            android:paddingLeft="15dp"
-                            android:gravity="left"
-                            android:text="Name"
-                            android:textStyle="normal|bold"
-                            android:textSize="16sp"
-                            android:fontFamily="Cooper Black"
-                            android:layout_weight="0.19"
-
-                            android:layout_alignBaseline="@+id/profile_name_value"
-                            android:layout_alignBottom="@+id/profile_name_value"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <View
-                            android:id="@+id/border_profile_name"
-                            android:layout_width="2dp"
-                            android:layout_height="15dp"
-                            android:background="@android:color/holo_blue_dark"
-                            android:layout_toRightOf="@+id/profile_name_textView"
-                            android:layout_toEndOf="@+id/profile_name_textView" />
-
-
-                        <TextView android:id="@+id/profile_name_value"
-                            android:text="name"
-                            android:fontFamily="Cooper Black"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="15dp"
-                            android:paddingLeft="15dp"
-                            android:gravity="center_horizontal"
-                            android:textSize="16sp"
-                            android:layout_weight="0.19"
-
-                            android:layout_alignBaseline="@+id/profile_name_Edit"
-                            android:layout_alignBottom="@+id/profile_name_Edit"
-                            android:layout_toRightOf="@+id/border_profile_name"
-                            android:layout_toEndOf="@+id/border_profile_name" />
-
-
-                        <TextView android:id="@+id/profile_name_Edit"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="15dp"
-                            android:paddingLeft="15dp"
-                            android:gravity="center"
-                            android:text="Edit"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="12sp"
-                            android:background="@drawable/back_button"
-                            android:layout_alignTop="@+id/border_profile_name"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
-
-                    </RelativeLayout>
-
-
-
-                    <RelativeLayout
-                        android:id="@+id/profile_surname_entry"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:paddingRight="15dp"
-                        android:gravity="center"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true">
-
-                        <TextView android:id="@+id/profile_surname_textView"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="15dp"
-                            android:paddingLeft="15dp"
-                            android:gravity="left"
-                            android:text="Surname"
-                            android:textStyle="normal|bold"
-                            android:textSize="16sp"
-                            android:fontFamily="Cooper Black"
-                            android:layout_weight="0.19"
-
-                            android:layout_alignBaseline="@+id/profile_surname_value"
-                            android:layout_alignBottom="@+id/profile_surname_value"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true" />
-
-                        <View
-                            android:id="@+id/border_profile_surname"
-                            android:layout_width="2dp"
-                            android:layout_height="15dp"
-                            android:background="@android:color/holo_blue_dark"
-                            android:layout_toRightOf="@+id/profile_surname_textView"
-                            android:layout_toEndOf="@+id/profile_surname_textView" />
-
-
-                        <TextView android:id="@+id/profile_surname_value"
-                            android:text="surname"
-                            android:fontFamily="Cooper Black"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="15dp"
-                            android:paddingLeft="15dp"
-                            android:gravity="center_horizontal"
-                            android:textSize="16sp"
-                            android:layout_weight="0.19"
-
-                            android:layout_alignBaseline="@+id/profile_surname_Edit"
-                            android:layout_alignBottom="@+id/profile_surname_Edit"
-                            android:layout_toRightOf="@+id/border_profile_surname"
-                            android:layout_toEndOf="@+id/border_profile_surname" />
-
-                        <TextView android:id="@+id/profile_surname_Edit"
-                            android:layout_width="70dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:paddingRight="15dp"
-                            android:paddingLeft="15dp"
-                            android:gravity="center"
-                            android:text="Edit"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="12sp"
-                            android:background="@drawable/back_button"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentEnd="true" />
-
-                    </RelativeLayout>
-        -->
                 </LinearLayout>
             </ScrollView>
         </android.support.v7.widget.CardView>

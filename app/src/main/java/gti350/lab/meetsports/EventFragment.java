@@ -4,6 +4,7 @@ package gti350.lab.meetsports;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -38,6 +39,36 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        Bundle args = getArguments();
+        if (MainActivity.Events.size() == 0){
+            View v = inflater.inflate(R.layout.fragment_event, container, false);
+            Log.d(TAG, "Bundle arguments are null");
+            return v;
+        } else {
+
+            View v = inflater.inflate(R.layout.fragment_event_updated, container, false);
+            text_event_category = (TextView) v.findViewById(R.id.event_category_1);
+            text_event_type = (TextView) v.findViewById(R.id.event_type_1);
+            text_event_date = (TextView) v.findViewById(R.id.event_date_1);
+            text_event_duration = (TextView) v.findViewById(R.id.event_duration_1);
+            text_event_distance = (TextView) v.findViewById(R.id.event_distance_1);
+            text_event_place = (TextView) v.findViewById(R.id.event_place_1);
+            text_event_address = (TextView) v.findViewById(R.id.event_address_1);
+
+            text_event_category.setText(MainActivity.Events.get(0).getCategory());
+            text_event_type.setText(MainActivity.Events.get(0).getType());
+            text_event_date.setText(MainActivity.Events.get(0).getDate());
+            text_event_duration.setText(MainActivity.Events.get(0).getDuration());
+            text_event_distance.setText(MainActivity.Events.get(0).getDistance());
+            text_event_place.setText(MainActivity.Events.get(0).getPlace());
+            text_event_address.setText(MainActivity.Events.get(0).getAddress());
+
+            CardView card_event1 = (CardView) v.findViewById(R.id.event1);
+            card_event1.setOnClickListener(this); // calling onClick() method
+            return v;
+        }
+        /*
         Bundle args = getArguments();
         if (args == null) {
             // Default page (no events chosen)
@@ -63,6 +94,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             String place = getArguments().getString("place");
             String address = getArguments().getString("address");
 
+
             text_event_category.setText(category);
             text_event_type.setText(type);
             text_event_date.setText(date);
@@ -74,7 +106,8 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             CardView card_event1 = (CardView) v.findViewById(R.id.event1);
             card_event1.setOnClickListener(this); // calling onClick() method
             return v;
-        }
+
+        }*/
     }
 
     @Override
@@ -87,8 +120,10 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                         .customView(R.layout.event_details, true)
                         .positiveText("Close")
                         .negativeText("Delete")
-                        .titleColorRes(R.color.colorAppBackground)
-                        .backgroundColorRes(R.color.colorWhite)
+                        .titleColor(-1)
+                        .positiveColor(-1)
+                        .negativeColor(-1)
+                        .backgroundColorRes(R.color.colorAppBackground)
                         .show();
                 break;
 
