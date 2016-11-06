@@ -1,4 +1,4 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Fragments;
 
 /**
  * Created by VMabille on 04/11/2016.
@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import gti350.lab.meetsports.Activities.MainActivity;
+import gti350.lab.meetsports.Activities.SignUpActivity;
 
 
 public class GenderPickerDialogFragment{

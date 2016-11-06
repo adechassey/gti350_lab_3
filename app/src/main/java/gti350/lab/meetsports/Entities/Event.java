@@ -1,4 +1,4 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Entities;
 
 /**
  * Created by VMabille on 05/11/2016.

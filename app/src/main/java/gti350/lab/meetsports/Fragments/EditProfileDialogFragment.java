@@ -1,4 +1,4 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Fragments;
 
 /**
  * Created by VMabille on 04/11/2016.
@@ -7,23 +7,15 @@ package gti350.lab.meetsports;
  * Created by VMabille on 27/09/2016.
  */
 
-import gti350.lab.meetsports.MainActivity;
-import android.app.Dialog;
+import gti350.lab.meetsports.Activities.MainActivity;
+
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.text.InputType;
 
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 

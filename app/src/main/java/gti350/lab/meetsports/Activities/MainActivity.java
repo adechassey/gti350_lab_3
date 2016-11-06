@@ -1,30 +1,25 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Activities;
 
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import gti350.lab.meetsports.LogOutDialogFragment;
-
-import com.afollestad.materialdialogs.MaterialDialog;
-
-import org.w3c.dom.Text;
+import gti350.lab.meetsports.Entities.Event;
+import gti350.lab.meetsports.Fragments.EventFragment;
+import gti350.lab.meetsports.Fragments.LogOutDialogFragment;
+import gti350.lab.meetsports.Fragments.ProfileFragment;
+import gti350.lab.meetsports.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -234,6 +229,10 @@ public class MainActivity extends AppCompatActivity {
                             .setAction("CANCEL", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    EventFragment fragment_event = new EventFragment();
+                                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                                    fragmentTransaction_event.commit();
                                     Snackbar snackbar1 = Snackbar.make(drawerLayout, "Event has been deleted!", Snackbar.LENGTH_SHORT);
                                     snackbar1.show();
                                 }

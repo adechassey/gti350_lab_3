@@ -1,19 +1,15 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Fragments;
 
-import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
-import gti350.lab.meetsports.EditProfileDialogFragment;
-import gti350.lab.meetsports.GenderPickerDialogFragment;
+
+import gti350.lab.meetsports.Activities.MainActivity;
+import gti350.lab.meetsports.R;
 
 
 /**

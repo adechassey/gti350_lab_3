@@ -1,17 +1,16 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Fragments;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+
+import gti350.lab.meetsports.R;
+import gti350.lab.meetsports.Activities.SignInActivity;
 
 /**
  * Created by VMabille on 05/11/2016.

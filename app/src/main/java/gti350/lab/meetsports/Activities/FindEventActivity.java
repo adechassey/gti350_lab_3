@@ -1,4 +1,4 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Activities;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -20,6 +20,9 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
+import gti350.lab.meetsports.Entities.Event;
+import gti350.lab.meetsports.R;
 
 /**
  * Created by Antoine on 02/10/2016.

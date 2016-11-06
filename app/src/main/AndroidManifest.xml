@@ -24,7 +24,7 @@
             android:value="AIzaSyAKS8p5wWtvFF3LxvVLZjYt3g8aPMFzen4" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,28 +33,28 @@
         </activity>
 
         <activity
-            android:name=".CreateEventActivity"
+            android:name=".Activities.CreateEventActivity"
             android:label="Create an event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity" />
+                android:value="gti350.lab.meetsports.Activities.MainActivity" />
         </activity>
 
         <activity
-            android:name=".SignInActivity"
+            android:name=".Activities.SignInActivity"
             android:theme="@style/AppTheme.Dark" />
 
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Activities.SignUpActivity"
             android:label="Meet Sports"
             android:theme="@style/AppTheme.Dark" />
 
         <activity
-            android:name=".FindEventActivity"
+            android:name=".Activities.FindEventActivity"
             android:label="Find an event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity" />
+                android:value="gti350.lab.meetsports.Activities.MainActivity" />
         </activity>
 
     </application>

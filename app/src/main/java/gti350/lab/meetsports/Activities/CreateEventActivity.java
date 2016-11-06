@@ -1,12 +1,10 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -32,6 +30,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.Calendar;
+
+import gti350.lab.meetsports.R;
 
 public class CreateEventActivity extends AppIntro {
     private static final String TAG = "CreateEventActivity";

@@ -1,4 +1,4 @@
-package gti350.lab.meetsports;
+package gti350.lab.meetsports.Activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +10,12 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.graphics.Color;
-import gti350.lab.meetsports.GenderPickerDialogFragment;
+
+import gti350.lab.meetsports.Fragments.GenderPickerDialogFragment;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import gti350.lab.meetsports.R;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
