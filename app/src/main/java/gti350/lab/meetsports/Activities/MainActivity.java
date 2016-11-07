@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String user_Email = "JChirac@ms.com";
     public static String user_Password = new String();
+    public static String user_Password_temp = new String();
     public static String user_Name = "Jacques";
     public static String user_Surname = "Chirac";
     public static String user_Age = "NA";

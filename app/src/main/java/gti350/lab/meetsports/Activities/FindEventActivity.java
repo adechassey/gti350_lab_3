@@ -173,6 +173,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
         TextView address = (TextView) findViewById(getResources().getIdentifier("event_address_" + id, "id", getPackageName()));*/
 
         Intent intent = new Intent();
+
         Event event = new Event(category.getText().toString(), type.getText().toString(), date.getText().toString(), duration.getText().toString(), distance.getText().toString(), "Chalet du Mont-Royal", "1196 Camillien-Houde Road, Montreal, Québec H3H 1A1" );
         MainActivity.Events.add(event);
 

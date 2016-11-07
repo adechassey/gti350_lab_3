@@ -7,9 +7,17 @@ package gti350.lab.meetsports.Fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.view.View;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import gti350.lab.meetsports.Activities.MainActivity;
+import gti350.lab.meetsports.Activities.SignInActivity;
 import gti350.lab.meetsports.Activities.SignUpActivity;
+import gti350.lab.meetsports.R;
 
 
 public class GenderPickerDialogFragment{
@@ -21,11 +29,16 @@ public class GenderPickerDialogFragment{
 
         final String[] list = new String[]{"Male","Female"};
 
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
+        builder.title("Select gender");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Select gender");
-        builder.setItems(list, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int item) {
+
+        builder.positiveText("Yes");
+        builder.items(list);
+
+        builder.itemsCallback(new MaterialDialog.ListCallback() {
+            @Override
+            public void onSelection(MaterialDialog dialog, View itemView, int item, CharSequence text){
 
                 if (parent_activity == SIGN_UP_ACTIVITY ){
                     MainActivity.setGender(list[item]);
@@ -34,16 +47,15 @@ public class GenderPickerDialogFragment{
                     MainActivity.setGender(list[item]);
                     ProfileFragment.display_user_infos();
                 }
-
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        });
-        builder.create();
 
+        builder.negativeText("Cancel");
+
+        builder.titleColor(-1);
+        builder.positiveColor(-1);
+        builder.negativeColor(-1);
+        builder.backgroundColorRes(R.color.colorAppBackground);
 
         builder.show();
     }

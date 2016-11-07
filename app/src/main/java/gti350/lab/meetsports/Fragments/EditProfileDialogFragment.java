@@ -8,15 +8,25 @@ package gti350.lab.meetsports.Fragments;
  */
 
 import gti350.lab.meetsports.Activities.MainActivity;
+import gti350.lab.meetsports.Activities.SignInActivity;
+import gti350.lab.meetsports.Activities.SignUpActivity;
+import gti350.lab.meetsports.R;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.text.InputType;
 
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.internal.MDAdapter;
 
 
 /**
@@ -31,76 +41,73 @@ public class EditProfileDialogFragment {
         final String title = Title ;
         final String hint = Hint ;
 
-        final EditText input = new EditText(context);
-        final EditText confirm_pw_input = new EditText(context);
+/*        final EditText confirm_pw_input = new EditText(context);
         confirm_pw_input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD);
         confirm_pw_input.setHint("Confirm password");
         confirm_pw_input.setPadding(0,100,0,30);
+*/
 
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(context);
+        builder.title(title);
+
+        builder.input(hint, "",  new MaterialDialog.InputCallback() {
+            @Override
+            public void onInput(MaterialDialog dialog, CharSequence input) {
+                if (title == "Edit Name"){
+                    MainActivity.user_Name = input.toString();
+                } else if (title == "Edit Surname"){
+                    MainActivity.user_Surname = input.toString();
+                } else if (title == "Edit Age"){
+                    MainActivity.user_Age = input.toString();
+                } else if (title == "Edit E-mail"){
+                    MainActivity.user_Email = input.toString();
+                } else if (title == "Edit Password"){
+
+                    String password = input.toString();
+
+                    if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+                        Toast.makeText(context, "Passwords need to be between 4 and 10 alphanumeric characters" , Toast.LENGTH_LONG).show();
+                    } else {
+                        MainActivity.user_Password_temp = password ;
+                        EditProfileDialogFragment confirm_dialog = new EditProfileDialogFragment();
+                        confirm_dialog.showAlertDialog(context, "Confirm Password", "confirm password");
+                    }
+
+                } else if (title == "Confirm Password"){
+
+                    String password_confirm = input.toString();
+
+                    if (!password_confirm.equals(MainActivity.user_Password_temp) ) {
+                        Toast.makeText(context, "Passwords don't match" , Toast.LENGTH_LONG).show();
+                    } else {
+                        MainActivity.user_Password = password_confirm;
+                        Toast.makeText(context, "Password changed succesfully" , Toast.LENGTH_LONG).show();
+                    }
+
+                }
+                ProfileFragment.display_user_infos();
+            }
+        });
 
         if (title == "Edit E-mail"){
-            input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        } else if (title == "Edit Password"){
-            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD);
+            builder.inputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        } else if (title == "Edit Password" || title == "Confirm Password"){
+            builder.inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD);
         } else if (title == "Edit Age"){
-            input.setInputType(InputType.TYPE_CLASS_NUMBER);
+            builder.inputType(InputType.TYPE_CLASS_NUMBER);
         } else {
-            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.inputType(InputType.TYPE_CLASS_TEXT);
         }
 
-        input.setHint(hint);
-        input.setPadding(0,100,0,30);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(title);
-        builder.setView(input);
-        if (title == "Edit Password"){
-            LinearLayout layout = new LinearLayout(context);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.addView(input);
-            layout.addView(confirm_pw_input);
-            builder.setView(layout);
-        } else {
-            builder.setView(input);
-        }
+        builder.negativeText("Cancel");
 
-        builder.setPositiveButton("Validate", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+        builder.titleColor(-1);
+        builder.positiveColor(-1);
+        builder.negativeColor(-1);
+        builder.backgroundColorRes(R.color.colorAppBackground);
 
-                        input.getText();
-
-                        if (title == "Edit Name"){
-                            MainActivity.user_Name = input.getText().toString();
-                        } else if (title == "Edit Surname"){
-                            MainActivity.user_Surname = input.getText().toString();
-                        } else if (title == "Edit Age"){
-                            MainActivity.user_Age = input.getText().toString();
-                        } else if (title == "Edit E-mail"){
-                            MainActivity.user_Email = input.getText().toString();
-                        } else if (title == "Edit Password"){
-
-                            String password = input.getText().toString();
-                            String confirm_password = confirm_pw_input.getText().toString();
-
-                            if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-                                Toast.makeText(context, "Passwords need to be between 4 and 10 alphanumeric characters" , Toast.LENGTH_LONG).show();
-                            }
-
-                            if (!confirm_password.equals(password) ) {
-                                Toast.makeText(context, "Passwords don't match" , Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(context, "Password changed succesfully" , Toast.LENGTH_LONG).show();
-                            }
-
-                        }
-                        ProfileFragment.display_user_infos();
-                    }
-                });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Send the negative button event back to the host activity
-                    }
-                });
         builder.show();
 
 
