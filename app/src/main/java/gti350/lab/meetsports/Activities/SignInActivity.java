@@ -16,6 +16,9 @@ import butterknife.InjectView;
 import gti350.lab.meetsports.Manager.SessionManager;
 import gti350.lab.meetsports.R;
 
+import static gti350.lab.meetsports.Activities.MainActivity.user_Name;
+import static gti350.lab.meetsports.Activities.MainActivity.user_Surname;
+
 /**
  * Created by VMabille on 31/10/2016.
  */
@@ -125,6 +128,7 @@ public class SignInActivity extends AppCompatActivity {
     public void LoginSuccess() {
         // Creating user login session
         session.createLoginSession(email);
+        Toast.makeText(getApplicationContext(), "Welcome " + user_Name + " " + user_Surname + ", you are now logged in", Toast.LENGTH_LONG).show();
         Btn_signIn.setEnabled(true);
         finish();
     }

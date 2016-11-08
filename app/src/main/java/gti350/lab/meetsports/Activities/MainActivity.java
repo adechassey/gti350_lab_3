@@ -11,10 +11,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
 
         // email
         String email = user.get(SessionManager.KEY_EMAIL);
-        Toast.makeText(getBaseContext(), "Welcome " + user_Name + " " + user_Surname + ", you are now logged in", Toast.LENGTH_LONG).show();
-
 
         setContentView(R.layout.activity_main);
 
