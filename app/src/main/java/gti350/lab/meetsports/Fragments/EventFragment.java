@@ -69,13 +69,10 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     public static CardView card_event1;
     public static CardView card_event2;
     public static CardView card_event3;
-    private ViewGroup Container;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        Container = container;
 
         if (MainActivity.Events.size() == 0){
             View v = inflater.inflate(R.layout.fragment_event, container, false);

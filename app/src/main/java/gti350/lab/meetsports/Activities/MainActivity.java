@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import java.util.List;
 
 import gti350.lab.meetsports.Entities.Event;
 import gti350.lab.meetsports.Fragments.EventFragment;
+import gti350.lab.meetsports.Fragments.InfoFragment;
 import gti350.lab.meetsports.Fragments.LogOutDialogFragment;
 import gti350.lab.meetsports.Fragments.ProfileFragment;
 import gti350.lab.meetsports.Manager.SessionManager;
@@ -151,6 +153,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.log_out:
                         LogOutDialogFragment log_out_dialog = new LogOutDialogFragment();
                         log_out_dialog.show(getFragmentManager(), "LogOutFragmentDialog");
+                        return true;
+
+                    case R.id.info:
+                        InfoFragment fragment_info = new InfoFragment();
+                        FragmentTransaction fragmentTransaction_info = getFragmentManager().beginTransaction();
+                        fragmentTransaction_info.replace(R.id.frame, fragment_info);
+                        fragmentTransaction_info.commit();
                         return true;
 
                     default:
