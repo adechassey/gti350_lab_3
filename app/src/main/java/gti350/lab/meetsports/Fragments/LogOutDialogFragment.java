@@ -2,15 +2,15 @@ package gti350.lab.meetsports.Fragments;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import gti350.lab.meetsports.Manager.SessionManager;
 import gti350.lab.meetsports.R;
-import gti350.lab.meetsports.Activities.SignInActivity;
 
 /**
  * Created by VMabille on 05/11/2016.
@@ -18,8 +18,14 @@ import gti350.lab.meetsports.Activities.SignInActivity;
 
 public class LogOutDialogFragment extends DialogFragment {
 
+    // Session Manager Class
+    private SessionManager session;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Session class instance
+        session = new SessionManager(getActivity());
+
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
         builder.title("Do you really want to leave ?");
 
@@ -28,8 +34,8 @@ public class LogOutDialogFragment extends DialogFragment {
         builder.onPositive(new MaterialDialog.SingleButtonCallback() {
             @Override
             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                Intent logOut = new Intent(getActivity(), SignInActivity.class);
-                startActivity(logOut);
+                session.logoutUser();
+                Toast.makeText(getActivity(), "Come back soon !", Toast.LENGTH_SHORT).show();
             }
         });
         builder.negativeText("Cancel");

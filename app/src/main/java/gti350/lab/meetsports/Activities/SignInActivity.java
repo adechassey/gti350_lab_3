@@ -1,20 +1,19 @@
 package gti350.lab.meetsports.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.app.ProgressDialog;
-import android.util.Log;
-
-import android.widget.EditText;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import gti350.lab.meetsports.Manager.SessionManager;
 import gti350.lab.meetsports.R;
 
 /**
@@ -25,17 +24,27 @@ import gti350.lab.meetsports.R;
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
+    private SessionManager session;
+    private String email;
+    private String password;
 
-    @InjectView(R.id.sign_in_email) EditText input_Email;
-    @InjectView(R.id.sign_in_pw) EditText input_Password;
-    @InjectView(R.id.btn_login) Button Btn_signIn;
-    @InjectView(R.id.sign_up_link) TextView sign_up_link;
+    @InjectView(R.id.sign_in_email)
+    EditText input_Email;
+    @InjectView(R.id.sign_in_pw)
+    EditText input_Password;
+    @InjectView(R.id.btn_login)
+    Button Btn_signIn;
+    @InjectView(R.id.sign_up_link)
+    TextView sign_up_link;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         ButterKnife.inject(this);
+
+        // Session Manager
+        session = new SessionManager(getApplicationContext());
 
         Btn_signIn.setOnClickListener(new View.OnClickListener() {
 
@@ -73,19 +82,17 @@ public class SignInActivity extends AppCompatActivity {
         progressDialog.show();
 
 
-
-
         // TODO: Implement your own authentication logic here.
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
 
-                        String email = input_Email.getText().toString();
-                        String password = input_Password.getText().toString();
+                        email = input_Email.getText().toString();
+                        password = input_Password.getText().toString();
 
-                        if ( email.equals(MainActivity.user_Email) && password.equals(MainActivity.user_Password)
-                                ||  email.equals("user@ms.com") && password.equals("user")){
+                        if (email.equals(MainActivity.user_Email) && password.equals(MainActivity.user_Password)
+                                || email.equals("user@ms.com") && password.equals("user")) {
                             LoginSuccess();
                         } else {
                             LoginFailed();
@@ -101,7 +108,7 @@ public class SignInActivity extends AppCompatActivity {
         if (requestCode == MainActivity.REQUEST_SIGN_UP) {
             if (resultCode == RESULT_OK) {
 
-                if(SignUpActivity.SIGN_UP_SUCCESS == 1){
+                if (SignUpActivity.SIGN_UP_SUCCESS == 1) {
                     // automatically loggs in the new user
                     this.finish();
                 }
@@ -116,7 +123,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void LoginSuccess() {
-        MainActivity.SESSION_ON = true;
+        // Creating user login session
+        session.createLoginSession(email);
         Btn_signIn.setEnabled(true);
         finish();
     }

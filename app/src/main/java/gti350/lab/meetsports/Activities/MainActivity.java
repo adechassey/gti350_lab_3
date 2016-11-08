@@ -11,18 +11,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import gti350.lab.meetsports.Entities.Event;
 import gti350.lab.meetsports.Fragments.EventFragment;
 import gti350.lab.meetsports.Fragments.LogOutDialogFragment;
 import gti350.lab.meetsports.Fragments.ProfileFragment;
+import gti350.lab.meetsports.Manager.SessionManager;
 import gti350.lab.meetsports.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int PERMISSIONS_REQUEST_CAMERA = 10;
     public static final int PERMISSIONS_REQUEST_GALLERY = 11;
 
-    public static boolean SESSION_ON = false;
+    // Session Manager Class
+    private SessionManager session;
 
     public static String user_Email = "JChirac@ms.com";
     public static String user_Password = new String();
@@ -63,13 +68,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!SESSION_ON) {
-            Intent intent = new Intent(this, SignInActivity.class);
-            startActivityForResult(intent, REQUEST_SIGN_IN);
-        }
+        // Session class instance
+        session = new SessionManager(getApplicationContext());
+
+        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+
+        /**
+         * Call this function whenever you want to check user login
+         * This will redirect user to LoginActivity is he is not
+         * logged in
+         * */
+        session.checkLogin();
+
+        // get user data from session
+        HashMap<String, String> user = session.getUserDetails();
+
+        // email
+        String email = user.get(SessionManager.KEY_EMAIL);
+        Toast.makeText(getBaseContext(), "Welcome " + user_Name + " " + user_Surname + ", you are now logged in", Toast.LENGTH_LONG).show();
+
 
         setContentView(R.layout.activity_main);
-
 
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -134,10 +153,8 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.log_out:
-
                         LogOutDialogFragment log_out_dialog = new LogOutDialogFragment();
                         log_out_dialog.show(getFragmentManager(), "LogOutFragmentDialog");
-
                         return true;
 
                     default:
@@ -177,11 +194,6 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case (0): {
-                String welcome_phrase = "Welcome " + MainActivity.user_Name + " " + MainActivity.user_Surname + ", you are now logged in";
-                Toast.makeText(getBaseContext(), welcome_phrase, Toast.LENGTH_LONG).show();
-                break;
-            }
             // From CreateEventActivity
             case (2): {
                 if (resultCode == CreateEventActivity.RESULT_OK) {
