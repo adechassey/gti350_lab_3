@@ -334,7 +334,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Permission granted to access media content", Toast.LENGTH_SHORT).show();
 
                 } else {
-
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     Toast.makeText(getApplicationContext(), "Permission denied to access media content", Toast.LENGTH_SHORT).show();
