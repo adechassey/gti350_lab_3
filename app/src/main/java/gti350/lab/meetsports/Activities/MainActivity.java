@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.LayoutInflater;
 import android.widget.Toast;
+import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,17 +38,19 @@ public class MainActivity extends AppCompatActivity {
 
     public static String user_Email = "JChirac@ms.com";
     public static String user_Password = new String();
-    public static String user_Password_temp = new String();
     public static String user_Name = "Jacques";
     public static String user_Surname = "Chirac";
     public static String user_Age = "NA";
     public static String user_Gender = "Male";
+    public static String temp_String = new String();
 
     // Defining Layout variables
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
+    public static TextView header_name;
+    public static TextView header_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Initializing NavigationView
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        View header = navigationView.getHeaderView(0);
+        header_name = (TextView) header.findViewById(R.id.header_username);
+        header_email = (TextView) header.findViewById(R.id.header_email);
 
         // Setting the Fragment to event
         EventFragment fragment_event = new EventFragment();

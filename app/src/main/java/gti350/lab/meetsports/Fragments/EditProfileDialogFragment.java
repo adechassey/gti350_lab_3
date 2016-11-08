@@ -69,7 +69,7 @@ public class EditProfileDialogFragment {
                     if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
                         Toast.makeText(context, "Passwords need to be between 4 and 10 alphanumeric characters" , Toast.LENGTH_LONG).show();
                     } else {
-                        MainActivity.user_Password_temp = password ;
+                        MainActivity.temp_String = password ;
                         EditProfileDialogFragment confirm_dialog = new EditProfileDialogFragment();
                         confirm_dialog.showAlertDialog(context, "Confirm Password", "confirm password");
                     }
@@ -78,7 +78,7 @@ public class EditProfileDialogFragment {
 
                     String password_confirm = input.toString();
 
-                    if (!password_confirm.equals(MainActivity.user_Password_temp) ) {
+                    if (!password_confirm.equals(MainActivity.temp_String) ) {
                         Toast.makeText(context, "Passwords don't match" , Toast.LENGTH_LONG).show();
                     } else {
                         MainActivity.user_Password = password_confirm;
@@ -107,6 +107,9 @@ public class EditProfileDialogFragment {
         builder.positiveColor(-1);
         builder.negativeColor(-1);
         builder.backgroundColorRes(R.color.colorAppBackground);
+
+
+
 
         builder.show();
 

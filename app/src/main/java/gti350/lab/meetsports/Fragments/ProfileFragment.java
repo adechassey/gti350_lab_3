@@ -104,6 +104,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public static void display_user_infos(){
 
+        //Update header menu infos
+        MainActivity.header_name.setText(MainActivity.user_Name + " " + MainActivity.user_Surname);
+        MainActivity.header_email.setText(MainActivity.user_Email);
+        //Update user infos
         profile_name.setText(MainActivity.user_Name);
         profile_surname.setText(MainActivity.user_Surname);
         profile_gender.setText(MainActivity.user_Gender);
