@@ -2,7 +2,9 @@ package gti350.lab.meetsports.Activities;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
@@ -11,9 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.LayoutInflater;
-import android.widget.Toast;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,11 +30,16 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
 
     public static List<Event> Events = new ArrayList<>();
-
+    // Activity request
     public static final int REQUEST_SIGN_IN = 0;
     public static final int REQUEST_SIGN_UP = 1;
     public static final int REQUEST_CREATE_EVENT = 2;
     public static final int REQUEST_FIND_EVENT = 3;
+    public static final int REQUEST_CAMERA = 4;
+    public static final int REQUEST_GALLERY = 5;
+    // Permissions
+    public static final int PERMISSIONS_REQUEST_CAMERA = 10;
+    public static final int PERMISSIONS_REQUEST_GALLERY = 11;
 
     public static boolean SESSION_ON = false;
 
@@ -133,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
 
                         return true;
 
-
-
                     default:
                         Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
                         return true;
@@ -171,8 +176,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         switch (requestCode) {
             case (0): {
                 String welcome_phrase = "Welcome " + MainActivity.user_Name + " " + MainActivity.user_Surname + ", you are now logged in";
@@ -287,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             }
-
         }
     }
 
@@ -305,4 +307,42 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.user_Gender = gender;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, REQUEST_CAMERA);
+                    Toast.makeText(getApplicationContext(), "Permission granted to access camera", Toast.LENGTH_SHORT).show();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(getApplicationContext(), "Permission denied to access camera", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+            case PERMISSIONS_REQUEST_GALLERY: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Intent loadIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(loadIntent, REQUEST_GALLERY);
+                    Toast.makeText(getApplicationContext(), "Permission granted to access media content", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(getApplicationContext(), "Permission denied to access media content", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 }

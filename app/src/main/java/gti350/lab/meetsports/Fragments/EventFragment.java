@@ -23,8 +23,6 @@ import gti350.lab.meetsports.R;
 public class EventFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "EventFragment";
 
-    private Integer cardSoftBackground = 0xfffcf2;
-
     private TextView text_event_category;
     private TextView text_event_type;
     private TextView text_event_date;
@@ -99,7 +97,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                 text_event_address_2.setText(MainActivity.Events.get(1).getAddress());
 
                 CardView card_event2 = (CardView) v.findViewById(R.id.event2);
-                card_event2.setCardBackgroundColor(-1);
+                card_event2.setCardBackgroundColor(getResources().getColor(R.color.colorBackgroundSoft));
                 card_event2.setClickable(true);
                 card_event2.setOnClickListener(this); // calling onClick() method
             }
@@ -124,7 +122,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                 text_event_address_3.setText(MainActivity.Events.get(2).getAddress());
 
                 CardView card_event3 = (CardView) v.findViewById(R.id.event3);
-                card_event3.setCardBackgroundColor(-1);
+                card_event3.setCardBackgroundColor(getResources().getColor(R.color.colorBackgroundSoft));
                 card_event3.setClickable(true);
                 card_event3.setOnClickListener(this); // calling onClick() method
             }
