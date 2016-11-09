@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import gti350.lab.meetsports.R;
 
@@ -14,8 +17,25 @@ import gti350.lab.meetsports.R;
 
 public class InfoFragment extends Fragment {
 
+    private RatingBar ratingBar;
+    private Button rateBtn;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_info, container, false);
+
+        ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
+        rateBtn = (Button) v.findViewById(R.id.ratingSubmit);
+        //Performing action on Button Click
+        rateBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                //Getting the rating and displaying it on the toast
+                String rating = String.valueOf(ratingBar.getRating());
+                Toast.makeText(getActivity(), rating, Toast.LENGTH_SHORT).show();
+            }
+
+        });
         return v;
     }
 }

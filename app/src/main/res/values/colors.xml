@@ -31,4 +31,7 @@
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
 
+    <!-- Rating bar -->
+    <color name="starOn">#ffed29</color>
+    <color name="starOff">#c1be9d</color>
 </resources>
