@@ -39,5 +39,11 @@
             android:icon="@drawable/ic_info"
             android:title="About us" />
 
+        <item
+            android:id="@+id/debug"
+            android:checked="false"
+            android:icon="@drawable/ic_info"
+            android:title="Debug" />
+
     </group>
 </menu>

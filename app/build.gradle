@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
     defaultConfig {
-        applicationId "gti350.lab.meetsports"
+        applicationId "com.company.meetsports"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
@@ -42,6 +42,10 @@ dependencies {
     // Material dialog
     compile 'com.afollestad.material-dialogs:core:0.9.1.0'
     compile 'com.afollestad.material-dialogs:commons:0.9.1.0'
+    // Retrofit, Gson
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
 
     testCompile 'junit:junit:4.12'
 }

@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout android:id="@+id/layout_events"
+        <LinearLayout
+            android:id="@+id/layout_events"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -258,29 +259,84 @@
                 card_view:cardBackgroundColor="@color/colorAppBackground">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/event_category_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="@color/colorAppBackground"
-                    android:textSize="18sp"
-                    android:textStyle="normal|bold" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/event_date_3"
+                        android:id="@+id/event_category_3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text=""
+                        android:textAlignment="center"
+                        android:textColor="@color/colorAppBackground"
+                        android:textSize="18sp"
+                        android:textStyle="normal|bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/event_date_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/event_duration_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/event_type_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/event_distance_3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:padding="3dp"
+                            android:text=""
+                            android:textAlignment="center"
+                            android:textColor="@color/colorDark"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/event_place_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -292,7 +348,7 @@
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/event_duration_3"
+                        android:id="@+id/event_address_3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -302,64 +358,9 @@
                         android:textAlignment="center"
                         android:textColor="@color/colorDark"
                         android:textSize="16sp" />
+
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/event_type_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:padding="3dp"
-                        android:text=""
-                        android:textAlignment="center"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/event_distance_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_weight="1"
-                        android:padding="3dp"
-                        android:text=""
-                        android:textAlignment="center"
-                        android:textColor="@color/colorDark"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/event_place_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/event_address_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:padding="3dp"
-                    android:text=""
-                    android:textAlignment="center"
-                    android:textColor="@color/colorDark"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>
