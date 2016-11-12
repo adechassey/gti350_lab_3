@@ -75,7 +75,11 @@ public class EditProfileDialogFragment {
                     }
 
                 }
-                ProfileFragment.display_user_infos();
+
+                if (title != "Enter number of participants"){
+                    ProfileFragment.display_user_infos();
+
+                }
             }
         });
 
@@ -83,7 +87,7 @@ public class EditProfileDialogFragment {
             builder.inputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         } else if (title == "Edit Password" || title == "Confirm Password"){
             builder.inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD);
-        } else if (title == "Edit Age"){
+        } else if (title == "Edit Age" || title == "Enter number of participants"){
             builder.inputType(InputType.TYPE_CLASS_NUMBER);
         } else {
             builder.inputType(InputType.TYPE_CLASS_TEXT);
@@ -91,7 +95,6 @@ public class EditProfileDialogFragment {
 
 
         builder.negativeText("Cancel");
-
         builder.titleColor(-1);
         builder.positiveColor(-1);
         builder.negativeColor(-1);

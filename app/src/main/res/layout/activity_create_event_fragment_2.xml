@@ -38,49 +38,62 @@
             android:layout_marginStart="5dp"
             custom:cardBackgroundColor="@color/colorBackgroundSoft">
 
-            <TextView
-                android:id="@+id/textView_participants"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="Participants"
-                android:textColor="@color/colorAppBackground"
-                android:textSize="18sp"
-                tools:ignore="HardcodedText" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView_participants_result"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="12dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="@string/participants_result"
-                android:textAlignment="textEnd"
-                android:textColor="@color/create_event"
-                android:textSize="16sp"
-                android:textStyle="normal|bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <com.appyvet.rangebar.RangeBar
-                android:id="@+id/rangebar_participants"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="17dp"
-                custom:barWeight="3dp"
-                custom:connectingLineColor="@color/colorConnectingLine"
-                custom:connectingLineWeight="3dp"
-                custom:pinColor="@color/colorPin"
-                custom:pinMaxFont="12sp"
-                custom:pinRadius="15sp"
-                custom:rangeBarColor="@color/colorRangebar"
-                custom:selectorColor="@color/colorSelector"
-                custom:selectorSize="8sp"
-                custom:tickEnd="11"
-                custom:tickInterval="1"
-                custom:tickStart="1" />
+                    <TextView
+                        android:id="@+id/textView_participants"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Participants"
+                        android:textColor="@color/colorAppBackground"
+                        android:textSize="18sp"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/textView_participants_result"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="@string/participants_result"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/create_event"
+                        android:textSize="16sp"
+                        android:textStyle="normal|bold" />
+
+                </LinearLayout>
+
+                <com.appyvet.rangebar.RangeBar
+                    android:id="@+id/rangebar_participants"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="17dp"
+                    custom:barWeight="3dp"
+                    custom:connectingLineColor="@color/colorConnectingLine"
+                    custom:connectingLineWeight="3dp"
+                    custom:pinColor="@color/colorPin"
+                    custom:pinMaxFont="12sp"
+                    custom:pinRadius="15sp"
+                    custom:rangeBarColor="@color/colorRangebar"
+                    custom:selectorColor="@color/colorSelector"
+                    custom:selectorSize="8sp"
+                    custom:tickEnd="11"
+                    custom:tickInterval="1"
+                    custom:tickStart="1" />
+
+            </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
@@ -133,9 +146,9 @@
                 custom:rangeBarColor="@color/colorRangebar"
                 custom:selectorColor="@color/colorSelector"
                 custom:selectorSize="8sp"
-                custom:tickEnd="36"
+                custom:tickEnd="70"
                 custom:tickInterval="1"
-                custom:tickStart="18" />
+                custom:tickStart="10" />
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView

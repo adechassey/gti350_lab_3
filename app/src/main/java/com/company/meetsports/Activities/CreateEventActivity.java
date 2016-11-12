@@ -1,4 +1,4 @@
-package com.company.meetsports.Activities;
+package gti350.lab.meetsports.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -31,7 +31,8 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.Calendar;
 
-import com.company.meetsports.R;
+import gti350.lab.meetsports.R;
+import gti350.lab.meetsports.Fragments.EditProfileDialogFragment;
 
 public class CreateEventActivity extends AppIntro {
     private static final String TAG = "CreateEventActivity";
@@ -162,9 +163,22 @@ public class CreateEventActivity extends AppIntro {
                     if (minParticipants == maxParticipants)
                         participants_result.setText(minParticipants + " persons");
                     else if (minParticipants == 11 && maxParticipants == 11) {
-                        participants_result.setText("More than 10 persons");
+                        participants_result.setText("More than 10 persons. Clic to enter exact number");
+                        participants_result.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EditProfileDialogFragment.showAlertDialog(getActivity(), "Enter number of participants", "Number of participants");
+                            }
+                        });
                     } else if (minParticipants != 11 && maxParticipants == 11) {
-                        participants_result.setText(minParticipants + " to more than 10 persons");
+                        //  participants_result.setText(minParticipants + " to more than 10 persons");
+                        participants_result.setText("More than 10 persons. Clic to enter exact number");
+                        participants_result.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EditProfileDialogFragment.showAlertDialog(getActivity(), "Enter number of participants", "Number of participants");
+                            }
+                        });
                     } else {
                         participants_result.setText(minParticipants + " to " + maxParticipants + " persons");
 
