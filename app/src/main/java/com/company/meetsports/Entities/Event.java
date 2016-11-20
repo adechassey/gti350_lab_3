@@ -5,6 +5,7 @@ package com.company.meetsports.Entities;
  */
 
 public class Event {
+    private Integer id;
     private String category;
     private String type;
     private String date;
@@ -14,7 +15,8 @@ public class Event {
     private String address;
 
 
-    public Event(String category, String type,  String date, String duration, String distance, String place, String address) {
+    public Event(Integer id, String category, String type,  String date, String duration, String distance, String place, String address) {
+        this.id = id;
         this.category = category;
         this.type = type;
         this.date = date;
@@ -23,6 +25,8 @@ public class Event {
         this.place = place;
         this.address = address;
     }
+
+    public Integer getId() { return id; }
 
     public String getCategory() {
         return category;

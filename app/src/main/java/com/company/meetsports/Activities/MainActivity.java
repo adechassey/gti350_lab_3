@@ -281,50 +281,22 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == FindEventActivity.RESULT_OK) {
 
                     EventFragment fragment_event = new EventFragment();
-                    /*
-                    Bundle bundle = new Bundle();
-
-                    String category = data.getStringExtra("category");
-                    String type = data.getStringExtra("type");
-                    String date = data.getStringExtra("date");
-                    String duration = data.getStringExtra("duration");
-                    String distance = data.getStringExtra("distance");
-                    String place = data.getStringExtra("place");
-                    String address = data.getStringExtra("address");
-                    String id = data.getStringExtra("id");
-                    String phone = data.getStringExtra("phone");
-                    String website = data.getStringExtra("website");
-
-                    bundle.putString("category", category);
-                    bundle.putString("type", type);
-                    bundle.putString("date", date);
-                    bundle.putString("duration", duration);
-                    bundle.putString("distance", distance);
-                    bundle.putString("place", place);
-                    bundle.putString("address", address);
-                    /*bundle.putString("id", id);
-                    bundle.putString("phone", phone);
-                    bundle.putString("website", website);
-                    fragment_event.setArguments(bundle);*/
-
+                    Toast.makeText(getApplicationContext(), "Event selected", Toast.LENGTH_SHORT).show();
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
 
+                } else if(resultCode == FindEventActivity.RESULT_CANCELED) {
+
+                    Toast.makeText(getApplicationContext(), "You already selected this event", Toast.LENGTH_SHORT).show();
+                    Intent findEvent = new Intent(getApplicationContext(), FindEventActivity.class);
+                    startActivityForResult(findEvent, REQUEST_FIND_EVENT);
                 }
                 break;
             }
         }
     }
 
-    public void clear_user_infos() {
-        user_Name = "";
-        user_Surname = "";
-        user_Gender = "";
-        user_Age = "";
-        user_Email = "";
-        user_Password = "";
-    }
 
     public static void setGender(String gender) {
 

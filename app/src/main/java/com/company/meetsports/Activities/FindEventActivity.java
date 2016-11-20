@@ -85,17 +85,6 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
                 Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * Helper method to format information about a place nicely.
-     */
-    private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id,
-                                              CharSequence address, CharSequence phoneNumber, Uri websiteUri) {
-        Log.e(TAG, res.getString(R.string.place_details, name, id, address, phoneNumber,
-                websiteUri));
-        return Html.fromHtml(res.getString(R.string.place_details, name, id, address, phoneNumber,
-                websiteUri));
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -163,6 +152,8 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
     }
 
     private void storeEvent(int id) {
+
+        boolean existing_event = false;
         TextView category = (TextView) findViewById(getResources().getIdentifier("event_category_" + id, "id", getPackageName()));
         TextView type = (TextView) findViewById(getResources().getIdentifier("event_type_" + id, "id", getPackageName()));
         TextView date = (TextView) findViewById(getResources().getIdentifier("event_date_" + id, "id", getPackageName()));
@@ -174,18 +165,28 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
 
         Intent intent = new Intent();
 
-        Event event = new Event(category.getText().toString(), type.getText().toString(), date.getText().toString(), duration.getText().toString(), distance.getText().toString(), "Chalet du Mont-Royal", "1196 Camillien-Houde Road, Montreal, Québec H3H 1A1" );
-        MainActivity.Events.add(event);
+        // Check if event is already selected
+        for(Event event : MainActivity.Events){
+            if (event.getId() == id){
+                existing_event = true;
+            }
+        }
 
-
-        intent.putExtra("category", category.getText());
-        intent.putExtra("type", type.getText());
-        intent.putExtra("date", date.getText());
-        intent.putExtra("duration", duration.getText());
-        intent.putExtra("distance", distance.getText());
-        intent.putExtra("place", "Chalet du Mont-Royal");
-        intent.putExtra("address", "1196 Camillien-Houde Road, Montreal, Québec H3H 1A1");
-        setResult(MainActivity.RESULT_OK, intent);
-        finish();
+        if(!existing_event) {
+            Event event = new Event(id,
+                    category.getText().toString(),
+                    type.getText().toString(),
+                    date.getText().toString(),
+                    duration.getText().toString(),
+                    distance.getText().toString(),
+                    "Chalet du Mont-Royal",
+                    "1196 Camillien-Houde Road, Montreal, Québec H3H 1A1");
+            MainActivity.Events.add(event);
+            setResult(MainActivity.RESULT_OK, intent);
+            finish();
+        } else {
+            setResult(MainActivity.RESULT_CANCELED, intent);
+            finish();
+        }
     }
 }
