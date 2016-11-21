@@ -1,22 +1,17 @@
-package gti350.lab.meetsports.Fragments;
+package com.company.meetsports.Fragments;
 
 
 import android.app.Fragment;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.view.ViewGroup;
-import android.view.ViewStub;
-import android.widget.TextView;
 import android.widget.TextView;
 
 import android.util.TypedValue;
@@ -24,12 +19,8 @@ import android.graphics.Typeface;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-
-import org.w3c.dom.Text;
-
-import gti350.lab.meetsports.Activities.MainActivity;
-import gti350.lab.meetsports.Activities.SignInActivity;
-import gti350.lab.meetsports.R;
+import com.company.meetsports.Activities.MainActivity;
+import com.company.meetsports.R;
 
 
 public class EventFragment extends Fragment implements View.OnClickListener {

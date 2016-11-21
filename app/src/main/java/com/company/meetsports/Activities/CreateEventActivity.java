@@ -1,4 +1,4 @@
-package gti350.lab.meetsports.Activities;
+package com.company.meetsports.Activities;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -23,6 +23,8 @@ import android.widget.TimePicker;
 
 import com.appyvet.rangebar.IRangeBarFormatter;
 import com.appyvet.rangebar.RangeBar;
+import com.company.meetsports.Fragments.EditProfileDialogFragment;
+import com.company.meetsports.R;
 import com.github.paolorotolo.appintro.AppIntro;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -31,8 +33,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.Calendar;
 
-import gti350.lab.meetsports.R;
-import gti350.lab.meetsports.Fragments.EditProfileDialogFragment;
+
 
 public class CreateEventActivity extends AppIntro {
     private static final String TAG = "CreateEventActivity";
