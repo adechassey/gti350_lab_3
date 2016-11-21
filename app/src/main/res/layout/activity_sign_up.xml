@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,7 +14,8 @@
         android:paddingRight="15dp"
         android:gravity="center">
 
-        <TextView android:id="@+id/cancel_sign_up"
+        <TextView
+            android:id="@+id/cancel_sign_up"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -26,7 +26,8 @@
             android:layout_weight="0.19" />
 
 
-        <TextView android:id="@+id/logo_sign_in"
+        <TextView
+            android:id="@+id/logo_sign_up"
             android:text="Meet\nSports"
             android:fontFamily="Cooper Black"
             android:layout_below="@+id/cancel_login"
@@ -60,7 +61,8 @@
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
 
-            <TextView android:id="@+id/text_sign_up"
+            <TextView
+                android:id="@+id/text_sign_up"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -76,7 +78,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp">
-                <EditText android:id="@+id/sign_up_name"
+
+                <EditText
+                    android:id="@+id/sign_up_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
@@ -88,7 +92,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="18dp">
-                <EditText android:id="@+id/sign_up_surname"
+
+                <EditText
+                    android:id="@+id/sign_up_surname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
@@ -101,11 +107,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp">
-                <TextView android:id="@+id/sign_up_gender"
+
+                <TextView
+                    android:id="@+id/sign_up_gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text=" Gender"
-                    android:textSize="18dp"/>
+                    android:textSize="18dp" />
             </android.support.design.widget.TextInputLayout>
 
             <View
@@ -120,7 +128,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:layout_marginBottom="8dp">
-                <EditText android:id="@+id/sign_up_age"
+
+                <EditText
+                    android:id="@+id/sign_up_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
@@ -132,7 +142,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp">
-                <EditText android:id="@+id/sign_up_email"
+
+                <EditText
+                    android:id="@+id/sign_up_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
@@ -144,11 +156,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp">
-                <EditText android:id="@+id/sign_up_pw"
+
+                <EditText
+                    android:id="@+id/sign_up_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Password"/>
+                    android:hint="Password" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -156,11 +170,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp">
-                <EditText android:id="@+id/sign_up_pw_confirm"
+
+                <EditText
+                    android:id="@+id/sign_up_pw_confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Confirm password"/>
+                    android:hint="Confirm password" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.v7.widget.AppCompatButton
@@ -170,7 +186,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
                 android:padding="12dp"
-                android:text="Create Account"/>
+                android:text="Create Account" />
 
         </LinearLayout>
     </ScrollView>

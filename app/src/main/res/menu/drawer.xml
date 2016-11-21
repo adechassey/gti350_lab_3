@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/event"
+            android:checked="true"
+            android:icon="@drawable/ic_my_events"
+            android:title="My Events" />
+
+        <item
+            android:id="@+id/find_event"
+            android:checked="false"
+            android:icon="@drawable/ic_find_event"
+            android:title="Find an event" />
+
+        <item
+            android:id="@+id/create_event"
+            android:checked="false"
+            android:icon="@drawable/ic_create_event"
+            android:title="Create an event" />
+
+        <item
+            android:id="@+id/profile"
+            android:checked="false"
+            android:icon="@drawable/ic_user"
+            android:title="Profile" />
+
+        <item
+            android:id="@+id/log_out"
+            android:checked="false"
+            android:icon="@drawable/ic_logout"
+            android:title="Log out" />
+
+        <item
+            android:id="@+id/info"
+            android:checked="false"
+            android:icon="@drawable/ic_info"
+            android:title="About us" />
+
+        <item
+            android:id="@+id/debug"
+            android:checked="false"
+            android:icon="@drawable/ic_info"
+            android:title="Debug" />
+
+    </group>
+</menu>

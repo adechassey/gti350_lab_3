@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="gti350.lab.meetsports">
+    package="com.company.meetsports">
 
     <!-- Permissions -->
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -8,6 +8,16 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
+
 
     <application
         android:allowBackup="true"
@@ -24,7 +34,7 @@
             android:value="AIzaSyAKS8p5wWtvFF3LxvVLZjYt3g8aPMFzen4" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.company.meetsports.Activities.MainActivity"
             android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,37 +43,31 @@
         </activity>
 
         <activity
-            android:name=".CreateEventActivity"
+            android:name="com.company.meetsports.Activities.CreateEventActivity"
             android:label="Create an event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity" />
+                android:value="com.company.meetsports.Activities.MainActivity" />
         </activity>
 
         <activity
-            android:name=".SignInActivity"
+            android:name="com.company.meetsports.Activities.SignInActivity"
             android:theme="@style/AppTheme.Dark" />
 
         <activity
-            android:name=".SignUpActivity"
+            android:name="com.company.meetsports.Activities.SignUpActivity"
             android:label="Meet Sports"
             android:theme="@style/AppTheme.Dark" />
 
         <activity
-            android:name=".FindEventActivity"
+            android:name="com.company.meetsports.Activities.FindEventActivity"
             android:label="Find an event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity" />
+                android:value="com.company.meetsports.Activities.MainActivity" />
         </activity>
 
-        <activity
-            android:name=".SetAccountActivity"
-            android:label="Profile">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="gti350.lab.meetsports.MainActivity" />
-        </activity>
+        <!-- Services -->
 
     </application>
 </manifest>

@@ -1,87 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="gti350.lab.meetsports.MainActivity">
+    android:background="@color/colorAppBackground"
+    android:fitsSystemWindows="true"
+    tools:context=".Activities.MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/main_activity_header"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:paddingRight="15dp"
-        android:paddingTop="10dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/log_off_link"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="Cooper Black"
-            android:gravity="right"
-            android:text="Log Off"
-            android:textColor="@color/colorWhite"
-            android:textSize="16dip"
-            android:textStyle="normal|bold" />
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/tool_bar" />
 
-        <TextView
-            android:id="@+id/logo_main"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:layout_weight="0.19"
-            android:fontFamily="Cooper Black"
-            android:gravity="center"
-            android:text="Meet\nSports"
-            android:textColor="@color/colorWhite"
-            android:textSize="36sp"
-            android:textStyle="normal|bold" />
-
-    </RelativeLayout>
-
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/main_activity_header"
-        android:fitsSystemWindows="true">
-
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:paddingTop="56dp">
+            android:layout_height="match_parent"></FrameLayout>
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_find_event"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Find a event" />
+    </LinearLayout>
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_create_event"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Create an event" />
+    <android.support.design.widget.NavigationView
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_profile"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Profile" />
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/header"
+        app:menu="@menu/drawer" />
 
-        </LinearLayout>
-    </ScrollView>
 
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>
