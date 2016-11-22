@@ -25,6 +25,6 @@ public interface ApiInterface {
     @POST("events")
     Call<Event> addEvent(@Body Event event);
 
-    @DELETE("/{id}")
+    @DELETE("events/{id}")
     Call<Event> deleteEvent(@Path("id") Integer id_event);
 }
