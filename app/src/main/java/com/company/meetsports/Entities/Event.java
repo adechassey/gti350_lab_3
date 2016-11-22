@@ -32,14 +32,14 @@ public class Event {
     private Integer maxContribution;
     @SerializedName("level")
     private String level;
-    @SerializedName("latitude")
-    private Double latitude;
-    @SerializedName("longitude")
-    private Double longitude;
+    @SerializedName("place")
+    private String place;
+    @SerializedName("address")
+    private String address;
 
     public Event(Integer id_event, String category, String type, Timestamp date_time, Double minDuration, Double maxDuration,
                  Integer minParticipants, Integer maxParticipants, Integer minAge, Integer maxAge, Integer minContribution,
-                 Integer maxContribution, String level, Double latitude, Double longitude) {
+                 Integer maxContribution, String level, String place, String address) {
         super();
         this.id_event = id_event;
         this.category = category;
@@ -54,8 +54,8 @@ public class Event {
         this.minContribution = minContribution;
         this.maxContribution = maxContribution;
         this.level = level;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.place = place;
+        this.address = address;
     }
 
     public Integer getId_event() {
@@ -162,19 +162,19 @@ public class Event {
         this.level = level;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public String getPlace() {
+        return place;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public void setPlace(String place) {
+        this.place = place;
     }
 
-    public Double getLongitude() {
-        return longitude;
+    public String getAddress() {
+        return address;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -5,21 +5,25 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.IntegerRes;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import com.company.meetsports.Adapters.EventsAdapter;
+import com.company.meetsports.DataProvider.ApiClient;
+import com.company.meetsports.DataProvider.ApiInterface;
+import com.company.meetsports.Entities.Event;
 import com.company.meetsports.Entities.Event_OLD;
 import com.company.meetsports.Fragments.DebugFragment;
 import com.company.meetsports.Fragments.EventFragment;
@@ -28,6 +32,15 @@ import com.company.meetsports.Fragments.LogOutDialogFragment;
 import com.company.meetsports.Fragments.ProfileFragment;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -210,37 +223,60 @@ public class MainActivity extends AppCompatActivity {
             case (2): {
                 if (resultCode == CreateEventActivity.RESULT_OK) {
                     // TODO Extract the data returned from the child Activity.
-                    data.getStringExtra("category");
-                    data.getStringExtra("type");
-                    data.getIntExtra("year", 0);
-                    data.getIntExtra("month", 0);
-                    data.getIntExtra("day", 0);
-                    data.getIntExtra("hour", 0);
-                    data.getIntExtra("minute", 0);
-                    data.getDoubleExtra("duration", 0);
-                    data.getIntExtra("minParticipants", 0);
-                    data.getIntExtra("maxParticipants", 0);
-                    data.getIntExtra("minAge", 0);
-                    data.getIntExtra("maxAge", 0);
-                    data.getIntExtra("minContribution", 0);
-                    data.getIntExtra("maxContribution", 0);
-                    data.getStringExtra("level");
-                    data.getStringExtra("place");
-                    data.getStringExtra("address");
+                    String category = data.getStringExtra("category");
+                    String type = data.getStringExtra("type");
+                    Integer year = data.getIntExtra("year", 0);
+                    Integer month = data.getIntExtra("month", 0);
+                    Integer day = data.getIntExtra("day", 0);
+                    Integer hour = data.getIntExtra("hour", 0);
+                    Integer minute = data.getIntExtra("minute", 0);
+                    Double minDuration = data.getDoubleExtra("minDuration", 0);
+                    Double maxDuration = data.getDoubleExtra("maxDuration", 0);
+                    Integer minParticipants = data.getIntExtra("minParticipants", 0);
+                    Integer maxParticipants = data.getIntExtra("maxParticipants", 0);
+                    Integer minAge = data.getIntExtra("minAge", 0);
+                    Integer maxAge = data.getIntExtra("maxAge", 0);
+                    Integer minContribution = data.getIntExtra("minContribution", 0);
+                    Integer maxContribution = data.getIntExtra("maxContribution", 0);
+                    String level = data.getStringExtra("level");
+                    String place = data.getStringExtra("place");
+                    String address = data.getStringExtra("address");
 
+                    Event newEvent = new Event(null, category, type, null, minDuration, maxDuration, minParticipants, maxParticipants, minAge, maxAge, minContribution, maxContribution, level, place, address);
+
+                    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+                    Call<Event> call = apiService.addEvent(newEvent);
+                    call.enqueue(new Callback<Event>() {
+                        @Override
+                        public void onResponse(Call<Event> call, Response<Event> response) {
+                            int statusCode = response.code();
+                            Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                        }
+
+                        @Override
+                        public void onFailure(Call<Event> call, Throwable t) {
+                            // Log error here since request failed
+                            Log.e(TAG, t.toString());
+                        }
+                    });
+
+                    DebugFragment fragment_event = new DebugFragment();
+                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                    fragmentTransaction_event.commit();
+
+
+                    /*
                     EventFragment fragment_event = new EventFragment();
 
                     Bundle bundle = new Bundle();
-                    String category = data.getStringExtra("category");
-                    String type = data.getStringExtra("type");
                     String date = "05/11/16";
                     String duration = "1h";
                     String distance = "1.2km";
-                    String place = data.getStringExtra("place");
-                    String address = data.getStringExtra("address");
                     /*String id = data.getStringExtra("id");
                     String phone = data.getStringExtra("phone");
-                    String website = data.getStringExtra("website");*/
+                    String website = data.getStringExtra("website");
 
                     bundle.putString("category", category);
                     bundle.putString("type", type);
@@ -251,16 +287,16 @@ public class MainActivity extends AppCompatActivity {
                     bundle.putString("address", address);
                     /*bundle.putString("id", id);
                     bundle.putString("phone", phone);
-                    bundle.putString("website", website);*/
+                    bundle.putString("website", website);
                     fragment_event.setArguments(bundle);
 
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
-
+*/
                     // Show message on CreateEventActivity finished
                     Snackbar snackbar = Snackbar
-                            .make(drawerLayout, "Event_OLD created successfully", Snackbar.LENGTH_LONG)
+                            .make(drawerLayout, "Event created successfully", Snackbar.LENGTH_LONG)
                             .setAction("CANCEL", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -286,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
 
-                } else if(resultCode == FindEventActivity.RESULT_CANCELED) {
+                } else if (resultCode == FindEventActivity.RESULT_CANCELED) {
 
                     Toast.makeText(getApplicationContext(), "You already selected this event", Toast.LENGTH_SHORT).show();
                     Intent findEvent = new Intent(getApplicationContext(), FindEventActivity.class);

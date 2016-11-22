@@ -34,7 +34,6 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.Calendar;
 
 
-
 public class CreateEventActivity extends AppIntro {
     private static final String TAG = "CreateEventActivity";
 
@@ -47,7 +46,8 @@ public class CreateEventActivity extends AppIntro {
     private static Integer day;
     private static Integer hour;
     private static Integer minute;
-    private static Double duration;
+    private static Double minDuration;
+    private static Double maxDuration;
     private static Integer minParticipants;
     private static Integer maxParticipants;
     private static Integer minAge;
@@ -91,7 +91,8 @@ public class CreateEventActivity extends AppIntro {
         setVibrateIntensity(30);
 
         // Initialize inputs
-        duration = 1.0;
+        minDuration = 1.0;
+        maxDuration = 2.0;
         final Calendar c = Calendar.getInstance();
         day = c.get(Calendar.DAY_OF_MONTH);
         month = c.get(Calendar.MONTH);
@@ -122,7 +123,7 @@ public class CreateEventActivity extends AppIntro {
             rangebar_duration = (RangeBar) view.findViewById(R.id.rangebar_duration);
             rangebar_duration.setRangePinsByValue(0, 1);
             duration_result = (TextView) view.findViewById(R.id.textView_duration_result);
-            duration_result.setText(duration + "h");
+            duration_result.setText(minDuration + "h - " + maxDuration + "h");
             rangebar_duration.setOnRangeBarChangeListener(new CreateEventActivity.CustomOnRangeBarChangeListener());
             rangebar_duration.setFormatter(new IRangeBarFormatter() {
                 @Override
@@ -130,7 +131,7 @@ public class CreateEventActivity extends AppIntro {
                     // Transform the String s here then return s
                     if (s.equals("5"))
                         return "4+";
-                    duration_result.setText(duration + "h");
+                    duration_result.setText(minDuration + "h - " + maxDuration + "h");
                     return s;
                 }
             });
@@ -295,7 +296,8 @@ public class CreateEventActivity extends AppIntro {
             intent.putExtra("day", day);
             intent.putExtra("hour", hour);
             intent.putExtra("minute", minute);
-            intent.putExtra("duration", duration);
+            intent.putExtra("minDuration", minDuration);
+            intent.putExtra("maxDuration", maxDuration);
             intent.putExtra("minParticipants", minParticipants);
             intent.putExtra("maxParticipants", minParticipants);
             intent.putExtra("minAge", minAge);
@@ -370,7 +372,8 @@ public class CreateEventActivity extends AppIntro {
         @Override
         public void onRangeChangeListener(RangeBar rangeBar, int leftPinIndex, int rightPinIndex, String leftPinValue, String rightPinValue) {
             if (rangeBar.equals(rangebar_duration)) {
-                duration = Double.parseDouble(rightPinValue);
+                minDuration = Double.parseDouble(leftPinValue);
+                maxDuration = Double.parseDouble(rightPinValue);
             }
             if (rangeBar.equals(rangebar_participants)) {
                 minParticipants = Integer.parseInt(leftPinValue);

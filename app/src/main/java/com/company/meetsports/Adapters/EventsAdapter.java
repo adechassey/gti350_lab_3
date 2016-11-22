@@ -24,17 +24,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventViewH
         TextView type;
         TextView category;
         TextView date_time;
-        TextView minDuration;
-        TextView maxDuration;
-        TextView minParticipants;
-        TextView maxParticipants;
-        TextView minAge;
-        TextView maxAge;
-        TextView minContribution;
-        TextView maxContribution;
+        TextView duration;
+        TextView participants;
+        TextView age;
+        TextView contribution;
         TextView level;
-        TextView latitude;
-        TextView longitude;
+        TextView place;
+        TextView address;
 
         public EventViewHolder(View v) {
             super(v);
@@ -42,17 +38,13 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventViewH
             type = (TextView) v.findViewById(R.id.type);
             category = (TextView) v.findViewById(R.id.category);
             date_time = (TextView) v.findViewById(R.id.date_time);
-            minDuration = (TextView) v.findViewById(R.id.minDuration);
-            maxDuration = (TextView) v.findViewById(R.id.maxDuration);
-            minParticipants = (TextView) v.findViewById(R.id.minParticipants);
-            maxParticipants = (TextView) v.findViewById(R.id.maxParticipants);
-            minAge = (TextView) v.findViewById(R.id.minAge);
-            maxAge = (TextView) v.findViewById(R.id.maxAge);
-            minContribution = (TextView) v.findViewById(R.id.minContribution);
-            maxContribution = (TextView) v.findViewById(R.id.maxContribution);
+            duration = (TextView) v.findViewById(R.id.duration);
+            participants = (TextView) v.findViewById(R.id.participants);
+            age = (TextView) v.findViewById(R.id.age);
+            contribution = (TextView) v.findViewById(R.id.contribution);
             level = (TextView) v.findViewById(R.id.level);
-            latitude = (TextView) v.findViewById(R.id.latitude);
-            longitude = (TextView) v.findViewById(R.id.longitude);
+            place = (TextView) v.findViewById(R.id.place);
+            address = (TextView) v.findViewById(R.id.address);
         }
     }
 
@@ -74,20 +66,19 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventViewH
         holder.type.setText(events.get(position).getType());
         holder.category.setText(events.get(position).getCategory());
         holder.date_time.setText(events.get(position).getDate_time().toString());
-        holder.minDuration.setText(events.get(position).getMinDuration().toString());
-        holder.maxDuration.setText(events.get(position).getMaxDuration().toString());
-        holder.minParticipants.setText(events.get(position).getMinParticipants().toString());
-        holder.minAge.setText(events.get(position).getMinAge().toString());
-        holder.maxAge.setText(events.get(position).getMaxAge().toString());
-        holder.minContribution.setText(events.get(position).getMinContribution().toString());
-        holder.maxContribution.setText(events.get(position).getMaxContribution().toString());
+        holder.duration.setText(events.get(position).getMinDuration().toString() + " - " + events.get(position).getMaxDuration().toString() + "h");
+        holder.participants.setText(events.get(position).getMinParticipants().toString() + " - " + events.get(position).getMaxParticipants().toString() + " persons");
+        holder.age.setText(events.get(position).getMinAge().toString() + " - " + events.get(position).getMaxAge().toString() + " years");
+        holder.contribution.setText(events.get(position).getMinContribution().toString() + " - " + events.get(position).getMaxContribution().toString() + "$");
         holder.level.setText(events.get(position).getLevel());
-        holder.latitude.setText(events.get(position).getLatitude().toString());
-        holder.longitude.setText(events.get(position).getLongitude().toString());
+        holder.place.setText(events.get(position).getPlace());
+        holder.address.setText(events.get(position).getAddress());
     }
 
     @Override
     public int getItemCount() {
+        if (events == null)
+            return 0;
         return events.size();
     }
 }

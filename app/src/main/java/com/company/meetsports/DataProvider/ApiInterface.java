@@ -5,7 +5,9 @@ import com.company.meetsports.Entities.Event;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -21,8 +23,8 @@ public interface ApiInterface {
     Call<Event> getEventById(@Path("id") Integer id_event);
 
     @POST("events")
-    Call addEvent(@Path("id") Integer id_event);
+    Call<Event> addEvent(@Body Event event);
 
     @DELETE("/{id}")
-    Call deleteEvent(@Path("id") Integer id_event);
+    Call<Event> deleteEvent(@Path("id") Integer id_event);
 }
