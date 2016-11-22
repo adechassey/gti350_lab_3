@@ -1,20 +1,28 @@
 package com.company.meetsports.DataProvider;
 
-import com.company.meetsports.Entities.EventsResponse;
-import com.company.meetsports.Entities.MoviesResponse;
+import com.company.meetsports.Entities.Event;
+
+import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface ApiInterface {
 
     @GET("events")
     //Call<EventsResponse> getAllEvents(@Query("api_key") String apiKey);
-    Call<EventsResponse> getAllEvents();
+    Call<List<Event>> getAllEvents();
 
     @GET("events/{id}")
     //Call<EventsResponse> getEventById(@Path("id") int id, @Query("api_key") String apiKey);
-    Call<EventsResponse> getEventById(@Path("id") Integer id_event);
+    Call<Event> getEventById(@Path("id") Integer id_event);
+
+    @POST("events")
+    Call addEvent(@Path("id") Integer id_event);
+
+    @DELETE("/{id}")
+    Call deleteEvent(@Path("id") Integer id_event);
 }

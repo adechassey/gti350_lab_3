@@ -13,7 +13,7 @@ public class Event {
     @SerializedName("type")
     private String type;
     @SerializedName("date_time")
-    private DateTime date_time;
+    private String date_time;
     @SerializedName("minDuration")
     private Double minDuration;
     @SerializedName("maxDuration")
@@ -37,7 +37,7 @@ public class Event {
     @SerializedName("longitude")
     private Double longitude;
 
-    public Event(Integer id_event, String category, String type, DateTime date_time, Double minDuration, Double maxDuration,
+    public Event(Integer id_event, String category, String type, String date_time, Double minDuration, Double maxDuration,
                  Integer minParticipants, Integer maxParticipants, Integer minAge, Integer maxAge, Integer minContribution,
                  Integer maxContribution, String level, Double latitude, Double longitude) {
         super();
@@ -82,11 +82,11 @@ public class Event {
         this.type = type;
     }
 
-    public DateTime getDate_time() {
+    public String getDate_time() {
         return date_time;
     }
 
-    public void setDate_time(DateTime date_time) {
+    public void setDate_time(String date_time) {
         this.date_time = date_time;
     }
 
