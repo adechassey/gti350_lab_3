@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/eventOLD"
+            android:id="@+id/event"
             android:checked="true"
             android:icon="@drawable/ic_my_events"
             android:title="My Events" />
@@ -13,13 +13,13 @@
             android:id="@+id/find_event"
             android:checked="false"
             android:icon="@drawable/ic_find_event"
-            android:title="Find an eventOLD" />
+            android:title="Find an event" />
 
         <item
             android:id="@+id/create_event"
             android:checked="false"
             android:icon="@drawable/ic_create_event"
-            android:title="Create an eventOLD" />
+            android:title="Create an event" />
 
         <item
             android:id="@+id/profile"

@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     //Replacing the main content with fragments
-                    case R.id.eventOLD:
+                    case R.id.event:
                         Toast.makeText(getApplicationContext(), "Opening event", Toast.LENGTH_SHORT).show();
                         EventFragment fragment_event = new EventFragment();
                         FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                    DebugFragment fragment_event = new DebugFragment();
+                    EventFragment fragment_event = new EventFragment();
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
@@ -304,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                                     fragmentTransaction_event.commit();
-                                    Snackbar snackbar1 = Snackbar.make(drawerLayout, "Event_OLD has been deleted!", Snackbar.LENGTH_SHORT);
+                                    Snackbar snackbar1 = Snackbar.make(drawerLayout, "Event has been deleted!", Snackbar.LENGTH_SHORT);
                                     snackbar1.show();
                                 }
                             });
@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == FindEventActivity.RESULT_OK) {
 
                     EventFragment fragment_event = new EventFragment();
-                    Toast.makeText(getApplicationContext(), "Event_OLD selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Event selected", Toast.LENGTH_SHORT).show();
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();

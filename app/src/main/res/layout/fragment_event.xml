@@ -9,23 +9,31 @@
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:elevation="5dp"
-        android:text="No coming events"
+        android:text="My events"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/info"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:elevation="5dp"
-        android:text="Take a look at the menu to search for events or why not create one ?"
-        android:textAlignment="center"
-        android:textColor="@color/colorWhite"
-        android:textSize="18sp"
-        android:textStyle="normal|italic" />
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/layout_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/events_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
