@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.company.meetsports.Adapters.EventsAdapter;
 import com.company.meetsports.Adapters.MoviesAdapter;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
+import com.company.meetsports.Entities.Event;
+import com.company.meetsports.Entities.EventsResponse;
 import com.company.meetsports.Entities.Movie;
 import com.company.meetsports.Entities.MoviesResponse;
 import com.company.meetsports.R;
@@ -38,31 +41,31 @@ public class DebugFragment extends Fragment {
      */
 
     // TODO - insert API KEY here (https://www.themoviedb.org)
-    private final static String API_KEY = "3dc7a68bed9ff5f3029a3ae47a9f6589";
+    //private final static String API_KEY = "3dc7a68bed9ff5f3029a3ae47a9f6589";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_debug, container, false);
-
+/*
         if (API_KEY.isEmpty()) {
             Toast.makeText(getActivity(), "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
         }
-
-        final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.movies_recycler_view);
+*/
+        final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.events_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<MoviesResponse> call = apiService.getTopRatedMovies(API_KEY);
-        call.enqueue(new Callback<MoviesResponse>() {
+        Call<EventsResponse> call = apiService.getAllEvents();
+        call.enqueue(new Callback<EventsResponse>() {
             @Override
-            public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
+            public void onResponse(Call<EventsResponse> call, Response<EventsResponse> response) {
                 int statusCode = response.code();
-                List<Movie> movies = response.body().getResults();
-                recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getActivity().getApplicationContext()));
+                List<Event> events = response.body().getResults();
+                recyclerView.setAdapter(new EventsAdapter(events, R.layout.list_item_event, getActivity().getApplicationContext()));
             }
 
             @Override
-            public void onFailure(Call<MoviesResponse> call, Throwable t) {
+            public void onFailure(Call<EventsResponse> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
             }

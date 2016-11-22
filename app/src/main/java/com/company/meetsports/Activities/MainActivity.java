@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.company.meetsports.Entities.Event;
+import com.company.meetsports.Entities.Event_OLD;
 import com.company.meetsports.Fragments.DebugFragment;
 import com.company.meetsports.Fragments.EventFragment;
 import com.company.meetsports.Fragments.InfoFragment;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
 
-    public static List<Event> Events = new ArrayList<>();
+    public static List<Event_OLD> eventOLDs = new ArrayList<>();
     // Activity request
     public static final int REQUEST_SIGN_IN = 0;
     public static final int REQUEST_SIGN_UP = 1;
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                     //Replacing the main content with fragments
-                    case R.id.event:
+                    case R.id.eventOLD:
                         Toast.makeText(getApplicationContext(), "Opening event", Toast.LENGTH_SHORT).show();
                         EventFragment fragment_event = new EventFragment();
                         FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Show message on CreateEventActivity finished
                     Snackbar snackbar = Snackbar
-                            .make(drawerLayout, "Event created successfully", Snackbar.LENGTH_LONG)
+                            .make(drawerLayout, "Event_OLD created successfully", Snackbar.LENGTH_LONG)
                             .setAction("CANCEL", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
                                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                                     fragmentTransaction_event.commit();
-                                    Snackbar snackbar1 = Snackbar.make(drawerLayout, "Event has been deleted!", Snackbar.LENGTH_SHORT);
+                                    Snackbar snackbar1 = Snackbar.make(drawerLayout, "Event_OLD has been deleted!", Snackbar.LENGTH_SHORT);
                                     snackbar1.show();
                                 }
                             });
@@ -281,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == FindEventActivity.RESULT_OK) {
 
                     EventFragment fragment_event = new EventFragment();
-                    Toast.makeText(getApplicationContext(), "Event selected", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Event_OLD selected", Toast.LENGTH_SHORT).show();
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();

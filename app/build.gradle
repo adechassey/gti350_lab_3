@@ -46,6 +46,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    // Joda Time
+    compile 'joda-time:joda-time:2.9.6'
 
     testCompile 'junit:junit:4.12'
 }

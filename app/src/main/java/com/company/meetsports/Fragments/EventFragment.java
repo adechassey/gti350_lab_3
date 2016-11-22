@@ -35,7 +35,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        if (MainActivity.Events.size() == 0){
+        if (MainActivity.eventOLDs.size() == 0){
             View v = inflater.inflate(R.layout.fragment_event, container, false);
             Log.d(TAG, "Bundle arguments are null");
             return v;
@@ -46,7 +46,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
             View v = inflater.inflate(R.layout.fragment_event_updated, container, false);
             LinearLayout event_layout = (LinearLayout) v.findViewById(R.id.layout_events);
 
-            for(int i=0; i < MainActivity.Events.size(); i++){
+            for(int i = 0; i < MainActivity.eventOLDs.size(); i++){
                 View card_event = create_card_view(i) ;
                 card_event.setOnClickListener(this); // calling onClick() method
                 event_layout.addView(card_event);
@@ -62,7 +62,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
         final int Id = v.getId();
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
-        builder.title("Event details")
+        builder.title("Event_OLD details")
                 .positiveText("Close")
                 .negativeText("Delete")
                 .customView(R.layout.event_details, true)
@@ -76,7 +76,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                 ViewGroup layout = (LinearLayout) getActivity().findViewById(R.id.layout_events);
                 View card = (CardView) getActivity().findViewById(Id);
                 layout.removeView(card);
-                MainActivity.Events.remove(Id-1000);
+                MainActivity.eventOLDs.remove(Id-1000);
                 dialog.dismiss();
             }});
         builder.show();
@@ -141,7 +141,7 @@ public class EventFragment extends Fragment implements View.OnClickListener {
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT,
                 2.0f));
         text_event_category.setPadding(3,3,3,3);
-        text_event_category.setText(MainActivity.Events.get(id).getCategory());
+        text_event_category.setText(MainActivity.eventOLDs.get(id).getCategory());
         text_event_category.setTextColor(colorDark);
         text_event_category.setTextSize(18);
         text_event_category.setTypeface(null, Typeface.BOLD);
@@ -172,13 +172,13 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
         text_event_date.setGravity(Gravity.CENTER);
         text_event_date.setLayoutParams(params_textView);
-        text_event_date.setText(MainActivity.Events.get(id).getDate());
+        text_event_date.setText(MainActivity.eventOLDs.get(id).getDate());
         text_event_date.setTextColor(colorDark);
         text_event_date.setTextSize(14);
 
         text_event_duration.setGravity(Gravity.CENTER);
         text_event_duration.setLayoutParams(params_textView);
-        text_event_duration.setText(MainActivity.Events.get(id).getDuration());
+        text_event_duration.setText(MainActivity.eventOLDs.get(id).getDuration());
         text_event_duration.setTextColor(colorDark);
         text_event_duration.setTextSize(14);
 
@@ -194,13 +194,13 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
         text_event_type.setGravity(Gravity.CENTER);
         text_event_type.setLayoutParams(params_textView);
-        text_event_type.setText(MainActivity.Events.get(id).getType());
+        text_event_type.setText(MainActivity.eventOLDs.get(id).getType());
         text_event_type.setTextColor(colorDark);
         text_event_type.setTextSize(14);
 
         text_event_distance.setGravity(Gravity.CENTER);
         text_event_distance.setLayoutParams(params_textView);
-        text_event_distance.setText(MainActivity.Events.get(id).getDistance());
+        text_event_distance.setText(MainActivity.eventOLDs.get(id).getDistance());
         text_event_distance.setTextColor(colorDark);
         text_event_distance.setTextSize(14);
 
@@ -216,13 +216,13 @@ public class EventFragment extends Fragment implements View.OnClickListener {
 
         text_event_place.setGravity(Gravity.CENTER);
         text_event_place.setLayoutParams(params_textView);
-        text_event_place.setText(MainActivity.Events.get(id).getPlace());
+        text_event_place.setText(MainActivity.eventOLDs.get(id).getPlace());
         text_event_place.setTextColor(colorDark);
         text_event_place.setTextSize(14);
 
         text_event_address.setGravity(Gravity.CENTER);
         text_event_address.setLayoutParams(params_textView);
-        text_event_address.setText(MainActivity.Events.get(id).getAddress());
+        text_event_address.setText(MainActivity.eventOLDs.get(id).getAddress());
         text_event_address.setTextColor(colorDark);
         text_event_address.setTextSize(14);
 

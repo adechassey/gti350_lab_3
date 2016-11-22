@@ -1,14 +1,10 @@
 package com.company.meetsports.Activities;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.text.Html;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -21,7 +17,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
-import com.company.meetsports.Entities.Event;
+import com.company.meetsports.Entities.Event_OLD;
 import com.company.meetsports.R;
 
 /**
@@ -92,7 +88,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
             case R.id.event1:
                 // do your code
                 new MaterialDialog.Builder(this)
-                        .title("Event details")
+                        .title("Event_OLD details")
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
@@ -111,7 +107,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
             case R.id.event2:
                 // do your code
                 new MaterialDialog.Builder(this)
-                        .title("Event details")
+                        .title("Event_OLD details")
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
@@ -130,7 +126,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
             case R.id.event3:
                 // do your code
                 new MaterialDialog.Builder(this)
-                        .title("Event details")
+                        .title("Event_OLD details")
                         .customView(R.layout.event_details, true)
                         .positiveText("I am going")
                         .negativeText("Close")
@@ -166,14 +162,14 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
         Intent intent = new Intent();
 
         // Check if event is already selected
-        for(Event event : MainActivity.Events){
-            if (event.getId() == id){
+        for(Event_OLD eventOLD : MainActivity.eventOLDs){
+            if (eventOLD.getId() == id){
                 existing_event = true;
             }
         }
 
         if(!existing_event) {
-            Event event = new Event(id,
+            Event_OLD eventOLD = new Event_OLD(id,
                     category.getText().toString(),
                     type.getText().toString(),
                     date.getText().toString(),
@@ -181,7 +177,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
                     distance.getText().toString(),
                     "Chalet du Mont-Royal",
                     "1196 Camillien-Houde Road, Montreal, Québec H3H 1A1");
-            MainActivity.Events.add(event);
+            MainActivity.eventOLDs.add(eventOLD);
             setResult(MainActivity.RESULT_OK, intent);
             finish();
         } else {

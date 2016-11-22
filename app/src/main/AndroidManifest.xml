@@ -44,7 +44,7 @@
 
         <activity
             android:name="com.company.meetsports.Activities.CreateEventActivity"
-            android:label="Create an event">
+            android:label="Create an eventOLD">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.company.meetsports.Activities.MainActivity" />
@@ -61,7 +61,7 @@
 
         <activity
             android:name="com.company.meetsports.Activities.FindEventActivity"
-            android:label="Find an event">
+            android:label="Find an eventOLD">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.company.meetsports.Activities.MainActivity" />
