@@ -2,23 +2,28 @@ package com.company.meetsports.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.company.meetsports.Adapters.FindEventsAdapter;
+import com.company.meetsports.DataProvider.ApiClient;
+import com.company.meetsports.DataProvider.ApiInterface;
+import com.company.meetsports.Entities.Event;
+import com.company.meetsports.R;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
-import com.company.meetsports.Entities.Event_OLD;
-import com.company.meetsports.R;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Antoine on 02/10/2016.
@@ -27,8 +32,12 @@ import com.company.meetsports.R;
  * https://androidhub.intel.com/en/posts/nglauber/Android_Search.html
  */
 
-public class FindEventActivity extends AppCompatActivity implements PlaceSelectionListener, View.OnClickListener {
+public class FindEventActivity extends AppCompatActivity implements PlaceSelectionListener {
     private static final String TAG = "FindEventActivity";
+
+    private SwipeRefreshLayout swipeContainer;
+    private RecyclerView recyclerView;
+    private static List<Event> findEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +52,48 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
         // occurred.
         autocompleteFragment.setOnPlaceSelectedListener(this);
 
-        CardView card_event1 = (CardView) findViewById(R.id.event1);
-        card_event1.setOnClickListener(this); // calling onClick() method
-        CardView card_event2 = (CardView) findViewById(R.id.event2);
-        card_event2.setOnClickListener(this);
-        CardView card_event3 = (CardView) findViewById(R.id.event3);
-        card_event3.setOnClickListener(this);
+        // Refresh scrolling
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                fetchTimelineAsync(0);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
+        // Getting findEvents
+        recyclerView = (RecyclerView) findViewById(R.id.events_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+
+        Call<List<Event>> call = apiService.getAllEvents();
+        call.enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                int statusCode = response.code();
+                Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                findEvents = response.body();
+                recyclerView.setAdapter(new FindEventsAdapter(findEvents, R.layout.list_item_event_find, getApplicationContext().getApplicationContext()));
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+
+            }
+        });
     }
 
     /**
@@ -82,107 +127,27 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
     }
 
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.event1:
-                // do your code
-                new MaterialDialog.Builder(this)
-                        .title("Event_OLD details")
-                        .customView(R.layout.event_details, true)
-                        .positiveText("I am going")
-                        .negativeText("Close")
-                        .titleColor(-1)
-                        .positiveColor(-1)
-                        .negativeColor(-1)
-                        .backgroundColorRes(R.color.colorAppBackground)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                storeEvent(1);
-                            }
-                        }).show();
-                break;
+    public void fetchTimelineAsync(int page) {
+        Toast.makeText(getApplicationContext(), "Updating...", Toast.LENGTH_SHORT).show();
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-            case R.id.event2:
-                // do your code
-                new MaterialDialog.Builder(this)
-                        .title("Event_OLD details")
-                        .customView(R.layout.event_details, true)
-                        .positiveText("I am going")
-                        .negativeText("Close")
-                        .titleColor(-1)
-                        .positiveColor(-1)
-                        .negativeColor(-1)
-                        .backgroundColorRes(R.color.colorAppBackground)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                storeEvent(2);
-                            }
-                        }).show();
-                break;
-
-            case R.id.event3:
-                // do your code
-                new MaterialDialog.Builder(this)
-                        .title("Event_OLD details")
-                        .customView(R.layout.event_details, true)
-                        .positiveText("I am going")
-                        .negativeText("Close")
-                        .titleColor(-1)
-                        .positiveColor(-1)
-                        .negativeColor(-1)
-                        .backgroundColorRes(R.color.colorAppBackground)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                storeEvent(3);
-                            }
-                        }).show();
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    private void storeEvent(int id) {
-
-        boolean existing_event = false;
-        TextView category = (TextView) findViewById(getResources().getIdentifier("event_category_" + id, "id", getPackageName()));
-        TextView type = (TextView) findViewById(getResources().getIdentifier("event_type_" + id, "id", getPackageName()));
-        TextView date = (TextView) findViewById(getResources().getIdentifier("event_date_" + id, "id", getPackageName()));
-        TextView duration = (TextView) findViewById(getResources().getIdentifier("event_duration_" + id, "id", getPackageName()));
-        TextView distance = (TextView) findViewById(getResources().getIdentifier("event_distance_" + id, "id", getPackageName()));
-
-        /*TextView place = (TextView) findViewById(getResources().getIdentifier("event_place_" + id, "id", getPackageName()));
-        TextView address = (TextView) findViewById(getResources().getIdentifier("event_address_" + id, "id", getPackageName()));*/
-
-        Intent intent = new Intent();
-
-        // Check if event is already selected
-        for(Event_OLD eventOLD : MainActivity.eventOLDs){
-            if (eventOLD.getId() == id){
-                existing_event = true;
+        Call<List<Event>> call = apiService.getAllEvents();
+        call.enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                int statusCode = response.code();
+                Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                findEvents = response.body();
+                recyclerView.setAdapter(new FindEventsAdapter(findEvents, R.layout.list_item_event_find, getApplicationContext()));
+                if (response.isSuccessful())
+                    swipeContainer.setRefreshing(false);
             }
-        }
 
-        if(!existing_event) {
-            Event_OLD eventOLD = new Event_OLD(id,
-                    category.getText().toString(),
-                    type.getText().toString(),
-                    date.getText().toString(),
-                    duration.getText().toString(),
-                    distance.getText().toString(),
-                    "Chalet du Mont-Royal",
-                    "1196 Camillien-Houde Road, Montreal, Québec H3H 1A1");
-            MainActivity.eventOLDs.add(eventOLD);
-            setResult(MainActivity.RESULT_OK, intent);
-            finish();
-        } else {
-            setResult(MainActivity.RESULT_CANCELED, intent);
-            finish();
-        }
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+            }
+        });
     }
 }

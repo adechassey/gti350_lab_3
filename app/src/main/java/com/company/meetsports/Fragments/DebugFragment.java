@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.company.meetsports.Adapters.EventsAdapter;
+import com.company.meetsports.Adapters.MyEventsAdapter;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.Event;
@@ -53,8 +53,8 @@ public class DebugFragment extends Fragment {
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 int statusCode = response.code();
                 Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                List<Event> events = response.body();
-                recyclerView.setAdapter(new EventsAdapter(events, R.layout.list_item_event, getActivity().getApplicationContext()));
+                List<Event> myEvents = response.body();
+                recyclerView.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
             }
 
             @Override

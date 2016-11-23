@@ -3,19 +3,17 @@ package com.company.meetsports.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.company.meetsports.Adapters.EventsAdapter;
+import com.company.meetsports.Adapters.MyEventsAdapter;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.Event;
@@ -27,11 +25,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.company.meetsports.Activities.MainActivity.id_user;
+
 public class EventFragment extends Fragment {
     private static final String TAG = "EventFragment";
 
+    private SwipeRefreshLayout swipeContainer;
     private RecyclerView recyclerView;
-    private static List<Event> events;
+    private static List<Event> myEvents;
 
     @Nullable
     @Override
@@ -41,86 +42,68 @@ public class EventFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-
-        Call<List<Event>> call = apiService.getAllEvents();
+        Call<List<Event>> call = apiService.getEventsAttendingByUserId(id_user);
         call.enqueue(new Callback<List<Event>>() {
             @Override
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 int statusCode = response.code();
                 Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                events = response.body();
-                recyclerView.setAdapter(new EventsAdapter(events, R.layout.list_item_event, getActivity().getApplicationContext()));
-
-                /*
-                recyclerView.addOnItemTouchListener(
-                        new RecyclerItemClickListener(getActivity(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(View view, final int position) {
-                                // do whatever
-
-                                MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity());
-                                builder.title("Event details")
-                                        .positiveText("Close")
-                                        .negativeText("Delete")
-                                        .customView(R.layout.event_details, true)
-                                        .titleColor(-1)
-                                        .positiveColor(-1)
-                                        .negativeColor(-1)
-                                        .backgroundColorRes(R.color.colorAppBackground)
-                                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                            @Override
-                                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                                final ViewGroup layout = (LinearLayout) getActivity().findViewById(R.id.layout_events);
-
-                                                final Integer id_event = Integer.parseInt(layout.findViewById(R.id.id_event).getTag().toString());
-
-                                                ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                                                Call<Event> call = apiService.deleteEvent(id_event);
-                                                call.enqueue(new Callback<Event>() {
-                                                    @Override
-                                                    public void onResponse(Call<Event> call, Response<Event> response) {
-                                                        int statusCode = response.code();
-                                                        Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                                                        if (statusCode == 204) {
-                                                            Log.d(TAG, "Position: " + String.valueOf(position));
-                                                            Log.d(TAG, "id_event: " + String.valueOf(id_event));
-                                                            events.remove(events.get(position));
-
-                                                            recyclerView.getAdapter().notifyDataSetChanged();
-                                                            recyclerView.setAdapter(new EventsAdapter(events, R.layout.list_item_event, getActivity().getApplicationContext()));
-
-
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onFailure(Call<Event> call, Throwable t) {
-                                                        // Log error here since request failed
-                                                        Log.e(TAG, t.toString());
-                                                    }
-                                                });
-                                                dialog.dismiss();
-                                            }
-                                        });
-                                builder.show();
-                            }
-
-                            @Override
-                            public void onLongItemClick(View view, int position) {
-                                // do whatever
-                            }
-                        })
-                );
-                */
+                myEvents = response.body();
+                recyclerView.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
             }
 
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
+
             }
         });
 
+
+        // Refresh scrolling
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+                fetchTimelineAsync(0);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         return v;
+    }
+
+    public void fetchTimelineAsync(int page) {
+        Toast.makeText(getActivity(), "Updating...", Toast.LENGTH_SHORT).show();
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<List<Event>> call = apiService.getEventsAttendingByUserId(id_user);
+        call.enqueue(new Callback<List<Event>>() {
+            @Override
+            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                int statusCode = response.code();
+                Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                myEvents = response.body();
+                recyclerView.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
+                if (response.isSuccessful())
+                    swipeContainer.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailure(Call<List<Event>> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+
+            }
+        });
     }
 }

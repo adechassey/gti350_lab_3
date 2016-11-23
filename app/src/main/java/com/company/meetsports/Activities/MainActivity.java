@@ -5,14 +5,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.IntegerRes;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,7 +17,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.company.meetsports.Adapters.EventsAdapter;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.Event;
@@ -33,11 +29,11 @@ import com.company.meetsports.Fragments.ProfileFragment;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
 
     public static List<Event_OLD> eventOLDs = new ArrayList<>();
+
     // Activity request
     public static final int REQUEST_SIGN_IN = 0;
     public static final int REQUEST_SIGN_UP = 1;
@@ -54,12 +51,15 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_FIND_EVENT = 3;
     public static final int REQUEST_CAMERA = 4;
     public static final int REQUEST_GALLERY = 5;
+
     // Permissions
     public static final int PERMISSIONS_REQUEST_CAMERA = 10;
     public static final int PERMISSIONS_REQUEST_GALLERY = 11;
 
     // Session Manager Class
-    private SessionManager session;
+    private static SessionManager session;
+    private static HashMap<String, String> user;
+    public static Integer id_user;
 
     public static String user_Email = "JChirac@ms.com";
     public static String user_Password = new String();
@@ -77,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
     public static TextView header_name;
     public static TextView header_email;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Session class instance
         session = new SessionManager(getApplicationContext());
 
@@ -94,10 +94,9 @@ public class MainActivity extends AppCompatActivity {
         session.checkLogin();
 
         // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
-
-        // email
-        String email = user.get(SessionManager.KEY_EMAIL);
+        user = session.getUserDetails();
+        // id_user
+        id_user = Integer.parseInt(user.get(SessionManager.KEY_ID));
 
         setContentView(R.layout.activity_main);
 
@@ -212,8 +211,8 @@ public class MainActivity extends AppCompatActivity {
 
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
-    }
 
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -242,16 +241,75 @@ public class MainActivity extends AppCompatActivity {
                     String place = data.getStringExtra("place");
                     String address = data.getStringExtra("address");
 
-                    Event newEvent = new Event(null, category, type, null, minDuration, maxDuration, minParticipants, maxParticipants, minAge, maxAge, minContribution, maxContribution, level, place, address);
-
+                    Event newEvent = new Event(null, id_user, category, type, null, minDuration, maxDuration, minParticipants, maxParticipants, minAge, maxAge, minContribution, maxContribution, level, place, address);
                     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-                    Call<Event> call = apiService.addEvent(newEvent);
-                    call.enqueue(new Callback<Event>() {
+                    final Call<Event> callEvent = apiService.addEvent(newEvent);
+                    callEvent.enqueue(new Callback<Event>() {
                         @Override
                         public void onResponse(Call<Event> call, Response<Event> response) {
                             int statusCode = response.code();
                             Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+
+                            EventFragment fragment_event = new EventFragment();
+                            FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                            fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                            fragmentTransaction_event.commit();
+
+                            // Show message on CreateEventActivity finished
+                            Snackbar snackbar = Snackbar
+                                    .make(drawerLayout, "Event created successfully", Snackbar.LENGTH_LONG)
+                                    .setAction("CANCEL", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+                                            Call<List<Event>> call = apiService.getEventsCreatedByUserId(id_user);
+                                            call.enqueue(new Callback<List<Event>>() {
+                                                @Override
+                                                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                                                    int statusCode = response.code();
+                                                    Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                                                    List<Event> myEvents = response.body();
+                                                    // Get the id of the last created event
+                                                    Integer id_event = myEvents.get(0).getId_event();
+                                                    Call<ResponseBody> callDelete = apiService.deleteEvent(id_event);
+                                                    callDelete.enqueue(new Callback<ResponseBody>() {
+                                                        @Override
+                                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                            int statusCode = response.code();
+                                                            Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                                                            EventFragment fragment_event = new EventFragment();
+                                                            FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                                                            fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                                                            fragmentTransaction_event.commit();
+                                                            Snackbar snackbar = Snackbar.make(drawerLayout, "Event has been deleted!", Snackbar.LENGTH_SHORT);
+                                                            snackbar.show();
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                            // Log error here since request failed
+                                                            Log.e(TAG, t.toString());
+                                                            Snackbar snackbar = Snackbar.make(drawerLayout, "Please check your internet connexion!", Snackbar.LENGTH_SHORT);
+                                                            snackbar.show();
+                                                        }
+                                                    });
+                                                }
+
+                                                @Override
+                                                public void onFailure(Call<List<Event>> call, Throwable t) {
+                                                    // Log error here since request failed
+                                                    Log.e(TAG, t.toString());
+
+                                                }
+                                            });
+
+
+                                        }
+                                    });
+                            snackbar.show();
+
+
                         }
 
                         @Override
@@ -261,54 +319,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
 
-                    EventFragment fragment_event = new EventFragment();
-                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                    fragmentTransaction_event.commit();
 
-
-                    /*
-                    EventFragment fragment_event = new EventFragment();
-
-                    Bundle bundle = new Bundle();
-                    String date = "05/11/16";
-                    String duration = "1h";
-                    String distance = "1.2km";
-                    /*String id = data.getStringExtra("id");
-                    String phone = data.getStringExtra("phone");
-                    String website = data.getStringExtra("website");
-
-                    bundle.putString("category", category);
-                    bundle.putString("type", type);
-                    bundle.putString("date", date);
-                    bundle.putString("duration", duration);
-                    bundle.putString("distance", distance);
-                    bundle.putString("place", place);
-                    bundle.putString("address", address);
-                    /*bundle.putString("id", id);
-                    bundle.putString("phone", phone);
-                    bundle.putString("website", website);
-                    fragment_event.setArguments(bundle);
-
-                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                    fragmentTransaction_event.commit();
-*/
-                    // Show message on CreateEventActivity finished
-                    Snackbar snackbar = Snackbar
-                            .make(drawerLayout, "Event created successfully", Snackbar.LENGTH_LONG)
-                            .setAction("CANCEL", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    EventFragment fragment_event = new EventFragment();
-                                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                                    fragmentTransaction_event.commit();
-                                    Snackbar snackbar1 = Snackbar.make(drawerLayout, "Event has been deleted!", Snackbar.LENGTH_SHORT);
-                                    snackbar1.show();
-                                }
-                            });
-                    snackbar.show();
                 }
                 break;
             }

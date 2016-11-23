@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -44,7 +46,7 @@
 
         <activity
             android:name="com.company.meetsports.Activities.CreateEventActivity"
-            android:label="Create an eventOLD">
+            android:label="Create an event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.company.meetsports.Activities.MainActivity" />
@@ -61,7 +63,7 @@
 
         <activity
             android:name="com.company.meetsports.Activities.FindEventActivity"
-            android:label="Find an eventOLD">
+            android:label="Find an event">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.company.meetsports.Activities.MainActivity" />

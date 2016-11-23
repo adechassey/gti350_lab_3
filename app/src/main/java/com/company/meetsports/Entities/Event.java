@@ -8,6 +8,8 @@ public class Event {
 
     @SerializedName("id_event")
     private Integer id_event;
+    @SerializedName("id_user")
+    private Integer id_user;
     @SerializedName("category")
     private String category;
     @SerializedName("type")
@@ -37,11 +39,9 @@ public class Event {
     @SerializedName("address")
     private String address;
 
-    public Event(Integer id_event, String category, String type, Timestamp date_time, Double minDuration, Double maxDuration,
-                 Integer minParticipants, Integer maxParticipants, Integer minAge, Integer maxAge, Integer minContribution,
-                 Integer maxContribution, String level, String place, String address) {
-        super();
+    public Event(Integer id_event, Integer id_user, String category, String type, Timestamp date_time, Double minDuration, Double maxDuration, Integer minParticipants, Integer maxParticipants, Integer minAge, Integer maxAge, Integer minContribution, Integer maxContribution, String level, String place, String address) {
         this.id_event = id_event;
+        this.id_user = id_user;
         this.category = category;
         this.type = type;
         this.date_time = date_time;
@@ -64,6 +64,14 @@ public class Event {
 
     public void setId_event(Integer id_event) {
         this.id_event = id_event;
+    }
+
+    public Integer getId_user() {
+        return id_user;
+    }
+
+    public void setId_user(Integer id_user) {
+        this.id_user = id_user;
     }
 
     public String getCategory() {
