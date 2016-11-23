@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.company.meetsports.Activities.MainActivity;
+import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -29,6 +30,8 @@ import static com.company.meetsports.Activities.MainActivity.PERMISSIONS_REQUEST
 import static com.company.meetsports.Activities.MainActivity.PERMISSIONS_REQUEST_GALLERY;
 import static com.company.meetsports.Activities.MainActivity.REQUEST_CAMERA;
 import static com.company.meetsports.Activities.MainActivity.REQUEST_GALLERY;
+import static com.company.meetsports.Activities.MainActivity.session;
+import static com.company.meetsports.Activities.MainActivity.user;
 
 
 /**
@@ -156,15 +159,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public static void display_user_infos() {
 
-        //Update header menu infos
-        MainActivity.header_name.setText(MainActivity.user_Name + " " + MainActivity.user_Surname);
-        MainActivity.header_email.setText(MainActivity.user_Email);
         //Update user infos
-        profile_name.setText(MainActivity.user_Name);
-        profile_surname.setText(MainActivity.user_Surname);
-        profile_gender.setText(MainActivity.user_Gender);
-        profile_age.setText(MainActivity.user_Age);
-        profile_email.setText(MainActivity.user_Email);
+        profile_name.setText(user.get(SessionManager.KEY_NAME));
+        profile_surname.setText(user.get(SessionManager.KEY_SURNAME));
+        profile_gender.setText(user.get(SessionManager.KEY_GENDER));
+        profile_age.setText(user.get(SessionManager.KEY_AGE));
+        profile_email.setText(user.get(SessionManager.KEY_EMAIL));
 
     }
 

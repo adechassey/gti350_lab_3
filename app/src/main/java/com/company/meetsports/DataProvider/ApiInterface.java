@@ -53,10 +53,14 @@ public interface ApiInterface {
     @FormUrlEncoded
     Call<User> getUserByUsername(@Field("email") String email);
 
+    @POST("users")
+    Call<ResponseBody> addUser(@Body User newUser);
+
     // Attendance methods
     @POST("attendances/{id_event}/{id_user}")
     Call<ResponseBody> addAttendance(@Path("id_event") Integer id_event, @Path("id_user") Integer id_user);
 
     @DELETE("attendances/{id_event}/{id_user}")
     Call<ResponseBody> deleteAttendance(@Path("id_event") Integer id_event, @Path("id_user") Integer id_user);
+
 }

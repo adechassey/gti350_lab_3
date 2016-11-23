@@ -11,21 +11,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.company.meetsports.DataProvider.ApiClient;
+import com.company.meetsports.DataProvider.ApiInterface;
+import com.company.meetsports.Entities.User;
+import com.company.meetsports.Manager.SessionManager;
+import com.company.meetsports.R;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.company.meetsports.DataProvider.ApiClient;
-import com.company.meetsports.DataProvider.ApiInterface;
-import com.company.meetsports.Entities.Event;
-import com.company.meetsports.Entities.User;
-import com.company.meetsports.Manager.SessionManager;
-import com.company.meetsports.R;
-
-import static com.company.meetsports.Activities.MainActivity.user_Name;
-import static com.company.meetsports.Activities.MainActivity.user_Surname;
+import static com.company.meetsports.Activities.MainActivity.header_email;
+import static com.company.meetsports.Activities.MainActivity.header_name;
 
 /**
  * Created by VMabille on 31/10/2016.
@@ -103,8 +102,7 @@ public class SignInActivity extends AppCompatActivity {
                         email = input_Email.getText().toString();
                         password = input_Password.getText().toString();
 
-                        if (email.equals(MainActivity.user_Email) && password.equals(MainActivity.user_Password)
-                                || email.equals("user@ms.com") && password.equals("user")) {
+                        if (password.equals("user")) {
                             LoginSuccess();
                         } else {
                             LoginFailed();
@@ -146,10 +144,10 @@ public class SignInActivity extends AppCompatActivity {
                 if (statusCode == 200) {
                     // Remove the item on remove/button click
                     User user = response.body();
-                    id_user = user.getId_user();
-                    email = user.getUsername();
-                    session.createLoginSession(id_user, email);
-                    Toast.makeText(getApplicationContext(), "Welcome " + user_Name + " " + user_Surname + ", you are now logged in", Toast.LENGTH_LONG).show();
+                    session.createLoginSession(user);
+                    header_name.setText(user.getSurname() + " " + user.getName());
+                    header_email.setText(user.getEmail());
+                    Toast.makeText(getApplicationContext(), "Welcome " + user.getSurname() + " " + user.getName() + ", you are now logged in", Toast.LENGTH_LONG).show();
                     Btn_signIn.setEnabled(true);
                     finish();
                 } else {

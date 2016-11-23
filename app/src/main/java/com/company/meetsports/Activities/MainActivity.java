@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.Event;
-import com.company.meetsports.Entities.Event_OLD;
 import com.company.meetsports.Fragments.DebugFragment;
 import com.company.meetsports.Fragments.EventFragment;
 import com.company.meetsports.Fragments.InfoFragment;
@@ -29,7 +28,6 @@ import com.company.meetsports.Fragments.ProfileFragment;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,8 +39,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
-
-    public static List<Event_OLD> eventOLDs = new ArrayList<>();
 
     // Activity request
     public static final int REQUEST_SIGN_IN = 0;
@@ -56,26 +52,17 @@ public class MainActivity extends AppCompatActivity {
     public static final int PERMISSIONS_REQUEST_CAMERA = 10;
     public static final int PERMISSIONS_REQUEST_GALLERY = 11;
 
-    // Session Manager Class
-    private static SessionManager session;
-    private static HashMap<String, String> user;
+    // Session Manager
+    public static SessionManager session;
+    public static HashMap<String, String> user;
     public static Integer id_user;
-
-    public static String user_Email = "JChirac@ms.com";
-    public static String user_Password = new String();
-    public static String user_Name = "Jacques";
-    public static String user_Surname = "Chirac";
-    public static String user_Age = "NA";
-    public static String user_Gender = "Male";
-    public static String temp_String = new String();
+    public static TextView header_name;
+    public static TextView header_email;
 
     // Defining Layout variables
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-
-    public static TextView header_name;
-    public static TextView header_email;
 
 
     @Override
@@ -109,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
         View header = navigationView.getHeaderView(0);
         header_name = (TextView) header.findViewById(R.id.header_username);
         header_email = (TextView) header.findViewById(R.id.header_email);
+        header_name.setText(user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME));
+        header_email.setText(user.get(SessionManager.KEY_EMAIL));
+
 
         // Setting the Fragment to event
         EventFragment fragment_event = new EventFragment();
@@ -342,12 +332,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-    }
-
-
-    public static void setGender(String gender) {
-
-        MainActivity.user_Gender = gender;
     }
 
     @Override

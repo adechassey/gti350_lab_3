@@ -33,14 +33,23 @@ public class GenderPickerDialogFragment{
         builder.itemsCallback(new MaterialDialog.ListCallback() {
             @Override
             public void onSelection(MaterialDialog dialog, View itemView, int item, CharSequence text){
-
+                /**
+                 *
+                 *
+                 * TODO:
+                 * Verifier ci-dessous !
+                 *
+                 *
+                 *
+                  */
+                /*
                 if (parent_activity == SIGN_UP_ACTIVITY ){
                     MainActivity.setGender(list[item]);
                     SignUpActivity.Update_gender(list[item]);
                 } else if (parent_activity == EDIT_PROFILE_ACTIVITY){
                     MainActivity.setGender(list[item]);
                     ProfileFragment.display_user_infos();
-                }
+                }*/
             }
         });
 
