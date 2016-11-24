@@ -105,6 +105,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             case R.id.profile_edit_gender:
                 GenderPickerDialogFragment.showAlertDialog(getActivity(), 2);
+
                 break;
 
             case R.id.profile_edit_age:
@@ -162,7 +163,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         //Update user infos
         profile_name.setText(user.get(SessionManager.KEY_NAME));
         profile_surname.setText(user.get(SessionManager.KEY_SURNAME));
-        profile_gender.setText(user.get(SessionManager.KEY_GENDER));
+        //profile_gender.setText(user.get(SessionManager.KEY_GENDER));  disabled le temps d'ajouter fonction pour modif genre dans la db
+        profile_gender.setText(GenderPickerDialogFragment.GENDER_PICKED);
         profile_age.setText(user.get(SessionManager.KEY_AGE));
         profile_email.setText(user.get(SessionManager.KEY_EMAIL));
 

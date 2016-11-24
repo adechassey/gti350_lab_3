@@ -33,7 +33,7 @@ public class InfoFragment extends Fragment {
             public void onClick(View arg0) {
                 //Getting the rating and displaying it on the toast
                 String rating = String.valueOf(ratingBar.getRating());
-                Toast.makeText(getActivity(), rating, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Thank you for the feedback !", Toast.LENGTH_SHORT).show();
             }
 
         });

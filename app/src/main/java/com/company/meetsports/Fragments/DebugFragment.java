@@ -42,7 +42,7 @@ public class DebugFragment extends Fragment {
             Toast.makeText(getActivity(), "Please obtain your API KEY first from themoviedb.org", Toast.LENGTH_LONG).show();
         }
 */
-        final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.events_recycler_view);
+        final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.events_recycler_view_debug);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
