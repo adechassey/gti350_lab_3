@@ -2,6 +2,7 @@ package com.company.meetsports.DataProvider;
 
 import com.company.meetsports.Entities.Event;
 import com.company.meetsports.Entities.User;
+import com.google.gson.annotations.JsonAdapter;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface ApiInterface {
     Call<List<Event>> getEventsByPosition(@Field("latitude") Double latitude, @Field("longitude") Double longitude);
 
     @POST("events")
-    Call<Event> addEvent(@Body Event event);
+    Call<ResponseBody> addEvent(@Body Event event);
 
     /*
         @POST("events/{id}")
@@ -49,12 +50,13 @@ public interface ApiInterface {
 
 
     // User methods
+
     @POST("users")
     @FormUrlEncoded
     Call<User> getUserByUsername(@Field("email") String email);
 
     @POST("users")
-    Call<ResponseBody> addUser(@Body User newUser);
+    Call<ResponseBody> addUser(@Body User user);
 
     // Attendance methods
     @POST("attendances/{id_event}/{id_user}")

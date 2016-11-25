@@ -234,10 +234,10 @@ public class MainActivity extends AppCompatActivity {
                     Event newEvent = new Event(null, id_user, category, type, null, minDuration, maxDuration, minParticipants, maxParticipants, minAge, maxAge, minContribution, maxContribution, level, place, address);
                     ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-                    final Call<Event> callEvent = apiService.addEvent(newEvent);
-                    callEvent.enqueue(new Callback<Event>() {
+                    final Call<ResponseBody> callEvent = apiService.addEvent(newEvent);
+                    callEvent.enqueue(new Callback<ResponseBody>() {
                         @Override
-                        public void onResponse(Call<Event> call, Response<Event> response) {
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             int statusCode = response.code();
                             Log.d(TAG, "Status code: " + String.valueOf(statusCode));
 
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailure(Call<Event> call, Throwable t) {
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
                             // Log error here since request failed
                             Log.e(TAG, t.toString());
                         }
