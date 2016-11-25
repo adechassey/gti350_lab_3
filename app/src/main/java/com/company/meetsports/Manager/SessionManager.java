@@ -1,14 +1,17 @@
 package com.company.meetsports.Manager;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.util.Log;
 
 import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.Activities.SignInActivity;
 import com.company.meetsports.Entities.User;
+import com.company.meetsports.Fragments.EventFragment;
+import com.company.meetsports.R;
 
 import java.util.HashMap;
 
@@ -71,7 +74,6 @@ public class SessionManager {
     public void checkLogin() {
         // Check login status
         if (!this.isLoggedIn()) {
-            Log.d(TAG, "isLoggedIn = false");
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(_context, SignInActivity.class);
             // Closing all the Activities
@@ -83,7 +85,6 @@ public class SessionManager {
             // Staring Login Activity
             _context.startActivity(i);
         }
-
     }
 
 

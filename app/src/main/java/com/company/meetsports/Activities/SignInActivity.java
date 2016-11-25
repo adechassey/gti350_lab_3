@@ -23,6 +23,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.company.meetsports.Activities.MainActivity.REQUEST_SIGN_UP;
+
 /**
  * Created by VMabille on 31/10/2016.
  */
@@ -69,7 +71,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivityForResult(intent, MainActivity.REQUEST_SIGN_UP);
+                startActivityForResult(intent, REQUEST_SIGN_UP);
             }
         });
     }
@@ -113,13 +115,11 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MainActivity.REQUEST_SIGN_UP) {
-            if (resultCode == RESULT_OK) {
-
-                if (SignUpActivity.SIGN_UP_SUCCESS == 1) {
+        if (requestCode == REQUEST_SIGN_UP) {
+            if (resultCode == SignUpActivity.RESULT_OK) {
                     // automatically loggs in the new user
-                    this.finish();
-                }
+                    // this.finish();
+                    recreate();
             }
         }
     }
@@ -142,16 +142,17 @@ public class SignInActivity extends AppCompatActivity {
                 if (statusCode == 200) {
                     // Remove the item on remove/button click
                     User user = response.body();
-                    // Session Manager
+
                     //session = new SessionManager(getApplicationContext());
-                    session.createLoginSession(user);
                     // set id_user
                     //id_user = user.getId_user();
 
+                    // Session Manager
+                    session.createLoginSession(user);
+
                     Btn_signIn.setEnabled(true);
 
-                    Intent intent = new Intent();
-                    setResult(SignInActivity.RESULT_OK, intent);
+                    setResult(SignInActivity.RESULT_OK);
                     finish();
                 }
             }

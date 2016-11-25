@@ -15,6 +15,7 @@ import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.User;
 import com.company.meetsports.Fragments.GenderPickerDialogFragment;
+import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
 import java.sql.Timestamp;
@@ -29,7 +30,9 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
-    public static int SIGN_UP_SUCCESS = 0;
+
+    private SessionManager session;
+
 
     @InjectView(R.id.sign_up_name)
     EditText input_Name;
@@ -56,6 +59,9 @@ public class SignUpActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate...");
         setContentView(R.layout.activity_sign_up);
         ButterKnife.inject(this);
+
+        // Session class instance
+        session = new SessionManager(getApplicationContext());
 
         Btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,9 +127,9 @@ public class SignUpActivity extends AppCompatActivity {
         String password = input_Password.getText().toString();
         Timestamp date = new Timestamp(System.currentTimeMillis());
 
-        User newUser = new User(null, name, surname, gender, age, email, password, null);
+        final User newUser = new User(null, name, surname, gender, age, email, password, null);
 
-        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> call = apiService.addUser(newUser);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -134,10 +140,8 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "User created successfully", Toast.LENGTH_SHORT).show();
 
                     Btn_sign_up.setEnabled(true);
-                    setResult(RESULT_OK, null);
 
-                    SIGN_UP_SUCCESS = 1;
-
+                    setResult(SignUpActivity.RESULT_OK);
                     finish();
                 }
             }

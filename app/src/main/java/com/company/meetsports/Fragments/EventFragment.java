@@ -53,7 +53,9 @@ public class EventFragment extends Fragment {
                 int statusCode = response.code();
                 Log.d(TAG, "Status code: " + String.valueOf(statusCode));
                 List<Event> myEvents = response.body();
-                recyclerView.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
+                if (myEvents.size() != 0) {
+                    recyclerView.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
+                }
             }
 
             @Override

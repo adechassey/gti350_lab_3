@@ -87,7 +87,18 @@ public class MainActivity extends AppCompatActivity {
         } else {
         */
         session = new SessionManager(getApplicationContext());
-        session.checkLogin();
+        //session.checkLogin();
+        if (session.isLoggedIn() == false) {
+    /*        Intent signInIntent = new Intent(this, SignInActivity.class);
+            // Closing all the Activities
+            signInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            // Add new Flag to start new Activity
+            signInIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivityForResult(signInIntent, REQUEST_SIGN_IN);
+*/
+            Intent signInIntent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivityForResult(signInIntent, REQUEST_SIGN_IN);
+        }
 
         // get user data from session
         user = session.getUserDetails();
@@ -219,12 +230,14 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             // From SignInActivity
             case (REQUEST_SIGN_IN):
-                Log.d(TAG, "onActivityResult " + resultCode);
                 if (resultCode == SignInActivity.RESULT_OK) {
                     Log.d(TAG, "onActivityResult SignIn RESULT_OK");
-                    recreate();
 
-/*
+                    // get user data from session
+                    user = session.getUserDetails();
+                    // id_user
+                    id_user = Integer.valueOf(user.get(SessionManager.KEY_ID));
+
                     header_name.setText(user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME));
                     header_email.setText(user.get(SessionManager.KEY_EMAIL));
                     Toast.makeText(getApplicationContext(), "Welcome " + user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME) + ", you are now logged in", Toast.LENGTH_LONG).show();
@@ -233,20 +246,15 @@ public class MainActivity extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
-                    */
+
                 }
                 break;
 
             // From SignUpActivity
             case (REQUEST_SIGN_UP):
-                /*
                 if (resultCode == SignUpActivity.RESULT_OK) {
-                    EventFragment fragment_event = new EventFragment();
-                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                    fragmentTransaction_event.commit();
+                    Log.d(TAG, "onActivityResult SignUp RESULT_OK");
                 }
-                */
                 break;
 
             // From CreateEventActivity
@@ -422,5 +430,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        Log.d(TAG, "onResume after signing in!");
+    }
 }
