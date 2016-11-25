@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.Adapters.MyEventsAdapter;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
@@ -25,21 +26,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.company.meetsports.Activities.MainActivity.id_user;
+import static com.company.meetsports.Activities.SignInActivity.id_user;
 
 public class EventFragment extends Fragment {
     private static final String TAG = "EventFragment";
 
     private SwipeRefreshLayout swipeContainer;
-    private RecyclerView recyclerView;
-    private static List<Event> myEvents;
+    private RecyclerView recyclerViewForAsync;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_event, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.events_recycler_view);
+        Log.d(TAG, "onCreate...");
+        Toast.makeText(getActivity(), "User id: " + id_user.toString(), Toast.LENGTH_LONG).show();
+        Log.d(TAG, "User id: " + id_user.toString());
+        final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.events_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerViewForAsync = recyclerView;
 
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<List<Event>> call = apiService.getEventsAttendingByUserId(id_user);
@@ -48,7 +52,7 @@ public class EventFragment extends Fragment {
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 int statusCode = response.code();
                 Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                myEvents = response.body();
+                List<Event> myEvents = response.body();
                 recyclerView.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
             }
 
@@ -92,8 +96,8 @@ public class EventFragment extends Fragment {
             public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                 int statusCode = response.code();
                 Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                myEvents = response.body();
-                recyclerView.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
+                List<Event> myEvents = response.body();
+                recyclerViewForAsync.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
                 if (response.isSuccessful())
                     swipeContainer.setRefreshing(false);
             }
@@ -106,4 +110,6 @@ public class EventFragment extends Fragment {
             }
         });
     }
+
+
 }

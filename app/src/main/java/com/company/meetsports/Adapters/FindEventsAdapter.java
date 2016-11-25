@@ -30,7 +30,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.company.meetsports.Activities.MainActivity.id_user;
+import static com.company.meetsports.Activities.SignInActivity.id_user;
+
 
 public class FindEventsAdapter extends RecyclerView.Adapter<FindEventsAdapter.EventViewHolder> {
     private static final String TAG = "MyEventsAdapter";

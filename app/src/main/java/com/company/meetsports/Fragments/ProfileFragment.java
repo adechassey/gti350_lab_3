@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
@@ -30,8 +29,7 @@ import static com.company.meetsports.Activities.MainActivity.PERMISSIONS_REQUEST
 import static com.company.meetsports.Activities.MainActivity.PERMISSIONS_REQUEST_GALLERY;
 import static com.company.meetsports.Activities.MainActivity.REQUEST_CAMERA;
 import static com.company.meetsports.Activities.MainActivity.REQUEST_GALLERY;
-import static com.company.meetsports.Activities.MainActivity.session;
-import static com.company.meetsports.Activities.MainActivity.user;
+import static com.company.meetsports.Activities.SignInActivity.user;
 
 
 /**
@@ -60,6 +58,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        Log.d(TAG, "onCreate...");
 
         profile_picture = (ImageView) v.findViewById(R.id.profile_picture);
         edit_name = (TextView) v.findViewById(R.id.profile_edit_name);

@@ -53,6 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate...");
         setContentView(R.layout.activity_sign_up);
         ButterKnife.inject(this);
 

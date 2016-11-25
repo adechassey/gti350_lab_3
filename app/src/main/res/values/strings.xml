@@ -10,7 +10,9 @@
     <string name="level_prompt">Select a level</string>
 
     <string-array name="category_array">
+        <item>Fitness</item>
         <item>Football</item>
+        <item>Hockey</item>
         <item>Running</item>
         <item>Tennis</item>
     </string-array>

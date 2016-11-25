@@ -42,6 +42,7 @@ public class FindEventActivity extends AppCompatActivity implements PlaceSelecti
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate...");
         setContentView(R.layout.activity_find_event);
 
         // Retrieve the PlaceAutocompleteFragment.

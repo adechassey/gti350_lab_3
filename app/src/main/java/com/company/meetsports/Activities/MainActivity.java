@@ -28,13 +28,16 @@ import com.company.meetsports.Fragments.ProfileFragment;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
-import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.company.meetsports.Activities.SignInActivity.id_user;
+import static com.company.meetsports.Activities.SignInActivity.session;
+import static com.company.meetsports.Activities.SignInActivity.user;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,10 +55,6 @@ public class MainActivity extends AppCompatActivity {
     public static final int PERMISSIONS_REQUEST_CAMERA = 10;
     public static final int PERMISSIONS_REQUEST_GALLERY = 11;
 
-    // Session Manager
-    public static SessionManager session;
-    public static HashMap<String, String> user = new HashMap<>();
-    public static Integer id_user;
     public static TextView header_name;
     public static TextView header_email;
 
@@ -68,11 +67,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate...");
         // Session class instance
         session = new SessionManager(getApplicationContext());
 
         Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
-
         /**
          * Call this function whenever you want to check user login
          * This will redirect user to LoginActivity is he is not
@@ -122,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
-
 
                     //Replacing the main content with fragments
                     case R.id.event:
@@ -208,6 +206,26 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            // From SignInActivity
+            case (0):
+                if (resultCode == SignInActivity.RESULT_OK) {
+                    EventFragment fragment_event = new EventFragment();
+                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                    fragmentTransaction_event.commit();
+                }
+                break;
+
+            // From SignUpActivity
+            case (1):
+                if (resultCode == SignInActivity.RESULT_OK) {
+                    EventFragment fragment_event = new EventFragment();
+                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                    fragmentTransaction_event.commit();
+                }
+                break;
+
             // From CreateEventActivity
             case (2): {
                 if (resultCode == CreateEventActivity.RESULT_OK) {
@@ -262,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                                                     List<Event> myEvents = response.body();
                                                     // Get the id of the last created event
                                                     Integer id_event = myEvents.get(0).getId_event();
-                                                    Call<ResponseBody> callDelete = apiService.deleteEvent(id_event);
+                                                    Call<ResponseBody> callDelete = apiService.deleteAttendance(id_event, id_user);
                                                     callDelete.enqueue(new Callback<ResponseBody>() {
                                                         @Override
                                                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -324,10 +342,15 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction_event.commit();
 
                 } else if (resultCode == FindEventActivity.RESULT_CANCELED) {
-
+/*
                     Toast.makeText(getApplicationContext(), "You already selected this event", Toast.LENGTH_SHORT).show();
                     Intent findEvent = new Intent(getApplicationContext(), FindEventActivity.class);
                     startActivityForResult(findEvent, REQUEST_FIND_EVENT);
+*/
+                    EventFragment fragment_event = new EventFragment();
+                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                    fragmentTransaction_event.commit();
                 }
                 break;
             }
@@ -371,4 +394,10 @@ public class MainActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+
 }

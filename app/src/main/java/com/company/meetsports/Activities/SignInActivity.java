@@ -17,6 +17,8 @@ import com.company.meetsports.Entities.User;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
+import java.util.HashMap;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import retrofit2.Call;
@@ -34,10 +36,14 @@ import static com.company.meetsports.Activities.MainActivity.header_name;
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
-    private SessionManager session;
+    // Session Manager
+    public static SessionManager session;
+    public static HashMap<String, String> user = new HashMap<>();
+    public static Integer id_user;
+
+
     private String email;
     private String password;
-    private Integer id_user;
 
     @InjectView(R.id.sign_in_email)
     EditText input_Email;
@@ -51,11 +57,9 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate...");
         setContentView(R.layout.activity_sign_in);
         ButterKnife.inject(this);
-
-        // Session Manager
-        session = new SessionManager(getApplicationContext());
 
         Btn_signIn.setOnClickListener(new View.OnClickListener() {
 
@@ -144,7 +148,12 @@ public class SignInActivity extends AppCompatActivity {
                 if (statusCode == 200) {
                     // Remove the item on remove/button click
                     User user = response.body();
+                    // Session Manager
+                    session = new SessionManager(getApplicationContext());
                     session.createLoginSession(user);
+                    // set id_user
+                    id_user = user.getId_user();
+
                     header_name.setText(user.getSurname() + " " + user.getName());
                     header_email.setText(user.getEmail());
                     Toast.makeText(getApplicationContext(), "Welcome " + user.getSurname() + " " + user.getName() + ", you are now logged in", Toast.LENGTH_LONG).show();

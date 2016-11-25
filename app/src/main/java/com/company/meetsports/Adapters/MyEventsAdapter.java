@@ -31,6 +31,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.company.meetsports.Activities.SignInActivity.id_user;
+
 public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.EventViewHolder> {
     private static final String TAG = "MyEventsAdapter";
 
@@ -170,7 +172,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.EventV
                                 Event event = myEvents.get(position);
 
                                 ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                                Call<ResponseBody> call = apiService.deleteEvent(event.getId_event());
+                                Call<ResponseBody> call = apiService.deleteAttendance(event.getId_event(), id_user);
                                 call.enqueue(new Callback<ResponseBody>() {
                                     @Override
                                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -271,7 +273,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.EventV
                                 Event event = myEvents.get(position);
 
                                 ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                                Call<ResponseBody> call = apiService.deleteEvent(event.getId_event());
+                                Call<ResponseBody> call = apiService.deleteAttendance(event.getId_event(), id_user);
                                 call.enqueue(new Callback<ResponseBody>() {
                                     @Override
                                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
