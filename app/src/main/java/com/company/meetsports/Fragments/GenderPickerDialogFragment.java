@@ -35,7 +35,7 @@ public class GenderPickerDialogFragment{
             public void onSelection(MaterialDialog dialog, View itemView, int item, CharSequence text){
                 GENDER_PICKED = list[item];
                 if (parent_activity == SIGN_UP_ACTIVITY ){
-                    SignUpActivity.Update_gender();
+                    SignUpActivity.Update_gender("Male");
                 } else if (parent_activity == EDIT_PROFILE_ACTIVITY ){
                     ProfileFragment.display_user_infos();
                 }

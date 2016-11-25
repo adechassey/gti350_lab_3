@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 import com.company.meetsports.Activities.SignInActivity;
 import com.company.meetsports.Entities.User;
@@ -11,6 +12,8 @@ import com.company.meetsports.Entities.User;
 import java.util.HashMap;
 
 public class SessionManager {
+    private static final String TAG = "SessionManager";
+
     // Shared Preferences
     private SharedPreferences pref;
 
@@ -30,12 +33,12 @@ public class SessionManager {
     private static final String IS_LOGIN = "IsLoggedIn";
 
     // Email address (make variable public to access from outside)
-    public static final String KEY_ID = "0";
+    public static final String KEY_ID = "id_user";
     public static final String KEY_NAME = "name";
     public static final String KEY_SURNAME = "surname";
     public static final String KEY_GENDER = "gender";
-    public static final String KEY_AGE = "0";
-    public static final String KEY_EMAIL = "email";
+    public static final String KEY_AGE = "age";
+    public static String KEY_EMAIL = "email";
 
     // Constructor
     public SessionManager(Context context) {
@@ -52,11 +55,11 @@ public class SessionManager {
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing ID & email in pref
-        editor.putInt(KEY_ID, user.getId_user());
+        editor.putString(KEY_ID, user.getId_user().toString());
         editor.putString(KEY_NAME, user.getName());
         editor.putString(KEY_SURNAME, user.getSurname());
         editor.putString(KEY_GENDER, user.getGender());
-        editor.putInt(KEY_AGE, user.getAge());
+        editor.putString(KEY_AGE, user.getAge().toString());
         editor.putString(KEY_EMAIL, user.getEmail());
         // commit changes
         editor.commit();
@@ -92,11 +95,11 @@ public class SessionManager {
         HashMap<String, String> user = new HashMap<String, String>();
 
         // user details
-        user.put(KEY_ID, String.valueOf(pref.getInt(KEY_ID, 0)));
+        user.put(KEY_ID, pref.getString(KEY_ID, null));
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
         user.put(KEY_SURNAME, pref.getString(KEY_SURNAME, null));
         user.put(KEY_GENDER, pref.getString(KEY_GENDER, null));
-        user.put(KEY_AGE, String.valueOf(pref.getInt(KEY_AGE, 0)));
+        user.put(KEY_AGE, pref.getString(KEY_AGE, null));
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
 
         // return user

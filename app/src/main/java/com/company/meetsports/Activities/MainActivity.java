@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Session Manager
     public static SessionManager session;
-    public static HashMap<String, String> user;
+    public static HashMap<String, String> user = new HashMap<>();
     public static Integer id_user;
     public static TextView header_name;
     public static TextView header_email;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         // get user data from session
         user = session.getUserDetails();
         // id_user
-        id_user = Integer.parseInt(user.get(SessionManager.KEY_ID));
+        id_user = Integer.valueOf(user.get(SessionManager.KEY_ID));
 
         setContentView(R.layout.activity_main);
 
