@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int PERMISSIONS_REQUEST_CAMERA = 10;
     public static final int PERMISSIONS_REQUEST_GALLERY = 11;
 
-    public static SessionManager session;
+    private SessionManager session;
     public static HashMap<String, String> user = new HashMap<>();
     public static Integer id_user;
 
@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate...");
-        // Session class instance
-        session = new SessionManager(getApplicationContext());
 
         /**
          * Call this function whenever you want to check user login
@@ -88,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(signInIntent, REQUEST_SIGN_IN);
         } else {
         */
+        session = new SessionManager(getApplicationContext());
         session.checkLogin();
 
         // get user data from session

@@ -53,11 +53,11 @@ public class SessionManager {
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing ID & email in pref
-        editor.putString(KEY_ID, user.getId_user().toString());
+        editor.putInt(KEY_ID, user.getId_user());
         editor.putString(KEY_NAME, user.getName());
         editor.putString(KEY_SURNAME, user.getSurname());
         editor.putString(KEY_GENDER, user.getGender());
-        editor.putString(KEY_AGE, user.getAge().toString());
+        editor.putInt(KEY_AGE, user.getAge());
         editor.putString(KEY_EMAIL, user.getEmail());
         // commit changes
         editor.commit();
@@ -94,11 +94,11 @@ public class SessionManager {
         HashMap<String, String> user = new HashMap<String, String>();
 
         // user details
-        user.put(KEY_ID, pref.getString(KEY_ID, ""));
+        user.put(KEY_ID, String.valueOf(pref.getInt(KEY_ID, 0)));
         user.put(KEY_NAME, pref.getString(KEY_NAME, ""));
         user.put(KEY_SURNAME, pref.getString(KEY_SURNAME, ""));
         user.put(KEY_GENDER, pref.getString(KEY_GENDER, ""));
-        user.put(KEY_AGE, pref.getString(KEY_AGE, ""));
+        user.put(KEY_AGE, String.valueOf(pref.getInt(KEY_AGE, 0)));
         user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, ""));
 
         // return user

@@ -23,8 +23,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.company.meetsports.Activities.MainActivity.session;
-
 /**
  * Created by VMabille on 31/10/2016.
  */
@@ -32,6 +30,8 @@ import static com.company.meetsports.Activities.MainActivity.session;
 
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
+
+    private SessionManager session;
 
     private String email;
     private String password;
@@ -51,6 +51,9 @@ public class SignInActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate...");
         setContentView(R.layout.activity_sign_in);
         ButterKnife.inject(this);
+
+        // Session class instance
+        session = new SessionManager(getApplicationContext());
 
         Btn_signIn.setOnClickListener(new View.OnClickListener() {
 
