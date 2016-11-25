@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
@@ -28,16 +29,13 @@ import com.company.meetsports.Fragments.ProfileFragment;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
+import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.company.meetsports.Activities.SignInActivity.id_user;
-import static com.company.meetsports.Activities.SignInActivity.session;
-import static com.company.meetsports.Activities.SignInActivity.user;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     public static final int PERMISSIONS_REQUEST_CAMERA = 10;
     public static final int PERMISSIONS_REQUEST_GALLERY = 11;
 
+    public static SessionManager session;
+    public static HashMap<String, String> user = new HashMap<>();
+    public static Integer id_user;
+
     public static TextView header_name;
     public static TextView header_email;
 
@@ -65,24 +67,35 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate...");
         // Session class instance
         session = new SessionManager(getApplicationContext());
 
-        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
         /**
          * Call this function whenever you want to check user login
          * This will redirect user to LoginActivity is he is not
          * logged in
          * */
+        /*
+        if (session.isLoggedIn() == false) {
+            Intent signInIntent = new Intent(this, SignInActivity.class);
+            // Closing all the Activities
+            signInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            // Add new Flag to start new Activity
+            signInIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivityForResult(signInIntent, REQUEST_SIGN_IN);
+        } else {
+        */
         session.checkLogin();
 
         // get user data from session
         user = session.getUserDetails();
         // id_user
         id_user = Integer.valueOf(user.get(SessionManager.KEY_ID));
+
+        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
         setContentView(R.layout.activity_main);
 
@@ -199,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
 
         //calling sync state is necessay or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
-
     }
 
     @Override
@@ -207,27 +219,39 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             // From SignInActivity
-            case (0):
+            case (REQUEST_SIGN_IN):
+                Log.d(TAG, "onActivityResult " + resultCode);
                 if (resultCode == SignInActivity.RESULT_OK) {
+                    Log.d(TAG, "onActivityResult SignIn RESULT_OK");
+                    recreate();
+
+/*
+                    header_name.setText(user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME));
+                    header_email.setText(user.get(SessionManager.KEY_EMAIL));
+                    Toast.makeText(getApplicationContext(), "Welcome " + user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME) + ", you are now logged in", Toast.LENGTH_LONG).show();
+
                     EventFragment fragment_event = new EventFragment();
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
+                    */
                 }
                 break;
 
             // From SignUpActivity
-            case (1):
-                if (resultCode == SignInActivity.RESULT_OK) {
+            case (REQUEST_SIGN_UP):
+                /*
+                if (resultCode == SignUpActivity.RESULT_OK) {
                     EventFragment fragment_event = new EventFragment();
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
                 }
+                */
                 break;
 
             // From CreateEventActivity
-            case (2): {
+            case (REQUEST_CREATE_EVENT): {
                 if (resultCode == CreateEventActivity.RESULT_OK) {
                     // TODO Extract the data returned from the child Activity.
                     String category = data.getStringExtra("category");
@@ -332,7 +356,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
             // From FindEventActivity
-            case (3): {
+            case (REQUEST_FIND_EVENT): {
                 if (resultCode == FindEventActivity.RESULT_OK) {
 
                     EventFragment fragment_event = new EventFragment();

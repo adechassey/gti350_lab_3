@@ -17,16 +17,13 @@ import com.company.meetsports.Entities.User;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
-import java.util.HashMap;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.company.meetsports.Activities.MainActivity.header_email;
-import static com.company.meetsports.Activities.MainActivity.header_name;
+import static com.company.meetsports.Activities.MainActivity.session;
 
 /**
  * Created by VMabille on 31/10/2016.
@@ -35,12 +32,6 @@ import static com.company.meetsports.Activities.MainActivity.header_name;
 
 public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
-
-    // Session Manager
-    public static SessionManager session;
-    public static HashMap<String, String> user = new HashMap<>();
-    public static Integer id_user;
-
 
     private String email;
     private String password;
@@ -149,20 +140,16 @@ public class SignInActivity extends AppCompatActivity {
                     // Remove the item on remove/button click
                     User user = response.body();
                     // Session Manager
-                    session = new SessionManager(getApplicationContext());
+                    //session = new SessionManager(getApplicationContext());
                     session.createLoginSession(user);
                     // set id_user
-                    id_user = user.getId_user();
+                    //id_user = user.getId_user();
 
-                    header_name.setText(user.getSurname() + " " + user.getName());
-                    header_email.setText(user.getEmail());
-                    Toast.makeText(getApplicationContext(), "Welcome " + user.getSurname() + " " + user.getName() + ", you are now logged in", Toast.LENGTH_LONG).show();
                     Btn_signIn.setEnabled(true);
+
+                    Intent intent = new Intent();
+                    setResult(SignInActivity.RESULT_OK, intent);
                     finish();
-                } else {
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
                 }
             }
 
@@ -172,7 +159,6 @@ public class SignInActivity extends AppCompatActivity {
                 Log.e(TAG, t.toString());
             }
         });
-
     }
 
     public void LoginFailed() {

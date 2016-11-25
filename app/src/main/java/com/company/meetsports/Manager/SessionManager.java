@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
+import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.Activities.SignInActivity;
 import com.company.meetsports.Entities.User;
 
@@ -23,9 +24,6 @@ public class SessionManager {
     // Context
     private Context _context;
 
-    // Shared pref mode
-    private int PRIVATE_MODE = 0;
-
     // Sharedpref file name
     private static final String PREF_NAME = "MeetSportsPref";
 
@@ -38,12 +36,12 @@ public class SessionManager {
     public static final String KEY_SURNAME = "surname";
     public static final String KEY_GENDER = "gender";
     public static final String KEY_AGE = "age";
-    public static String KEY_EMAIL = "email";
+    public static final String KEY_EMAIL = "email";
 
     // Constructor
     public SessionManager(Context context) {
         this._context = context;
-        pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
+        pref = _context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = pref.edit();
     }
 
@@ -66,13 +64,14 @@ public class SessionManager {
     }
 
     /**
-     * Check login method wil check user login status
+     * Check login method will check user login status
      * If false it will redirect user to login page
      * Else won't do anything
      */
     public void checkLogin() {
         // Check login status
         if (!this.isLoggedIn()) {
+            Log.d(TAG, "isLoggedIn = false");
             // user is not logged in redirect him to Login Activity
             Intent i = new Intent(_context, SignInActivity.class);
             // Closing all the Activities
@@ -95,12 +94,12 @@ public class SessionManager {
         HashMap<String, String> user = new HashMap<String, String>();
 
         // user details
-        user.put(KEY_ID, pref.getString(KEY_ID, null));
-        user.put(KEY_NAME, pref.getString(KEY_NAME, null));
-        user.put(KEY_SURNAME, pref.getString(KEY_SURNAME, null));
-        user.put(KEY_GENDER, pref.getString(KEY_GENDER, null));
-        user.put(KEY_AGE, pref.getString(KEY_AGE, null));
-        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+        user.put(KEY_ID, pref.getString(KEY_ID, ""));
+        user.put(KEY_NAME, pref.getString(KEY_NAME, ""));
+        user.put(KEY_SURNAME, pref.getString(KEY_SURNAME, ""));
+        user.put(KEY_GENDER, pref.getString(KEY_GENDER, ""));
+        user.put(KEY_AGE, pref.getString(KEY_AGE, ""));
+        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, ""));
 
         // return user
         return user;
@@ -113,9 +112,8 @@ public class SessionManager {
         // Clearing all data from Shared Preferences
         editor.clear();
         editor.commit();
-
-        // After logout redirect user to Loing Activity
-        Intent i = new Intent(_context, SignInActivity.class);
+        // After logout redirect user to MainActivity which will redirect to SignInActivity
+        Intent i = new Intent(_context, MainActivity.class);
         // Closing all the Activities
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 

@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.Adapters.MyEventsAdapter;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
@@ -26,7 +25,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.company.meetsports.Activities.SignInActivity.id_user;
+import static com.company.meetsports.Activities.MainActivity.id_user;
+
 
 public class EventFragment extends Fragment {
     private static final String TAG = "EventFragment";

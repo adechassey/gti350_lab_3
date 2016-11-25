@@ -12,13 +12,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
+
 /**
  * Created by VMabille on 05/11/2016.
  */
 
 public class LogOutDialogFragment extends DialogFragment {
 
-    // Session Manager Class
     private SessionManager session;
 
     @Override

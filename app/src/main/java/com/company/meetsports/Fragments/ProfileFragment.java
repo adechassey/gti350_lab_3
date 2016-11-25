@@ -29,7 +29,7 @@ import static com.company.meetsports.Activities.MainActivity.PERMISSIONS_REQUEST
 import static com.company.meetsports.Activities.MainActivity.PERMISSIONS_REQUEST_GALLERY;
 import static com.company.meetsports.Activities.MainActivity.REQUEST_CAMERA;
 import static com.company.meetsports.Activities.MainActivity.REQUEST_GALLERY;
-import static com.company.meetsports.Activities.SignInActivity.user;
+import static com.company.meetsports.Activities.MainActivity.user;
 
 
 /**
