@@ -32,7 +32,6 @@ import android.widget.Toast;
 
 import com.appyvet.rangebar.IRangeBarFormatter;
 import com.appyvet.rangebar.RangeBar;
-import com.company.meetsports.Activities.CreateEventActivity;
 import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
@@ -59,7 +58,7 @@ import retrofit2.Response;
 
 public class CreateEventFragment extends Fragment {
 
-    private static final String TAG = "CreateEventActivity";
+    private static final String TAG = "CreateEventFragment";
     private static final int REQUEST_PLACE_PICKER = 1;
 
     public static String category;
@@ -408,7 +407,6 @@ public class CreateEventFragment extends Fragment {
                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
                    fragmentTransaction_event.commit();
 
-                   // Show message on CreateEventActivity finished
                    Snackbar snackbar = Snackbar
                            .make(getView(), "Event created successfully", Snackbar.LENGTH_LONG)
                            .setAction("CANCEL", new View.OnClickListener() {

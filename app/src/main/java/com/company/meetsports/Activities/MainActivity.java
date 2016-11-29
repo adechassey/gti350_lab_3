@@ -255,26 +255,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
 
-            // From FindEventActivity
-            case (REQUEST_FIND_EVENT): {
-                if (resultCode == FindEventActivity.RESULT_OK) {
-
-                    EventFragment fragment_event = new EventFragment();
-                    Toast.makeText(getApplicationContext(), "Event selected", Toast.LENGTH_SHORT).show();
-                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                    fragmentTransaction_event.commit();
-
-                } else if (resultCode == FindEventActivity.RESULT_CANCELED) {
-
-                    EventFragment fragment_event = new EventFragment();
-                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                    fragmentTransaction_event.commit();
-                }
-                break;
-            }
-
         }
     }
 

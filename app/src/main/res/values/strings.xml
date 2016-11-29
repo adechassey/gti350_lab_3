@@ -4,7 +4,6 @@
 
     <string name="btn_createEvent">Create</string>
 
-    <!-- CreateEventActivity -->
     <string name="category_prompt">Select a category</string>
     <string name="type_prompt">Select a type</string>
     <string name="level_prompt">Select a level</string>
@@ -54,7 +53,6 @@
     <string name="contribution_result">textView_participants_result</string>
     <string name="level_result">textView_participants_result</string>
 
-    <!-- FindEventActivity -->
     <string name="selected_place">Last Selected Place:</string>
     <string name="place_details">
     <![CDATA[
