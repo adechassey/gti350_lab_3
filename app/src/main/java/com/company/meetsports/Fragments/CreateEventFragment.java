@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
@@ -101,11 +102,21 @@ public class CreateEventFragment extends Fragment {
         textView_category = (TextView) view.findViewById(R.id.textView_category);
         textView_type = (TextView) view.findViewById(R.id.textView_type) ;
         textView_level = (TextView) view.findViewById(R.id.textView_level) ;
+
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
+        ArrayAdapter<CharSequence> adapter_category = ArrayAdapter.createFromResource(getActivity(),
+                R.array.category_array, R.layout.spinner_item);
+        adapter_category.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner_category.setAdapter(adapter_category);
+
         spinner_category.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 
 
         spinner_type = (Spinner) view.findViewById(R.id.spinner_type);
+        ArrayAdapter<CharSequence> adapter_type = ArrayAdapter.createFromResource(getActivity(),
+                R.array.type_array, R.layout.spinner_item);
+        adapter_type.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner_type.setAdapter(adapter_type);
         spinner_type.setOnItemSelectedListener(new Spinner.OnItemSelectedListener()
         {
             @Override
@@ -242,8 +253,11 @@ public class CreateEventFragment extends Fragment {
         });
 
         spinner_level = (Spinner) view.findViewById(R.id.spinner_level);
+        ArrayAdapter<CharSequence> adapter_level = ArrayAdapter.createFromResource(getActivity(),
+                R.array.level_array, R.layout.spinner_item);
+        adapter_level.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinner_level.setAdapter(adapter_level);
         spinner_level.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-        textView_level.setText(level);
 
         btn_pick_place = (Button) view.findViewById(R.id.pickPlace);
         btn_pick_place.setOnClickListener(new View.OnClickListener() {

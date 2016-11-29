@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="30dp">
+        android:layout_marginLeft="28dp">
 
         <TextView
             android:id="@+id/header_menu_my_events"
@@ -21,11 +21,13 @@
             android:gravity="center"
             android:text="MY EVENTS"
             android:textColor="@color/colorWhite"
-            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textSize="15sp"
             />
         <View
+            android:id="@+id/view_my_events"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="3dp"
             android:background="#ffffff"
             android:layout_marginTop="10dp" />
 
@@ -45,9 +47,10 @@
             android:gravity="center"
             android:text="FIND EVENTS"
             android:textColor="@color/colorWhite"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
 
         <View
+            android:id="@+id/view_find_events"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#ffffff"
@@ -66,9 +69,10 @@
             android:gravity="center"
             android:text="CREATE EVENT"
             android:textColor="@color/colorWhite"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:layout_weight="1"/>
         <View
+            android:id="@+id/view_create_event"
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="#ffffff"

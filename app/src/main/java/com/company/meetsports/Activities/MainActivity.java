@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -18,10 +19,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.MenuItem;
 import android.view.MenuInflater;
 import 	android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -88,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView Button_My_Events;
     private TextView Button_Find_Events;
     private TextView Button_Create_Event;
+    private View view_MyEvents;
+    private View view_FindEvents;
+    private View view_CreateEvent;
+
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
@@ -124,8 +131,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Initializing Toolbar and setting it as the actionbar
-         toolbar = (Toolbar) findViewById(R.id.toolbar);
-         setSupportActionBar(toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        view_MyEvents = (View) findViewById(R.id.view_my_events);
+        view_FindEvents = (View) findViewById(R.id.view_find_events);
+        view_CreateEvent = (View) findViewById(R.id.view_create_event);
+
 
         final ImageButton toolbar_menu = (ImageButton) toolbar.findViewById(R.id.toolbar_menu);
         toolbar_menu.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the MyEvents fragment
+                reload_header_menu_display();
+                Update_menu_view(Button_My_Events, view_MyEvents);
                 EventFragment fragment_my_events = new EventFragment();
                 FragmentTransaction fragmentTransaction_my_events = getFragmentManager().beginTransaction();
                 fragmentTransaction_my_events.replace(R.id.frame, fragment_my_events);
@@ -191,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the FindEvent fragment
+                reload_header_menu_display();
+                Update_menu_view(Button_Find_Events, view_FindEvents);
                 FindEventFragment fragment_find_events = new FindEventFragment();
                 FragmentTransaction fragmentTransaction_find_events = getFragmentManager().beginTransaction();
                 fragmentTransaction_find_events.replace(R.id.frame, fragment_find_events);
@@ -203,7 +219,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                    // Start the Create Event fragment
-
+                reload_header_menu_display();
+                Update_menu_view(Button_Create_Event, view_CreateEvent);
                 CreateEventFragment fragment_create_event = new CreateEventFragment();
                 FragmentTransaction fragmentTransaction_create_event = getFragmentManager().beginTransaction();
                 fragmentTransaction_create_event.replace(R.id.frame, fragment_create_event);
@@ -308,7 +325,43 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public void Update_menu_view(TextView button_event, View underline) {
 
+        button_event.setTypeface(null, Typeface.BOLD);
+        button_event.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+
+        ViewGroup.LayoutParams params = underline.getLayoutParams();
+        params.height = 9;
+        underline.setLayoutParams(params);
+
+    }
+
+    public void reload_header_menu_display() {
+
+
+        Button_My_Events.setTypeface(null, Typeface.NORMAL);
+        Button_My_Events.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+
+        Button_Find_Events.setTypeface(null, Typeface.NORMAL);
+        Button_Find_Events.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+
+        Button_Create_Event.setTypeface(null, Typeface.NORMAL);
+        Button_Create_Event.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+
+
+        ViewGroup.LayoutParams params_my = view_MyEvents.getLayoutParams();
+        ViewGroup.LayoutParams params_find = view_FindEvents.getLayoutParams();
+        ViewGroup.LayoutParams params_create = view_CreateEvent.getLayoutParams();
+
+        params_my.height = 6;
+        params_find.height = 6;
+        params_create.height = 6;
+
+        view_MyEvents.setLayoutParams(params_my);
+        view_FindEvents.setLayoutParams(params_find);
+        view_CreateEvent.setLayoutParams(params_create);
+
+    }
 
 
 }

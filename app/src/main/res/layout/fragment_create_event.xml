@@ -67,9 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
                         android:entries="@array/category_array"
-                        android:prompt="@string/category_prompt"
-                        android:gravity="end"
-                        android:textAlignment="textEnd" />
+                        android:prompt="@string/category_prompt" />
 
                 </android.support.v7.widget.CardView>
 
