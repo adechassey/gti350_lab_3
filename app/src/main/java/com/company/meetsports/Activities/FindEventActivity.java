@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
+import android.view.Window;
 
 import com.company.meetsports.Adapters.FindEventsAdapter;
 import com.company.meetsports.DataProvider.ApiClient;

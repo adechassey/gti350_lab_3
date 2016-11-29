@@ -1,6 +1,11 @@
 package com.company.meetsports.Activities;
 
+import android.app.ActionBar;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.FragmentTransaction;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -9,26 +14,43 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.MenuItem;
+import android.view.MenuInflater;
+import 	android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.PopupMenu;
+import android.widget.AdapterView;
 
+import com.appyvet.rangebar.RangeBar;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.Event;
-import com.company.meetsports.Fragments.DebugFragment;
+import com.company.meetsports.Fragments.CreateEventFragment;
 import com.company.meetsports.Fragments.EventFragment;
 import com.company.meetsports.Fragments.InfoFragment;
 import com.company.meetsports.Fragments.LogOutDialogFragment;
 import com.company.meetsports.Fragments.ProfileFragment;
+import com.company.meetsports.Fragments.FindEventFragment;
+
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_FIND_EVENT = 3;
     public static final int REQUEST_CAMERA = 4;
     public static final int REQUEST_GALLERY = 5;
+    public static final int REQUEST_PLACE_PICKER = 6;
 
     // Permissions
     public static final int PERMISSIONS_REQUEST_CAMERA = 10;
@@ -62,6 +85,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Defining Layout variables
     private Toolbar toolbar;
+    private TextView Button_My_Events;
+    private TextView Button_Find_Events;
+    private TextView Button_Create_Event;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
@@ -76,26 +102,10 @@ public class MainActivity extends AppCompatActivity {
          * This will redirect user to LoginActivity is he is not
          * logged in
          * */
-        /*
-        if (session.isLoggedIn() == false) {
-            Intent signInIntent = new Intent(this, SignInActivity.class);
-            // Closing all the Activities
-            signInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            // Add new Flag to start new Activity
-            signInIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityForResult(signInIntent, REQUEST_SIGN_IN);
-        } else {
-        */
+
         session = new SessionManager(getApplicationContext());
-        //session.checkLogin();
         if (session.isLoggedIn() == false) {
-    /*        Intent signInIntent = new Intent(this, SignInActivity.class);
-            // Closing all the Activities
-            signInIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            // Add new Flag to start new Activity
-            signInIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivityForResult(signInIntent, REQUEST_SIGN_IN);
-*/
+
             Intent signInIntent = new Intent(getApplicationContext(), SignInActivity.class);
             startActivityForResult(signInIntent, REQUEST_SIGN_IN);
         }
@@ -109,17 +119,98 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        // Initializing Toolbar and setting it as the actionbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        // drawer layout for the main activity
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
-        // Initializing NavigationView
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View header = navigationView.getHeaderView(0);
-        header_name = (TextView) header.findViewById(R.id.header_username);
-        header_email = (TextView) header.findViewById(R.id.header_email);
-        header_name.setText(user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME));
-        header_email.setText(user.get(SessionManager.KEY_EMAIL));
+
+        // Initializing Toolbar and setting it as the actionbar
+         toolbar = (Toolbar) findViewById(R.id.toolbar);
+         setSupportActionBar(toolbar);
+
+        final ImageButton toolbar_menu = (ImageButton) toolbar.findViewById(R.id.toolbar_menu);
+        toolbar_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(MainActivity.this, toolbar_menu);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.toolbar_menu, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch(item.getItemId()){
+
+                            case R.id.toolbar_menu_profile:
+                                ProfileFragment fragment_profile = new ProfileFragment();
+                                FragmentTransaction fragmentTransaction_profile = getFragmentManager().beginTransaction();
+                                fragmentTransaction_profile.replace(R.id.frame, fragment_profile);
+                                fragmentTransaction_profile.commit();
+                                return true;
+
+                            case R.id.toolbar_menu_logout:
+                                LogOutDialogFragment log_out_dialog = new LogOutDialogFragment();
+                                log_out_dialog.show(getFragmentManager(), "LogOutFragmentDialog");
+                                return true;
+
+                            case R.id.toolbar_menu_aboutus:
+                                InfoFragment fragment_info = new InfoFragment();
+                                FragmentTransaction fragmentTransaction_info = getFragmentManager().beginTransaction();
+                                fragmentTransaction_info.replace(R.id.frame, fragment_info);
+                                fragmentTransaction_info.commit();
+                                return true;
+
+                        }
+                        return true;
+                    }
+
+
+                });
+
+                popup.show(); //showing popup menu
+            }
+        }); //closing the setOnClickListener method
+
+
+        Button_My_Events = (TextView) findViewById(R.id.header_menu_my_events);
+        Button_My_Events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the MyEvents fragment
+                EventFragment fragment_my_events = new EventFragment();
+                FragmentTransaction fragmentTransaction_my_events = getFragmentManager().beginTransaction();
+                fragmentTransaction_my_events.replace(R.id.frame, fragment_my_events);
+                fragmentTransaction_my_events.commit();
+            }
+        });
+
+        Button_Find_Events = (TextView) findViewById(R.id.header_menu_find_events);
+        Button_Find_Events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the FindEvent fragment
+                FindEventFragment fragment_find_events = new FindEventFragment();
+                FragmentTransaction fragmentTransaction_find_events = getFragmentManager().beginTransaction();
+                fragmentTransaction_find_events.replace(R.id.frame, fragment_find_events);
+                fragmentTransaction_find_events.commit();
+            }
+        });
+
+        Button_Create_Event = (TextView) findViewById(R.id.header_menu_create_events);
+        Button_Create_Event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                   // Start the Create Event fragment
+
+                CreateEventFragment fragment_create_event = new CreateEventFragment();
+                FragmentTransaction fragmentTransaction_create_event = getFragmentManager().beginTransaction();
+                fragmentTransaction_create_event.replace(R.id.frame, fragment_create_event);
+                fragmentTransaction_create_event.commit();
+            }
+        });
+
 
 
         // Setting the Fragment to event
@@ -128,100 +219,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction_event.replace(R.id.frame, fragment_event);
         fragmentTransaction_event.commit();
 
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            // This method will trigger on item Click of navigation menu
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                //Checking if the item is in checked state or not, if not make it in checked state
-                if (menuItem.isChecked()) menuItem.setChecked(false);
-                else menuItem.setChecked(true);
-
-                //Closing drawer on item click
-                drawerLayout.closeDrawers();
-
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-
-                    //Replacing the main content with fragments
-                    case R.id.event:
-                        Toast.makeText(getApplicationContext(), "Opening event", Toast.LENGTH_SHORT).show();
-                        EventFragment fragment_event = new EventFragment();
-                        FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                        fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                        fragmentTransaction_event.commit();
-                        return true;
-
-                    case R.id.find_event:
-                        Toast.makeText(getApplicationContext(), "Opening find event", Toast.LENGTH_SHORT).show();
-                        Intent findEvent = new Intent(getApplicationContext(), FindEventActivity.class);
-                        startActivityForResult(findEvent, REQUEST_FIND_EVENT);
-                        return true;
-
-                    case R.id.create_event:
-                        Toast.makeText(getApplicationContext(), "Opening create event", Toast.LENGTH_SHORT).show();
-                        Intent createEvent = new Intent(getApplicationContext(), CreateEventActivity.class);
-                        startActivityForResult(createEvent, REQUEST_CREATE_EVENT);
-                        return true;
-
-                    case R.id.profile:
-                        ProfileFragment fragment_profile = new ProfileFragment();
-                        FragmentTransaction fragmentTransaction_profile = getFragmentManager().beginTransaction();
-                        fragmentTransaction_profile.replace(R.id.frame, fragment_profile);
-                        fragmentTransaction_profile.commit();
-                        return true;
-
-                    case R.id.log_out:
-                        LogOutDialogFragment log_out_dialog = new LogOutDialogFragment();
-                        log_out_dialog.show(getFragmentManager(), "LogOutFragmentDialog");
-                        return true;
-
-                    case R.id.info:
-                        InfoFragment fragment_info = new InfoFragment();
-                        FragmentTransaction fragmentTransaction_info = getFragmentManager().beginTransaction();
-                        fragmentTransaction_info.replace(R.id.frame, fragment_info);
-                        fragmentTransaction_info.commit();
-                        return true;
-
-                    case R.id.debug:
-                        DebugFragment fragment_debug = new DebugFragment();
-                        FragmentTransaction fragmentTransaction_debug = getFragmentManager().beginTransaction();
-                        fragmentTransaction_debug.replace(R.id.frame, fragment_debug);
-                        fragmentTransaction_debug.commit();
-                        return true;
-
-                    default:
-                        Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
-                        return true;
-
-                }
-            }
-        });
-
-        // Initializing Drawer Layout and ActionBarToggle
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-                super.onDrawerOpened(drawerView);
-            }
-        };
-
-        //Setting the actionbarToggle to drawer layout
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-
-        //calling sync state is necessay or else your hamburger icon wont show up
-        actionBarDrawerToggle.syncState();
     }
 
     @Override
@@ -257,111 +254,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
 
-            // From CreateEventActivity
-            case (REQUEST_CREATE_EVENT): {
-                if (resultCode == CreateEventActivity.RESULT_OK) {
-                    // TODO Extract the data returned from the child Activity.
-                    String category = data.getStringExtra("category");
-                    String type = data.getStringExtra("type");
-                    Integer year = data.getIntExtra("year", 0);
-                    Integer month = data.getIntExtra("month", 0);
-                    Integer day = data.getIntExtra("day", 0);
-                    Integer hour = data.getIntExtra("hour", 0);
-                    Integer minute = data.getIntExtra("minute", 0);
-                    Double minDuration = data.getDoubleExtra("minDuration", 0);
-                    Double maxDuration = data.getDoubleExtra("maxDuration", 0);
-                    Integer minParticipants = data.getIntExtra("minParticipants", 0);
-                    Integer maxParticipants = data.getIntExtra("maxParticipants", 0);
-                    Integer minAge = data.getIntExtra("minAge", 0);
-                    Integer maxAge = data.getIntExtra("maxAge", 0);
-                    Integer minContribution = data.getIntExtra("minContribution", 0);
-                    Integer maxContribution = data.getIntExtra("maxContribution", 0);
-                    String level = data.getStringExtra("level");
-                    String place = data.getStringExtra("place");
-                    String address = data.getStringExtra("address");
 
-                    Event newEvent = new Event(null, id_user, category, type, null, minDuration, maxDuration, minParticipants, maxParticipants, minAge, maxAge, minContribution, maxContribution, level, place, address);
-                    ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-
-                    final Call<ResponseBody> callEvent = apiService.addEvent(newEvent);
-                    callEvent.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            int statusCode = response.code();
-                            Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-
-                            EventFragment fragment_event = new EventFragment();
-                            FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                            fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                            fragmentTransaction_event.commit();
-
-                            // Show message on CreateEventActivity finished
-                            Snackbar snackbar = Snackbar
-                                    .make(drawerLayout, "Event created successfully", Snackbar.LENGTH_LONG)
-                                    .setAction("CANCEL", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                                            Call<List<Event>> call = apiService.getEventsCreatedByUserId(id_user);
-                                            call.enqueue(new Callback<List<Event>>() {
-                                                @Override
-                                                public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                                                    int statusCode = response.code();
-                                                    Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                                                    List<Event> myEvents = response.body();
-                                                    // Get the id of the last created event
-                                                    Integer id_event = myEvents.get(0).getId_event();
-                                                    Call<ResponseBody> callDelete = apiService.deleteAttendance(id_event, id_user);
-                                                    callDelete.enqueue(new Callback<ResponseBody>() {
-                                                        @Override
-                                                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                                            int statusCode = response.code();
-                                                            Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                                                            EventFragment fragment_event = new EventFragment();
-                                                            FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                                                            fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                                                            fragmentTransaction_event.commit();
-                                                            Snackbar snackbar = Snackbar.make(drawerLayout, "Event has been deleted!", Snackbar.LENGTH_SHORT);
-                                                            snackbar.show();
-                                                        }
-
-                                                        @Override
-                                                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                                            // Log error here since request failed
-                                                            Log.e(TAG, t.toString());
-                                                            Snackbar snackbar = Snackbar.make(drawerLayout, "Please check your internet connexion!", Snackbar.LENGTH_SHORT);
-                                                            snackbar.show();
-                                                        }
-                                                    });
-                                                }
-
-                                                @Override
-                                                public void onFailure(Call<List<Event>> call, Throwable t) {
-                                                    // Log error here since request failed
-                                                    Log.e(TAG, t.toString());
-
-                                                }
-                                            });
-
-
-                                        }
-                                    });
-                            snackbar.show();
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            // Log error here since request failed
-                            Log.e(TAG, t.toString());
-                        }
-                    });
-
-
-                }
-                break;
-            }
             // From FindEventActivity
             case (REQUEST_FIND_EVENT): {
                 if (resultCode == FindEventActivity.RESULT_OK) {
@@ -373,11 +266,7 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction_event.commit();
 
                 } else if (resultCode == FindEventActivity.RESULT_CANCELED) {
-/*
-                    Toast.makeText(getApplicationContext(), "You already selected this event", Toast.LENGTH_SHORT).show();
-                    Intent findEvent = new Intent(getApplicationContext(), FindEventActivity.class);
-                    startActivityForResult(findEvent, REQUEST_FIND_EVENT);
-*/
+
                     EventFragment fragment_event = new EventFragment();
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
@@ -385,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             }
+
         }
     }
 
@@ -435,4 +325,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();  // Always call the superclass method first
         Log.d(TAG, "onResume after signing in!");
     }
+
+
+
+
+
+
 }

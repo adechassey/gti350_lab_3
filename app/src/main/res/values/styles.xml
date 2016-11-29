@@ -21,11 +21,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+
         <item name="colorPrimary">@color/colorDark</item>
         <item name="colorPrimaryDark">@color/colorAppBackground</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -38,6 +40,10 @@
         <item name="android:textColorHint">@color/iron</item>
 
         <item name="colorButtonNormal">@color/colorDark</item>
+        <item name="android:popupBackground">@style/PopupMenu</item>
+        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+
+
     </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
@@ -50,5 +56,12 @@
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/starOff</item>
         <item name="colorControlActivated">@color/starOn</item>
+    </style>
+
+    <style name="PopupMenu" parent="Theme.AppCompat">
+        <item name="android:popupBackground">@color/colorWhite</item>    </style>
+
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/create_event</item>
     </style>
 </resources>
