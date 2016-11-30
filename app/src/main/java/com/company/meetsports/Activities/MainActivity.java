@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -16,10 +17,12 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.MenuItem;
 import android.view.MenuInflater;
@@ -28,6 +31,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -53,6 +59,7 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -144,10 +151,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Creating the instance of PopupMenu
+
                 PopupMenu popup = new PopupMenu(MainActivity.this, toolbar_menu);
                 //Inflating the Popup using xml file
                 popup.getMenuInflater()
                         .inflate(R.menu.toolbar_menu, popup.getMenu());
+                Object menuHelper;
+                Class[] argTypes;
+                try {
+                    Field fMenuHelper = PopupMenu.class.getDeclaredField("mPopup");
+                    fMenuHelper.setAccessible(true);
+                    menuHelper = fMenuHelper.get(popup);
+                    argTypes = new Class[] { boolean.class };
+                    menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
+                } catch (Exception e) {
+                    // Possible exceptions are NoSuchMethodError and NoSuchFieldError
+                    //
+                    // In either case, an exception indicates something is wrong with the reflection code, or the
+                    // structure of the PopupMenu class or its dependencies has changed.
+                    //
+                    // These exceptions should never happen since we're shipping the AppCompat library in our own apk,
+                    // but in the case that they do, we simply can't force icons to display, so log the error and
+                    // show the menu normally.
+
+                    Log.w(TAG, "error forcing menu icons to show", e);
+                    popup.show();
+                    return;
+                }
 
                 //registering popup with OnMenuItemClickListener
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -181,7 +211,9 @@ public class MainActivity extends AppCompatActivity {
 
                 });
 
+
                 popup.show(); //showing popup menu
+
             }
         }); //closing the setOnClickListener method
 
