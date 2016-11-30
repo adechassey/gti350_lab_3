@@ -11,9 +11,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,13 +23,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.Toast;
-
 
 import com.appyvet.rangebar.IRangeBarFormatter;
 import com.appyvet.rangebar.RangeBar;
@@ -40,7 +33,6 @@ import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.Event;
-import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -48,7 +40,6 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -65,15 +56,15 @@ public class CreateEventFragment extends Fragment {
     private static final String TAG = "CreateEventFragment";
     private static final int REQUEST_PLACE_PICKER = 1;
 
-    public static String category;
-    public static String type;
+    public static String category = "Running";
+    public static String type = "For fun";
     public static Integer year;
     public static Integer month;
     public static Integer day;
     public static Integer hour;
     public static Integer minute;
-    public static Double minDuration = 1.0;
-    public static Double maxDuration = 3.0;
+    public static Double minDuration = 0.2;
+    public static Double maxDuration = 1.0;
     public static Integer minParticipants = 1;
     public static Integer maxParticipants = 4;
     public static Integer minAge = 18;
@@ -117,7 +108,7 @@ public class CreateEventFragment extends Fragment {
                 R.array.category_array, R.layout.spinner_item);
         adapter_category.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner_category.setAdapter(adapter_category);
-
+        spinner_category.setSelection(3, true);
         spinner_category.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 
 
@@ -126,17 +117,14 @@ public class CreateEventFragment extends Fragment {
                 R.array.type_array, R.layout.spinner_item);
         adapter_type.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spinner_type.setAdapter(adapter_type);
-        spinner_type.setOnItemSelectedListener(new Spinner.OnItemSelectedListener()
-        {
+        spinner_type.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
-            {
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 type = parentView.getItemAtPosition(position).toString();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView)
-            {
+            public void onNothingSelected(AdapterView<?> parentView) {
             }
         });
 
@@ -154,7 +142,7 @@ public class CreateEventFragment extends Fragment {
         date_result.setText(day + "/" + month + "/" + year);
 
         rangebar_duration = (RangeBar) view.findViewById(R.id.rangebar_duration);
-        rangebar_duration.setRangePinsByValue(1, 3);
+        rangebar_duration.setRangePinsByValue(Float.parseFloat(minDuration.toString()), Float.parseFloat(maxDuration.toString()));
         duration_result = (TextView) view.findViewById(R.id.textView_duration_result);
         duration_result.setText(minDuration + "h - " + maxDuration + "h");
         rangebar_duration.setOnRangeBarChangeListener(new CustomOnRangeBarChangeListener());
@@ -162,10 +150,13 @@ public class CreateEventFragment extends Fragment {
             @Override
             public String format(String s) {
                 // Transform the String s here then return s
-                if (s.equals("5"))
+                if (s.equals("5")) {
+                    duration_result.setText(minDuration + "h - more than 4h");
                     return "4+";
-                duration_result.setText(minDuration + "h - " + maxDuration + "h");
-                return s;
+                } else {
+                    duration_result.setText(minDuration + "h - " + maxDuration + "h");
+                    return s;
+                }
             }
         });
 
@@ -184,7 +175,7 @@ public class CreateEventFragment extends Fragment {
 
 
         rangebar_participants = (RangeBar) view.findViewById(R.id.rangebar_participants);
-        rangebar_participants.setRangePinsByValue(1, 4);
+        rangebar_participants.setRangePinsByValue(minParticipants, maxParticipants);
         rangebar_participants.setOnRangeBarChangeListener(new CustomOnRangeBarChangeListener());
         participants_result = (TextView) view.findViewById(R.id.textView_participants_result);
         participants_result.setText(minParticipants + " to " + maxParticipants + " persons");
@@ -224,7 +215,7 @@ public class CreateEventFragment extends Fragment {
         });
 
         rangebar_age = (RangeBar) view.findViewById(R.id.rangebar_age);
-        rangebar_age.setRangePinsByValue(18, 25);
+        rangebar_age.setRangePinsByValue(minAge, maxAge);
         rangebar_age.setOnRangeBarChangeListener(new CustomOnRangeBarChangeListener());
         age_result = (TextView) view.findViewById(R.id.textView_age_result);
         age_result.setText(minAge + " to " + maxAge + " years old");
@@ -243,7 +234,7 @@ public class CreateEventFragment extends Fragment {
         });
 
         rangebar_contribution = (RangeBar) view.findViewById(R.id.rangebar_contribution);
-        rangebar_contribution.setRangePinsByValue(0, 0);
+        rangebar_contribution.setRangePinsByValue(minContribution, maxContribution);
         rangebar_contribution.setOnRangeBarChangeListener(new CustomOnRangeBarChangeListener());
         contribution_result = (TextView) view.findViewById(R.id.textView_contribution_result);
         contribution_result.setText(minContribution + " $");
@@ -286,8 +277,8 @@ public class CreateEventFragment extends Fragment {
             }
         });
 
-       //place_result = (TextView) view.findViewById(R.id.textView_place_result);
-       //address_result = (TextView) view.findViewById(R.id.textView_address_result);
+        //place_result = (TextView) view.findViewById(R.id.textView_place_result);
+        //address_result = (TextView) view.findViewById(R.id.textView_address_result);
 
 
         btn_create_event = (Button) view.findViewById(R.id.btn_create_event);
@@ -318,13 +309,13 @@ public class CreateEventFragment extends Fragment {
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             textview_place.setLayoutParams(lparams);
 
-            textview_place.setPadding(0,10,0,5);
+            textview_place.setPadding(0, 10, 0, 5);
             textview_place.setGravity(Gravity.CENTER);
             textview_place.setTextColor(0xff183c69);
             textview_place.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
             textview_place.setText(place);
 
-            textview_address.setPadding(5,5,5,15);
+            textview_address.setPadding(5, 5, 5, 15);
             textview_address.setGravity(Gravity.CENTER);
             textview_address.setTextColor(0xff183c69);
             textview_address.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
@@ -348,9 +339,8 @@ public class CreateEventFragment extends Fragment {
             if (parent.getId() == R.id.spinner_category) {
                 category = parent.getItemAtPosition(pos).toString();
             } else if (parent.getId() == R.id.spinner_type) {
-              type = parent.getItemAtPosition(pos).toString();
-            } else
-            if (parent.getId() == R.id.spinner_level) {
+                type = parent.getItemAtPosition(pos).toString();
+            } else if (parent.getId() == R.id.spinner_level) {
                 level = parent.getItemAtPosition(pos).toString();
             }
         }
@@ -434,90 +424,89 @@ public class CreateEventFragment extends Fragment {
     }
 
 
+    public void create_event() {
 
-   public void create_event() {
+        if (address == null) {
+            Snackbar.make(getView(), "Please pick a place first", Snackbar.LENGTH_SHORT).show();
+        } else {
+            Event newEvent = new Event(null, MainActivity.id_user, category, type, null, minDuration, maxDuration, minParticipants, maxParticipants, minAge, maxAge, minContribution, maxContribution, level, place, address);
+            ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
 
-       if(address == null){
-           Snackbar.make(getView(), "Please pick a place first", Snackbar.LENGTH_SHORT).show();
-       } else {
-           Event newEvent = new Event(null, MainActivity.id_user, category, type, null, minDuration, maxDuration, minParticipants, maxParticipants, minAge, maxAge, minContribution, maxContribution, level, place, address);
-           ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+            final Call<ResponseBody> callEvent = apiService.addEvent(newEvent);
+            callEvent.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    int statusCode = response.code();
+                    Log.d(TAG, "Status code: " + String.valueOf(statusCode));
 
-           final Call<ResponseBody> callEvent = apiService.addEvent(newEvent);
-           callEvent.enqueue(new Callback<ResponseBody>() {
-               @Override
-               public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                   int statusCode = response.code();
-                   Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                    EventFragment fragment_event = new EventFragment();
+                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                    fragmentTransaction_event.commit();
 
-                   EventFragment fragment_event = new EventFragment();
-                   FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                   fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                   fragmentTransaction_event.commit();
+                    Snackbar snackbar = Snackbar
+                            .make(getView(), "Event created successfully", Snackbar.LENGTH_LONG)
+                            .setAction("CANCEL", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+                                    Call<List<Event>> call = apiService.getEventsCreatedByUserId(MainActivity.id_user);
+                                    call.enqueue(new Callback<List<Event>>() {
+                                        @Override
+                                        public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
+                                            int statusCode = response.code();
+                                            Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                                            List<Event> myEvents = response.body();
+                                            // Get the id of the last created event
+                                            Integer id_event = myEvents.get(0).getId_event();
+                                            Call<ResponseBody> callDelete = apiService.deleteAttendance(id_event, MainActivity.id_user);
+                                            callDelete.enqueue(new Callback<ResponseBody>() {
+                                                @Override
+                                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                                    int statusCode = response.code();
+                                                    Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                                                    EventFragment fragment_event = new EventFragment();
+                                                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
+                                                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
+                                                    fragmentTransaction_event.commit();
+                                                    Snackbar snackbar = Snackbar.make(getView(), "Event has been deleted!", Snackbar.LENGTH_SHORT);
+                                                    snackbar.show();
+                                                }
 
-                   Snackbar snackbar = Snackbar
-                           .make(getView(), "Event created successfully", Snackbar.LENGTH_LONG)
-                           .setAction("CANCEL", new View.OnClickListener() {
-                               @Override
-                               public void onClick(View view) {
-                                   final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
-                                   Call<List<Event>> call = apiService.getEventsCreatedByUserId(MainActivity.id_user);
-                                   call.enqueue(new Callback<List<Event>>() {
-                                       @Override
-                                       public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                                           int statusCode = response.code();
-                                           Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                                           List<Event> myEvents = response.body();
-                                           // Get the id of the last created event
-                                           Integer id_event = myEvents.get(0).getId_event();
-                                           Call<ResponseBody> callDelete = apiService.deleteAttendance(id_event, MainActivity.id_user);
-                                           callDelete.enqueue(new Callback<ResponseBody>() {
-                                               @Override
-                                               public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                                   int statusCode = response.code();
-                                                   Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                                                   EventFragment fragment_event = new EventFragment();
-                                                   FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                                                   fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                                                   fragmentTransaction_event.commit();
-                                                   Snackbar snackbar = Snackbar.make(getView(), "Event has been deleted!", Snackbar.LENGTH_SHORT);
-                                                   snackbar.show();
-                                               }
+                                                @Override
+                                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                                    // Log error here since request failed
+                                                    Log.e(TAG, t.toString());
+                                                    Snackbar snackbar = Snackbar.make(getView(), "Please check your internet connexion!", Snackbar.LENGTH_SHORT);
+                                                    snackbar.show();
+                                                }
+                                            });
+                                        }
 
-                                               @Override
-                                               public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                                   // Log error here since request failed
-                                                   Log.e(TAG, t.toString());
-                                                   Snackbar snackbar = Snackbar.make(getView(), "Please check your internet connexion!", Snackbar.LENGTH_SHORT);
-                                                   snackbar.show();
-                                               }
-                                           });
-                                       }
+                                        @Override
+                                        public void onFailure(Call<List<Event>> call, Throwable t) {
+                                            // Log error here since request failed
+                                            Log.e(TAG, t.toString());
 
-                                       @Override
-                                       public void onFailure(Call<List<Event>> call, Throwable t) {
-                                           // Log error here since request failed
-                                           Log.e(TAG, t.toString());
-
-                                       }
-                                   });
-
-
-                               }
-                           });
-                   snackbar.show();
+                                        }
+                                    });
 
 
-               }
+                                }
+                            });
+                    snackbar.show();
 
-               @Override
-               public void onFailure(Call<ResponseBody> call, Throwable t) {
-                   // Log error here since request failed
-                   Log.e(TAG, t.toString());
-               }
-           });
-       }
-   }
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    // Log error here since request failed
+                    Log.e(TAG, t.toString());
+                }
+            });
+        }
+    }
 
 }
 

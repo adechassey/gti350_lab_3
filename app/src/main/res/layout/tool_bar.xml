@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/logo_sign_in"
-            android:text="Meet\nSports"
+            android:text="Meet Sports"
             android:fontFamily="Cooper Black"
             android:layout_width="fill_parent"
             android:gravity="left"

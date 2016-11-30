@@ -1,7 +1,6 @@
 package com.company.meetsports.Fragments;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,17 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.Adapters.FindEventsAdapter;
-import com.company.meetsports.Adapters.MyEventsAdapter;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.Event;
 import com.company.meetsports.R;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 
 import java.util.List;
 
@@ -36,7 +29,7 @@ import static com.company.meetsports.Activities.MainActivity.id_user;
  * Created by VMabille on 28/11/2016.
  */
 
-public class FindEventFragment extends Fragment  {
+public class FindEventFragment extends Fragment {
     private static final String TAG = "FindEventFragment";
 
     private SwipeRefreshLayout swipeContainer;
@@ -47,7 +40,6 @@ public class FindEventFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_find_events, container, false);
         Log.d(TAG, "onCreate...");
-        Toast.makeText(getActivity(), "User id: " + id_user.toString(), Toast.LENGTH_LONG).show();
         Log.d(TAG, "User id: " + id_user.toString());
         final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.find_events_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -110,13 +102,14 @@ public class FindEventFragment extends Fragment  {
                 recyclerViewForAsync.setAdapter(new FindEventsAdapter(findEvents, R.layout.list_item_event_find, getActivity().getApplicationContext()));
                 if (response.isSuccessful())
                     swipeContainer.setRefreshing(false);
+                Toast.makeText(getActivity(), "Finished updating!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-
+                Toast.makeText(getActivity(), "Sorry, there was an error while updating!", Toast.LENGTH_SHORT).show();
             }
         });
     }

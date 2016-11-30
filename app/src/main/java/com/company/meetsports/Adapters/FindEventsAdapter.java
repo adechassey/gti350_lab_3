@@ -165,7 +165,7 @@ public class FindEventsAdapter extends RecyclerView.Adapter<FindEventsAdapter.Ev
                                             notifyItemRangeChanged(position, findEvents.size());*/
 
                                             // Show the removed item label
-                                            Toast.makeText(context, "Event added successfully", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "Event was added successfully in your events.", Toast.LENGTH_SHORT).show();
                                         }
                                     }
 

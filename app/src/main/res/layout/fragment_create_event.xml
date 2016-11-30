@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <ScrollView
@@ -11,18 +11,18 @@
 
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            xmlns:custom="http://schemas.android.com/apk/res-auto"
             xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:custom="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/activity_create_event"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorAppBackground"
+            android:orientation="vertical"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            android:orientation="vertical">
+            android:paddingTop="@dimen/activity_vertical_margin">
 
             <TextView
                 android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="40dp"
                 android:orientation="vertical"
                 android:textColor="@color/white">
 
@@ -97,8 +97,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
                         android:entries="@array/type_array"
-                        android:prompt="@string/type_prompt"
                         android:gravity="end"
+                        android:prompt="@string/type_prompt"
                         android:textAlignment="textEnd" />
 
                 </android.support.v7.widget.CardView>
@@ -219,7 +219,6 @@
                         custom:pinColor="@color/colorPin"
                         custom:pinMaxFont="12sp"
                         custom:pinRadius="15sp"
-                        custom:rangeBar="false"
                         custom:rangeBarColor="@color/colorRangebar"
                         custom:selectorColor="@color/colorSelector"
                         custom:selectorSize="8sp"
@@ -245,62 +244,45 @@
                     android:layout_marginStart="5dp"
                     custom:cardBackgroundColor="@color/colorBackgroundSoft">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/textView_participants"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_margin="12dp"
+                        android:text="Participants"
+                        android:textColor="@color/colorAppBackground"
+                        android:textSize="18sp"
+                        tools:ignore="HardcodedText" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/textView_participants_result"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="12dp"
+                        android:text="@string/duration_result"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/create_event"
+                        android:textSize="16sp"
+                        android:textStyle="normal|bold" />
 
-                            <TextView
-                                android:id="@+id/textView_participants"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="12dp"
-                                android:layout_marginBottom="5dp"
-                                android:text="Participants"
-                                android:textColor="@color/colorAppBackground"
-                                android:textSize="18sp"
-                                tools:ignore="HardcodedText" />
-
-                            <TextView
-                                android:id="@+id/textView_participants_result"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="12dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_marginEnd="5dp"
-                                android:text="@string/participants_result"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/create_event"
-                                android:textSize="16sp"
-                                android:textStyle="normal|bold" />
-
-                        </LinearLayout>
-
-                        <com.appyvet.rangebar.RangeBar
-                            android:id="@+id/rangebar_participants"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="17dp"
-                            android:layout_marginRight="17dp"
-                            custom:barWeight="3dp"
-                            custom:connectingLineColor="@color/colorConnectingLine"
-                            custom:connectingLineWeight="3dp"
-                            custom:pinColor="@color/colorPin"
-                            custom:pinMaxFont="12sp"
-                            custom:pinRadius="15sp"
-                            custom:rangeBarColor="@color/colorRangebar"
-                            custom:selectorColor="@color/colorSelector"
-                            custom:selectorSize="8sp"
-                            custom:tickEnd="11"
-                            custom:tickInterval="1"
-                            custom:tickStart="1" />
-
-                    </LinearLayout>
+                    <com.appyvet.rangebar.RangeBar
+                        android:id="@+id/rangebar_participants"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginRight="17dp"
+                        custom:barWeight="3dp"
+                        custom:connectingLineColor="@color/colorConnectingLine"
+                        custom:connectingLineWeight="3dp"
+                        custom:pinColor="@color/colorPin"
+                        custom:pinMaxFont="12sp"
+                        custom:pinRadius="15sp"
+                        custom:rangeBarColor="@color/colorRangebar"
+                        custom:selectorColor="@color/colorSelector"
+                        custom:selectorSize="8sp"
+                        custom:tickEnd="11"
+                        custom:tickInterval="1"
+                        custom:tickStart="1" />
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
@@ -450,18 +432,18 @@
             </LinearLayout>
 
             <android.support.v7.widget.CardView
-                app:cardBackgroundColor="@color/colorBackgroundSoft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"                >
+                android:layout_marginRight="5dp"
+                app:cardBackgroundColor="@color/colorBackgroundSoft">
 
                 <LinearLayout
                     android:id="@+id/cardview_placePicker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@color/colorDark">
+                    android:background="@color/colorDark"
+                    android:orientation="vertical">
 
                     <android.support.v7.widget.AppCompatButton
                         android:id="@+id/pickPlace"
@@ -469,27 +451,27 @@
                         android:layout_height="wrap_content"
                         android:text="Pick a place" />
 
-<!--
-                    <TextView
-                        android:id="@+id/textView_place_result"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
-                        android:textAlignment="center"
-                        android:text="Place"
-                        android:textColor="@color/colorAppBackground"
-                        android:textSize="16sp" />
+                    <!--
+                                        <TextView
+                                            android:id="@+id/textView_place_result"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="12dp"
+                                            android:textAlignment="center"
+                                            android:text="Place"
+                                            android:textColor="@color/colorAppBackground"
+                                            android:textSize="16sp" />
 
-                    <TextView
-                        android:id="@+id/textView_address_result"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="12dp"
-                        android:textColor="@color/colorAppBackground"
-                        android:text="Adress"
-                        android:textSize="16sp"
-                        android:textStyle="normal|bold" />
--->
+                                        <TextView
+                                            android:id="@+id/textView_address_result"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="12dp"
+                                            android:textColor="@color/colorAppBackground"
+                                            android:text="Adress"
+                                            android:textSize="16sp"
+                                            android:textStyle="normal|bold" />
+                    -->
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -498,19 +480,14 @@
                 android:id="@+id/btn_create_event"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:layout_marginBottom="24dp"
+                android:layout_marginTop="24dp"
                 android:padding="12dp"
                 android:text="Create event" />
 
 
-
         </LinearLayout>
 
-
-
-
     </ScrollView>
-
 
 </LinearLayout>

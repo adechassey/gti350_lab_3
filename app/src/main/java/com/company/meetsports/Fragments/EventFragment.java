@@ -98,16 +98,18 @@ public class EventFragment extends Fragment {
                 int statusCode = response.code();
                 Log.d(TAG, "Status code: " + String.valueOf(statusCode));
                 List<Event> myEvents = response.body();
-                recyclerViewForAsync.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
+                if (myEvents != null)
+                    recyclerViewForAsync.setAdapter(new MyEventsAdapter(myEvents, R.layout.list_item_event_my, getActivity().getApplicationContext()));
                 if (response.isSuccessful())
                     swipeContainer.setRefreshing(false);
+                Toast.makeText(getActivity(), "Finished updating!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<Event>> call, Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
-
+                Toast.makeText(getActivity(), "Sorry, there was an error while updating!", Toast.LENGTH_SHORT).show();
             }
         });
     }
