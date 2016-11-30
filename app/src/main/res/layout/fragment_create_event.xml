@@ -452,30 +452,28 @@
             <android.support.v7.widget.CardView
                 app:cardBackgroundColor="@color/colorBackgroundSoft"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="30dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+                android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:id="@+id/cardview_placePicker"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <Button
+                    <android.support.v7.widget.AppCompatButton
                         android:id="@+id/pickPlace"
-                        style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:text="Pick a place" />
 
+<!--
                     <TextView
                         android:id="@+id/textView_place_result"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
                         android:textAlignment="center"
+                        android:text="Place"
                         android:textColor="@color/colorAppBackground"
                         android:textSize="16sp" />
 
@@ -485,8 +483,10 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="12dp"
                         android:textColor="@color/colorAppBackground"
+                        android:text="Adress"
                         android:textSize="16sp"
                         android:textStyle="normal|bold" />
+-->
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

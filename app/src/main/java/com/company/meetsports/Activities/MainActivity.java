@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         // id_user
         id_user = Integer.valueOf(user.get(SessionManager.KEY_ID));
 
-        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
         setContentView(R.layout.activity_main);
 

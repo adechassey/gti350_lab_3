@@ -39,7 +39,6 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_event, container, false);
         Log.d(TAG, "onCreate...");
-        Toast.makeText(getActivity(), "User id: " + id_user.toString(), Toast.LENGTH_LONG).show();
         Log.d(TAG, "User id: " + id_user.toString());
         final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.events_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

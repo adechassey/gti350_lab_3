@@ -8,6 +8,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatButton;
@@ -15,6 +16,8 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,10 +91,17 @@ public class CreateEventFragment extends Fragment {
     public static Button btn_pick_place;
     public static Button btn_create_event;
 
+    public static LinearLayout cardView_placePicker;
+    public static TextView textview_place;
+    public static TextView textview_address;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         final View view = inflater.inflate(R.layout.fragment_create_event, container, false);
+
+        textview_place = new TextView(getActivity());
+        textview_address = new TextView(getActivity());
 
         Calendar cal = Calendar.getInstance();
 
@@ -99,9 +109,8 @@ public class CreateEventFragment extends Fragment {
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
 
-        textView_category = (TextView) view.findViewById(R.id.textView_category);
-        textView_type = (TextView) view.findViewById(R.id.textView_type) ;
-        textView_level = (TextView) view.findViewById(R.id.textView_level) ;
+        cardView_placePicker = (LinearLayout) view.findViewById(R.id.cardview_placePicker);
+
 
         spinner_category = (Spinner) view.findViewById(R.id.spinner_category);
         ArrayAdapter<CharSequence> adapter_category = ArrayAdapter.createFromResource(getActivity(),
@@ -277,10 +286,8 @@ public class CreateEventFragment extends Fragment {
             }
         });
 
-        place_result = (TextView) view.findViewById(R.id.textView_place_result);
-        place_result.setText(place);
-        address_result = (TextView) view.findViewById(R.id.textView_address_result);
-        address_result.setText(address);
+       //place_result = (TextView) view.findViewById(R.id.textView_place_result);
+       //address_result = (TextView) view.findViewById(R.id.textView_address_result);
 
 
         btn_create_event = (Button) view.findViewById(R.id.btn_create_event);
@@ -300,11 +307,37 @@ public class CreateEventFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_PLACE_PICKER && resultCode == Activity.RESULT_OK) {
+
+
             Place placePicked = PlacePicker.getPlace(getActivity(), data);
             place = placePicked.getName().toString();
             address = placePicked.getAddress().toString();
-            place_result.setText(place);
-            address_result.setText(address);
+
+
+            ViewGroup.LayoutParams lparams = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            textview_place.setLayoutParams(lparams);
+
+            textview_place.setPadding(0,10,0,5);
+            textview_place.setGravity(Gravity.CENTER);
+            textview_place.setTextColor(0xff183c69);
+            textview_place.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            textview_place.setText(place);
+
+            textview_address.setPadding(5,5,5,15);
+            textview_address.setGravity(Gravity.CENTER);
+            textview_address.setTextColor(0xff183c69);
+            textview_address.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            textview_address.setTypeface(null, Typeface.BOLD);
+
+            textview_address.setText(address);
+
+
+            cardView_placePicker.addView(textview_place);
+            cardView_placePicker.addView(textview_address);
+
+            //place_result.setText(place);
+            //address_result.setText(address);
         }
     }
 
