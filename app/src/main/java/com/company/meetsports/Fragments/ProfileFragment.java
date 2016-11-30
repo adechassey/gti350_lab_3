@@ -52,6 +52,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public static TextView profile_age;
     public static TextView profile_email;
 
+    public static String name_profile;
+    public static String surname_profile;
+    public static String age_profile;
+    public static String email_profile;
+
     private ImageView profile_picture;
 
     @Nullable
@@ -60,6 +65,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         Log.d(TAG, "onCreate...");
+
+        name_profile = user.get(SessionManager.KEY_NAME);
+        surname_profile = user.get(SessionManager.KEY_SURNAME);
+        age_profile = user.get(SessionManager.KEY_AGE);
+        email_profile = user.get(SessionManager.KEY_EMAIL);
 
         profile_picture = (ImageView) v.findViewById(R.id.profile_picture);
         edit_name = (TextView) v.findViewById(R.id.profile_edit_name);
@@ -160,16 +170,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public static void display_user_infos() {
 
-        //Update user infos
         profile_name.setText(user.get(SessionManager.KEY_NAME));
         profile_surname.setText(user.get(SessionManager.KEY_SURNAME));
-        //profile_gender.setText(user.get(SessionManager.KEY_GENDER));  disabled le temps d'ajouter fonction pour modif genre dans la db
-        profile_gender.setText(GenderPickerDialogFragment.GENDER_PICKED);
+        //profile_gender.setText(user.get(SessionManager.KEY_GENDER)); // disabled le temps d'ajouter fonction pour modif genre dans la db
+        profile_gender.setText("Male");
         profile_age.setText(user.get(SessionManager.KEY_AGE));
         profile_email.setText(user.get(SessionManager.KEY_EMAIL));
 
     }
 
+    public static void update_user_infos(){
+
+        if(GenderPickerDialogFragment.GENDER_PICKED != "") {
+            profile_gender.setText(GenderPickerDialogFragment.GENDER_PICKED);
+        } else {
+            profile_gender.setText(GenderPickerDialogFragment.GENDER_PICKED);
+        }
+        profile_name.setText(name_profile);
+        profile_surname.setText(surname_profile);
+        profile_age.setText(age_profile);
+        profile_email.setText(email_profile);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

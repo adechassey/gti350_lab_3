@@ -333,6 +333,7 @@ public class CreateEventFragment extends Fragment {
             textview_address.setText(address);
 
 
+            cardView_placePicker.setBackgroundColor(0x00fffcf2);
             cardView_placePicker.addView(textview_place);
             cardView_placePicker.addView(textview_address);
 

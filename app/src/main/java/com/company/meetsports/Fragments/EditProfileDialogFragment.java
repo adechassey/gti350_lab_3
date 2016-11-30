@@ -25,6 +25,8 @@ public class EditProfileDialogFragment {
 
     private static String newPassord;
 
+
+
     public static void showAlertDialog(final Context context, String Title, String Hint) {
         // Build the dialog and set up the button click handlers
 
@@ -44,13 +46,13 @@ public class EditProfileDialogFragment {
             @Override
             public void onInput(MaterialDialog dialog, CharSequence input) {
                 if (title == "Edit Name") {
-                    String name = input.toString();
+                    ProfileFragment.name_profile = input.toString();
                 } else if (title == "Edit Surname") {
-                    String surname = input.toString();
+                    ProfileFragment.surname_profile = input.toString();
                 } else if (title == "Edit Age") {
-                    String age = input.toString();
+                    ProfileFragment.age_profile = input.toString();
                 } else if (title == "Edit E-mail") {
-                    String email = input.toString();
+                    ProfileFragment.email_profile = input.toString();
                 } else if (title == "Edit Password") {
 
                     String password = input.toString();
@@ -77,7 +79,7 @@ public class EditProfileDialogFragment {
                 }
 
                 if (title != "Enter number of participants") {
-                    ProfileFragment.display_user_infos();
+                    ProfileFragment.update_user_infos();
 
                 }
             }
