@@ -1,12 +1,6 @@
 package com.company.meetsports.Activities;
 
-import android.app.ActionBar;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.FragmentTransaction;
-import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -14,60 +8,31 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ListPopupWindow;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.MenuItem;
-import android.view.MenuInflater;
-import 	android.view.Menu;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
-import android.widget.Toast;
 import android.widget.PopupMenu;
-import android.widget.AdapterView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.appyvet.rangebar.RangeBar;
-import com.company.meetsports.DataProvider.ApiClient;
-import com.company.meetsports.DataProvider.ApiInterface;
-import com.company.meetsports.Entities.Event;
 import com.company.meetsports.Fragments.CreateEventFragment;
 import com.company.meetsports.Fragments.EventFragment;
+import com.company.meetsports.Fragments.FindEventFragment;
 import com.company.meetsports.Fragments.InfoFragment;
 import com.company.meetsports.Fragments.LogOutDialogFragment;
 import com.company.meetsports.Fragments.ProfileFragment;
-import com.company.meetsports.Fragments.FindEventFragment;
-
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.lang.reflect.Field;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -90,9 +55,6 @@ public class MainActivity extends AppCompatActivity {
     public static HashMap<String, String> user = new HashMap<>();
     public static Integer id_user;
 
-    public static TextView header_name;
-    public static TextView header_email;
-
     // Defining Layout variables
     private Toolbar toolbar;
     private LinearLayout Button_My_Events;
@@ -104,9 +66,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView_menu_my;
     private TextView textView_menu_find;
     private TextView textView_menu_create;
-
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
 
 
     @Override
@@ -135,9 +94,6 @@ public class MainActivity extends AppCompatActivity {
         //Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
         setContentView(R.layout.activity_main);
-
-        // drawer layout for the main activity
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
 
         // Initializing Toolbar and setting it as the actionbar
@@ -168,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                     Field fMenuHelper = PopupMenu.class.getDeclaredField("mPopup");
                     fMenuHelper.setAccessible(true);
                     menuHelper = fMenuHelper.get(popup);
-                    argTypes = new Class[] { boolean.class };
+                    argTypes = new Class[]{boolean.class};
                     menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
                 } catch (Exception e) {
                     // Possible exceptions are NoSuchMethodError and NoSuchFieldError
@@ -189,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
 
-                        switch(item.getItemId()){
+                        switch (item.getItemId()) {
 
                             case R.id.toolbar_menu_profile:
                                 ProfileFragment fragment_profile = new ProfileFragment();
@@ -256,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         Button_Create_Event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                   // Start the Create Event fragment
+                // Start the Create Event fragment
                 reload_header_menu_display();
                 Update_menu_view(textView_menu_create, view_CreateEvent);
                 CreateEventFragment fragment_create_event = new CreateEventFragment();
@@ -265,7 +221,6 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction_create_event.commit();
             }
         });
-
 
 
         // Setting the Fragment to event
@@ -290,8 +245,6 @@ public class MainActivity extends AppCompatActivity {
                     // id_user
                     id_user = Integer.valueOf(user.get(SessionManager.KEY_ID));
 
-                    header_name.setText(user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME));
-                    header_email.setText(user.get(SessionManager.KEY_EMAIL));
                     Toast.makeText(getApplicationContext(), "Welcome " + user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME) + ", you are now logged in", Toast.LENGTH_LONG).show();
 
                     EventFragment fragment_event = new EventFragment();
@@ -360,7 +313,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();  // Always call the superclass method first
         Log.d(TAG, "onResume after signing in!");
     }
-
 
 
     public void Update_menu_view(TextView button_event, View underline) {

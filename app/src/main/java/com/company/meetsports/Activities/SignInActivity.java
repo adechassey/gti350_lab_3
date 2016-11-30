@@ -102,11 +102,37 @@ public class SignInActivity extends AppCompatActivity {
                         email = input_Email.getText().toString();
                         password = input_Password.getText().toString();
 
-                        if (password.equals("user")) {
-                            LoginSuccess();
-                        } else {
-                            LoginFailed();
-                        }
+                        // Set authorization default to false
+                        final Boolean[] isAuthorized = {false};
+
+                        // Requesting authorization from server
+                        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+                        Call<Boolean> call = apiService.getUserAccess(email, password);
+                        call.enqueue(new Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                int statusCode = response.code();
+                                Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                                if (statusCode == 200) {
+                                    // Remove the item on remove/button click
+                                    isAuthorized[0] = response.body();
+                                    Log.d(TAG, isAuthorized[0].toString());
+
+                                    if (isAuthorized[0]) {
+                                        LoginSuccess();
+                                    } else {
+                                        LoginFailed();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                // Log error here since request failed
+                                Log.e(TAG, t.toString());
+                                LoginFailed();
+                            }
+                        });
                         progressDialog.dismiss();
                     }
                 }, 3000);
@@ -117,9 +143,9 @@ public class SignInActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGN_UP) {
             if (resultCode == SignUpActivity.RESULT_OK) {
-                    // automatically loggs in the new user
-                    // this.finish();
-                    recreate();
+                // automatically loggs in the new user
+                // this.finish();
+                recreate();
             }
         }
     }

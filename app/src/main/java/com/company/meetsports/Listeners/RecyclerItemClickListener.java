@@ -1,4 +1,4 @@
-package com.company.meetsports.Fragments;
+package com.company.meetsports.Listeners;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

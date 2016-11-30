@@ -18,7 +18,7 @@ import retrofit2.http.Path;
 
 public interface ApiInterface {
 
-    // Events methods
+    // Event methods
     @GET("events")
     //Call<EventsResponse> getAllEvents(@Query("api_key") String apiKey);
     Call<List<Event>> getAllEvents();
@@ -54,6 +54,10 @@ public interface ApiInterface {
     @POST("users")
     @FormUrlEncoded
     Call<User> getUserByUsername(@Field("email") String email);
+
+    @POST("users/access")
+    @FormUrlEncoded
+    Call<Boolean> getUserAccess(@Field("email") String email, @Field("password") String password);
 
     @POST("users")
     Call<ResponseBody> addUser(@Body User user);
