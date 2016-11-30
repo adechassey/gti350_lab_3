@@ -64,7 +64,7 @@ public class FindEventsAdapter extends RecyclerView.Adapter<FindEventsAdapter.Ev
             date = (TextView) v.findViewById(R.id.date);
             time = (TextView) v.findViewById(R.id.time);
             duration = (TextView) v.findViewById(R.id.duration);
-            participants = (TextView) v.findViewById(R.id.participants);
+            participants = (TextView) v.findViewById(R.id.nb_participants);
             age = (TextView) v.findViewById(R.id.age);
             contribution = (TextView) v.findViewById(R.id.contribution);
             level = (TextView) v.findViewById(R.id.level);
@@ -98,11 +98,11 @@ public class FindEventsAdapter extends RecyclerView.Adapter<FindEventsAdapter.Ev
         holder.time.setText(sdfTime.format(findEvents.get(position).getDate_time()));
         holder.duration.setText(findEvents.get(position).getMinDuration().toString() + " - " + findEvents.get(position).getMaxDuration().toString() + "h");
         holder.age.setText(findEvents.get(position).getMinAge().toString() + " - " + findEvents.get(position).getMaxAge().toString() + " years");
-        /*holder.participants.setText(findEvents.get(position).getMinParticipants().toString() + " - " + findEvents.get(position).getMaxParticipants().toString() + " persons");
-        holder.contribution.setText(findEvents.get(position).getMinContribution().toString() + " - " + findEvents.get(position).getMaxContribution().toString() + "$");
+        holder.participants.setText(findEvents.get(position).getMinParticipants().toString() + " - " + findEvents.get(position).getMaxParticipants().toString() + " persons");
+        /*holder.contribution.setText(findEvents.get(position).getMinContribution().toString() + " - " + findEvents.get(position).getMaxContribution().toString() + "$");
         holder.level.setText(findEvents.get(position).getLevel());
         holder.place.setText(findEvents.get(position).getPlace());*/
-        holder.address.setText("A definir..");
+        holder.address.setText(findEvents.get(position).getAddress());
 
         // Set a click listener for TextView
         /*

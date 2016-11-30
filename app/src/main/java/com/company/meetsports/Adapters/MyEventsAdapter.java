@@ -66,7 +66,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.EventV
             date = (TextView) v.findViewById(R.id.date);
             time = (TextView) v.findViewById(R.id.time);
             duration = (TextView) v.findViewById(R.id.duration);
-            participants = (TextView) v.findViewById(R.id.participants);
+            participants = (TextView) v.findViewById(R.id.nb_participants);
             age = (TextView) v.findViewById(R.id.age);
             contribution = (TextView) v.findViewById(R.id.contribution);
             level = (TextView) v.findViewById(R.id.level);
@@ -99,12 +99,16 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.EventV
         holder.date.setText(sdfDate.format(myEvents.get(position).getDate_time()));
         holder.time.setText(sdfTime.format(myEvents.get(position).getDate_time()));
         holder.duration.setText(myEvents.get(position).getMinDuration().toString() + " - " + myEvents.get(position).getMaxDuration().toString() + "h");
+
         holder.age.setText(myEvents.get(position).getMinAge().toString() + " - " + myEvents.get(position).getMaxAge().toString() + " years");
+        holder.participants.setText(myEvents.get(position).getMinParticipants().toString() + " - " + myEvents.get(position).getMaxParticipants().toString() + " persons");
         /*holder.participants.setText(myEvents.get(position).getMinParticipants().toString() + " - " + myEvents.get(position).getMaxParticipants().toString() + " persons");
         holder.contribution.setText(myEvents.get(position).getMinContribution().toString() + " - " + myEvents.get(position).getMaxContribution().toString() + "$");
         holder.level.setText(myEvents.get(position).getLevel());
         holder.place.setText(myEvents.get(position).getPlace());*/
-        holder.address.setText("A definir..");
+        holder.address.setText(myEvents.get(position).getAddress());
+        //holder.address.setText(myEvents.get(position).getMinAge().toString() + " - " + myEvents.get(position).getMaxAge().toString() + " years");
+        // holder.address.setText("A definir..");
 
         // Set a click listener for TextView
         /*
@@ -161,8 +165,7 @@ public class MyEventsAdapter extends RecyclerView.Adapter<MyEventsAdapter.EventV
                 ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>((Activity) view.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
                 modeList.setAdapter(modeAdapter);
 
-                builder
-                        .setTitle("More details")
+                builder .setTitle("More details")
                         .setIcon(R.drawable.ic_my_events)
                         .setView(modeList)
                         .setPositiveButton("Back", null)

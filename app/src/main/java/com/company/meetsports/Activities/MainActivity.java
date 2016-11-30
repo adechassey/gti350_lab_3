@@ -95,12 +95,15 @@ public class MainActivity extends AppCompatActivity {
 
     // Defining Layout variables
     private Toolbar toolbar;
-    private TextView Button_My_Events;
-    private TextView Button_Find_Events;
-    private TextView Button_Create_Event;
+    private LinearLayout Button_My_Events;
+    private LinearLayout Button_Find_Events;
+    private LinearLayout Button_Create_Event;
     private View view_MyEvents;
     private View view_FindEvents;
     private View view_CreateEvent;
+    private TextView textView_menu_my;
+    private TextView textView_menu_find;
+    private TextView textView_menu_create;
 
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -144,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
         view_MyEvents = (View) findViewById(R.id.view_my_events);
         view_FindEvents = (View) findViewById(R.id.view_find_events);
         view_CreateEvent = (View) findViewById(R.id.view_create_event);
+        textView_menu_my = (TextView) findViewById(R.id.textview_menu_my);
+        textView_menu_find = (TextView) findViewById(R.id.textview_menu_find);
+        textView_menu_create = (TextView) findViewById(R.id.textview_menu_create);
 
 
         final ImageButton toolbar_menu = (ImageButton) toolbar.findViewById(R.id.toolbar_menu);
@@ -218,13 +224,13 @@ public class MainActivity extends AppCompatActivity {
         }); //closing the setOnClickListener method
 
 
-        Button_My_Events = (TextView) findViewById(R.id.header_menu_my_events);
+        Button_My_Events = (LinearLayout) findViewById(R.id.header_menu_my_events);
         Button_My_Events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the MyEvents fragment
                 reload_header_menu_display();
-                Update_menu_view(Button_My_Events, view_MyEvents);
+                Update_menu_view(textView_menu_my, view_MyEvents);
                 EventFragment fragment_my_events = new EventFragment();
                 FragmentTransaction fragmentTransaction_my_events = getFragmentManager().beginTransaction();
                 fragmentTransaction_my_events.replace(R.id.frame, fragment_my_events);
@@ -232,13 +238,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button_Find_Events = (TextView) findViewById(R.id.header_menu_find_events);
+        Button_Find_Events = (LinearLayout) findViewById(R.id.header_menu_find_events);
         Button_Find_Events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the FindEvent fragment
                 reload_header_menu_display();
-                Update_menu_view(Button_Find_Events, view_FindEvents);
+                Update_menu_view(textView_menu_find, view_FindEvents);
                 FindEventFragment fragment_find_events = new FindEventFragment();
                 FragmentTransaction fragmentTransaction_find_events = getFragmentManager().beginTransaction();
                 fragmentTransaction_find_events.replace(R.id.frame, fragment_find_events);
@@ -246,13 +252,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button_Create_Event = (TextView) findViewById(R.id.header_menu_create_events);
+        Button_Create_Event = (LinearLayout) findViewById(R.id.header_menu_create_events);
         Button_Create_Event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                    // Start the Create Event fragment
                 reload_header_menu_display();
-                Update_menu_view(Button_Create_Event, view_CreateEvent);
+                Update_menu_view(textView_menu_create, view_CreateEvent);
                 CreateEventFragment fragment_create_event = new CreateEventFragment();
                 FragmentTransaction fragmentTransaction_create_event = getFragmentManager().beginTransaction();
                 fragmentTransaction_create_event.replace(R.id.frame, fragment_create_event);
@@ -371,14 +377,14 @@ public class MainActivity extends AppCompatActivity {
     public void reload_header_menu_display() {
 
 
-        Button_My_Events.setTypeface(null, Typeface.NORMAL);
-        Button_My_Events.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+        textView_menu_my.setTypeface(null, Typeface.NORMAL);
+        textView_menu_my.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
 
-        Button_Find_Events.setTypeface(null, Typeface.NORMAL);
-        Button_Find_Events.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+        textView_menu_find.setTypeface(null, Typeface.NORMAL);
+        textView_menu_find.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
 
-        Button_Create_Event.setTypeface(null, Typeface.NORMAL);
-        Button_Create_Event.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+        textView_menu_create.setTypeface(null, Typeface.NORMAL);
+        textView_menu_create.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
 
 
         ViewGroup.LayoutParams params_my = view_MyEvents.getLayoutParams();

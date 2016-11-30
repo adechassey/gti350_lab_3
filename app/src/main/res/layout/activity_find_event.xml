@@ -43,12 +43,11 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:elevation="5dp"
             android:text="Nearest events"
             android:textAlignment="center"
             android:textColor="@color/colorWhite"
-            android:textSize="25sp" />
+            android:textStyle="normal|bold"
+            android:textSize="24sp" />
 
         <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/swipeContainer"
