@@ -184,13 +184,16 @@ public class CreateEventFragment extends Fragment {
             @Override
             public String format(String s) {
                 // Transform the String s here then return s
-                if (s.equals("11"))
+                if (s.equals("11")) {
+                    participants_result.setText("More than 10 persons.");
                     return "10+";
+                }
 
                 if (minParticipants == maxParticipants)
                     participants_result.setText(minParticipants + " persons");
+                /*
                 else if (minParticipants == 11 && maxParticipants == 11) {
-                    participants_result.setText("More than 10 persons. Clic to enter exact number");
+                    participants_result.setText("More than 10 persons.");
                     participants_result.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -199,14 +202,15 @@ public class CreateEventFragment extends Fragment {
                     });
                 } else if (minParticipants != 11 && maxParticipants == 11) {
                     //  participants_result.setText(minParticipants + " to more than 10 persons");
-                    participants_result.setText("More than 10 persons. Clic to enter exact number");
+                    participants_result.setText("More than 10 persons.");
                     participants_result.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             EditProfileDialogFragment.showAlertDialog(getActivity(), "Enter number of participants", "Number of participants");
                         }
                     });
-                } else {
+                    */
+                else {
                     participants_result.setText(minParticipants + " to " + maxParticipants + " persons");
 
                 }
@@ -223,8 +227,10 @@ public class CreateEventFragment extends Fragment {
             @Override
             public String format(String s) {
                 // Transform the String s here then return s
-                if (s.equals("36"))
-                    return "35+";
+                if (s.equals("71")) {
+                    age_result.setText("More than 70 years old");
+                    return "70+";
+                }
                 if (minAge == maxAge)
                     age_result.setText(minAge + " years old");
                 else
@@ -439,10 +445,7 @@ public class CreateEventFragment extends Fragment {
                     int statusCode = response.code();
                     Log.d(TAG, "Status code: " + String.valueOf(statusCode));
 
-                    EventFragment fragment_event = new EventFragment();
-                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                    fragmentTransaction_event.commit();
+                    MainActivity.Button_My_Events.performClick();
 
                     Snackbar snackbar = Snackbar
                             .make(getView(), "Event created successfully", Snackbar.LENGTH_LONG)
@@ -465,10 +468,9 @@ public class CreateEventFragment extends Fragment {
                                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                                     int statusCode = response.code();
                                                     Log.d(TAG, "Status code: " + String.valueOf(statusCode));
-                                                    EventFragment fragment_event = new EventFragment();
-                                                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                                                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                                                    fragmentTransaction_event.commit();
+
+                                                    MainActivity.Button_Create_Event.performClick();
+
                                                     Snackbar snackbar = Snackbar.make(getView(), "Event has been deleted!", Snackbar.LENGTH_SHORT);
                                                     snackbar.show();
                                                 }

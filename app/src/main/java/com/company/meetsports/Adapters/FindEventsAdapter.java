@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.company.meetsports.Activities.MainActivity;
 import com.company.meetsports.DataProvider.ApiClient;
 import com.company.meetsports.DataProvider.ApiInterface;
 import com.company.meetsports.Entities.Event;
@@ -163,6 +164,8 @@ public class FindEventsAdapter extends RecyclerView.Adapter<FindEventsAdapter.Ev
                                             /*findEvents.add(event);
                                             notifyItemInserted(position);
                                             notifyItemRangeChanged(position, findEvents.size());*/
+
+                                            MainActivity.Button_My_Events.performClick();
 
                                             // Show the removed item label
                                             Toast.makeText(context, "Event was added successfully in your events.", Toast.LENGTH_SHORT).show();

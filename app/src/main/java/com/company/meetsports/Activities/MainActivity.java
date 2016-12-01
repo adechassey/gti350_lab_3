@@ -55,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Defining Layout variables
     private Toolbar toolbar;
-    private LinearLayout Button_My_Events;
+    public static LinearLayout Button_My_Events;
     private LinearLayout Button_Find_Events;
-    private LinearLayout Button_Create_Event;
+    public static  LinearLayout Button_Create_Event;
     private View view_MyEvents;
     private View view_FindEvents;
     private View view_CreateEvent;
@@ -183,6 +183,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the MyEvents fragment
+                Button_My_Events.setClickable(false);
+                Button_Find_Events.setClickable(true);
+                Button_Create_Event.setClickable(true);
                 reload_header_menu_display();
                 Update_menu_view(textView_menu_my, view_MyEvents);
                 EventFragment fragment_my_events = new EventFragment();
@@ -197,6 +200,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the FindEvent fragment
+                Button_My_Events.setClickable(true);
+                Button_Find_Events.setClickable(false);
+                Button_Create_Event.setClickable(true);
                 reload_header_menu_display();
                 Update_menu_view(textView_menu_find, view_FindEvents);
                 FindEventFragment fragment_find_events = new FindEventFragment();
@@ -211,6 +217,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Start the Create Event fragment
+                Button_My_Events.setClickable(true);
+                Button_Find_Events.setClickable(true);
+                Button_Create_Event.setClickable(false);
                 reload_header_menu_display();
                 Update_menu_view(textView_menu_create, view_CreateEvent);
                 CreateEventFragment fragment_create_event = new CreateEventFragment();
@@ -348,6 +357,7 @@ public class MainActivity extends AppCompatActivity {
         view_MyEvents.setLayoutParams(params_my);
         view_FindEvents.setLayoutParams(params_find);
         view_CreateEvent.setLayoutParams(params_create);
+
 
     }
 

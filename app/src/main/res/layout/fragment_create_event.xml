@@ -335,9 +335,9 @@
                         custom:rangeBarColor="@color/colorRangebar"
                         custom:selectorColor="@color/colorSelector"
                         custom:selectorSize="8sp"
-                        custom:tickEnd="70"
+                        custom:tickEnd="71"
                         custom:tickInterval="1"
-                        custom:tickStart="10" />
+                        custom:tickStart="18" />
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
