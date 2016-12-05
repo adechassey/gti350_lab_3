@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
 
-    public static final String BASE_URL = "http://www.antoinedechassey.fr/meetsports/ws/";
+    public static final String BASE_URL = "https://www.antoinedechassey.fr/meetsports/ws/";
     private static Retrofit retrofit = null;
 
     public static Retrofit getClient() {
