@@ -3,37 +3,39 @@ package com.company.meetsports.Activities;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.company.meetsports.Entities.Event;
-import com.company.meetsports.Fragments.DebugFragment;
+import com.company.meetsports.Fragments.CreateEventFragment;
 import com.company.meetsports.Fragments.EventFragment;
+import com.company.meetsports.Fragments.FindEventFragment;
 import com.company.meetsports.Fragments.InfoFragment;
 import com.company.meetsports.Fragments.LogOutDialogFragment;
 import com.company.meetsports.Fragments.ProfileFragment;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private final String TAG = "MainActivity";
 
-    public static List<Event> Events = new ArrayList<>();
     // Activity request
     public static final int REQUEST_SIGN_IN = 0;
     public static final int REQUEST_SIGN_UP = 1;
@@ -41,62 +43,192 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_FIND_EVENT = 3;
     public static final int REQUEST_CAMERA = 4;
     public static final int REQUEST_GALLERY = 5;
+    public static final int REQUEST_PLACE_PICKER = 6;
+
     // Permissions
     public static final int PERMISSIONS_REQUEST_CAMERA = 10;
     public static final int PERMISSIONS_REQUEST_GALLERY = 11;
 
-    // Session Manager Class
     private SessionManager session;
-
-    public static String user_Email = "JChirac@ms.com";
-    public static String user_Password = new String();
-    public static String user_Name = "Jacques";
-    public static String user_Surname = "Chirac";
-    public static String user_Age = "NA";
-    public static String user_Gender = "Male";
-    public static String temp_String = new String();
+    public static HashMap<String, String> user = new HashMap<>();
+    public static Integer id_user;
 
     // Defining Layout variables
     private Toolbar toolbar;
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
+    public static LinearLayout Button_My_Events;
+    private LinearLayout Button_Find_Events;
+    public static  LinearLayout Button_Create_Event;
+    private View view_MyEvents;
+    private View view_FindEvents;
+    private View view_CreateEvent;
+    private TextView textView_menu_my;
+    private TextView textView_menu_find;
+    private TextView textView_menu_create;
 
-    public static TextView header_name;
-    public static TextView header_email;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Session class instance
-        session = new SessionManager(getApplicationContext());
-
-        Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
+        Log.d(TAG, "onCreate...");
 
         /**
          * Call this function whenever you want to check user login
          * This will redirect user to LoginActivity is he is not
          * logged in
          * */
-        session.checkLogin();
+
+        session = new SessionManager(getApplicationContext());
+        if (session.isLoggedIn() == false) {
+
+            Intent signInIntent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivityForResult(signInIntent, REQUEST_SIGN_IN);
+        }
 
         // get user data from session
-        HashMap<String, String> user = session.getUserDetails();
+        user = session.getUserDetails();
+        // id_user
+        id_user = Integer.valueOf(user.get(SessionManager.KEY_ID));
 
-        // email
-        String email = user.get(SessionManager.KEY_EMAIL);
+        //Toast.makeText(getApplicationContext(), "User Login Status: " + session.isLoggedIn(), Toast.LENGTH_LONG).show();
 
         setContentView(R.layout.activity_main);
+
 
         // Initializing Toolbar and setting it as the actionbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Initializing NavigationView
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        View header = navigationView.getHeaderView(0);
-        header_name = (TextView) header.findViewById(R.id.header_username);
-        header_email = (TextView) header.findViewById(R.id.header_email);
+        view_MyEvents = (View) findViewById(R.id.view_my_events);
+        view_FindEvents = (View) findViewById(R.id.view_find_events);
+        view_CreateEvent = (View) findViewById(R.id.view_create_event);
+        textView_menu_my = (TextView) findViewById(R.id.textview_menu_my);
+        textView_menu_find = (TextView) findViewById(R.id.textview_menu_find);
+        textView_menu_create = (TextView) findViewById(R.id.textview_menu_create);
+
+
+        final ImageButton toolbar_menu = (ImageButton) toolbar.findViewById(R.id.toolbar_menu);
+        toolbar_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Creating the instance of PopupMenu
+
+                PopupMenu popup = new PopupMenu(MainActivity.this, toolbar_menu);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.toolbar_menu, popup.getMenu());
+                Object menuHelper;
+                Class[] argTypes;
+                try {
+                    Field fMenuHelper = PopupMenu.class.getDeclaredField("mPopup");
+                    fMenuHelper.setAccessible(true);
+                    menuHelper = fMenuHelper.get(popup);
+                    argTypes = new Class[]{boolean.class};
+                    menuHelper.getClass().getDeclaredMethod("setForceShowIcon", argTypes).invoke(menuHelper, true);
+                } catch (Exception e) {
+                    // Possible exceptions are NoSuchMethodError and NoSuchFieldError
+                    //
+                    // In either case, an exception indicates something is wrong with the reflection code, or the
+                    // structure of the PopupMenu class or its dependencies has changed.
+                    //
+                    // These exceptions should never happen since we're shipping the AppCompat library in our own apk,
+                    // but in the case that they do, we simply can't force icons to display, so log the error and
+                    // show the menu normally.
+
+                    Log.w(TAG, "error forcing menu icons to show", e);
+                    popup.show();
+                    return;
+                }
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+
+                        switch (item.getItemId()) {
+
+                            case R.id.toolbar_menu_profile:
+                                ProfileFragment fragment_profile = new ProfileFragment();
+                                FragmentTransaction fragmentTransaction_profile = getFragmentManager().beginTransaction();
+                                fragmentTransaction_profile.replace(R.id.frame, fragment_profile);
+                                fragmentTransaction_profile.commit();
+                                return true;
+
+                            case R.id.toolbar_menu_logout:
+                                LogOutDialogFragment log_out_dialog = new LogOutDialogFragment();
+                                log_out_dialog.show(getFragmentManager(), "LogOutFragmentDialog");
+                                return true;
+
+                            case R.id.toolbar_menu_aboutus:
+                                InfoFragment fragment_info = new InfoFragment();
+                                FragmentTransaction fragmentTransaction_info = getFragmentManager().beginTransaction();
+                                fragmentTransaction_info.replace(R.id.frame, fragment_info);
+                                fragmentTransaction_info.commit();
+                                return true;
+
+                        }
+                        return true;
+                    }
+
+
+                });
+
+
+                popup.show(); //showing popup menu
+
+            }
+        }); //closing the setOnClickListener method
+
+
+        Button_My_Events = (LinearLayout) findViewById(R.id.header_menu_my_events);
+        Button_My_Events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the MyEvents fragment
+                Button_My_Events.setClickable(false);
+                Button_Find_Events.setClickable(true);
+                Button_Create_Event.setClickable(true);
+                reload_header_menu_display();
+                Update_menu_view(textView_menu_my, view_MyEvents);
+                EventFragment fragment_my_events = new EventFragment();
+                FragmentTransaction fragmentTransaction_my_events = getFragmentManager().beginTransaction();
+                fragmentTransaction_my_events.replace(R.id.frame, fragment_my_events);
+                fragmentTransaction_my_events.commit();
+            }
+        });
+
+        Button_Find_Events = (LinearLayout) findViewById(R.id.header_menu_find_events);
+        Button_Find_Events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the FindEvent fragment
+                Button_My_Events.setClickable(true);
+                Button_Find_Events.setClickable(false);
+                Button_Create_Event.setClickable(true);
+                reload_header_menu_display();
+                Update_menu_view(textView_menu_find, view_FindEvents);
+                FindEventFragment fragment_find_events = new FindEventFragment();
+                FragmentTransaction fragmentTransaction_find_events = getFragmentManager().beginTransaction();
+                fragmentTransaction_find_events.replace(R.id.frame, fragment_find_events);
+                fragmentTransaction_find_events.commit();
+            }
+        });
+
+        Button_Create_Event = (LinearLayout) findViewById(R.id.header_menu_create_events);
+        Button_Create_Event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Start the Create Event fragment
+                Button_My_Events.setClickable(true);
+                Button_Find_Events.setClickable(true);
+                Button_Create_Event.setClickable(false);
+                reload_header_menu_display();
+                Update_menu_view(textView_menu_create, view_CreateEvent);
+                CreateEventFragment fragment_create_event = new CreateEventFragment();
+                FragmentTransaction fragmentTransaction_create_event = getFragmentManager().beginTransaction();
+                fragmentTransaction_create_event.replace(R.id.frame, fragment_create_event);
+                fragmentTransaction_create_event.commit();
+            }
+        });
+
 
         // Setting the Fragment to event
         EventFragment fragment_event = new EventFragment();
@@ -104,203 +236,41 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction_event.replace(R.id.frame, fragment_event);
         fragmentTransaction_event.commit();
 
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            // This method will trigger on item Click of navigation menu
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-                //Checking if the item is in checked state or not, if not make it in checked state
-                if (menuItem.isChecked()) menuItem.setChecked(false);
-                else menuItem.setChecked(true);
-
-                //Closing drawer on item click
-                drawerLayout.closeDrawers();
-
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-
-
-                    //Replacing the main content with fragments
-                    case R.id.event:
-                        Toast.makeText(getApplicationContext(), "Opening event", Toast.LENGTH_SHORT).show();
-                        EventFragment fragment_event = new EventFragment();
-                        FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                        fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                        fragmentTransaction_event.commit();
-                        return true;
-
-                    case R.id.find_event:
-                        Toast.makeText(getApplicationContext(), "Opening find event", Toast.LENGTH_SHORT).show();
-                        Intent findEvent = new Intent(getApplicationContext(), FindEventActivity.class);
-                        startActivityForResult(findEvent, REQUEST_FIND_EVENT);
-                        return true;
-
-                    case R.id.create_event:
-                        Toast.makeText(getApplicationContext(), "Opening create event", Toast.LENGTH_SHORT).show();
-                        Intent createEvent = new Intent(getApplicationContext(), CreateEventActivity.class);
-                        startActivityForResult(createEvent, REQUEST_CREATE_EVENT);
-                        return true;
-
-                    case R.id.profile:
-                        ProfileFragment fragment_profile = new ProfileFragment();
-                        FragmentTransaction fragmentTransaction_profile = getFragmentManager().beginTransaction();
-                        fragmentTransaction_profile.replace(R.id.frame, fragment_profile);
-                        fragmentTransaction_profile.commit();
-                        return true;
-
-                    case R.id.log_out:
-                        LogOutDialogFragment log_out_dialog = new LogOutDialogFragment();
-                        log_out_dialog.show(getFragmentManager(), "LogOutFragmentDialog");
-                        return true;
-
-                    case R.id.info:
-                        InfoFragment fragment_info = new InfoFragment();
-                        FragmentTransaction fragmentTransaction_info = getFragmentManager().beginTransaction();
-                        fragmentTransaction_info.replace(R.id.frame, fragment_info);
-                        fragmentTransaction_info.commit();
-                        return true;
-
-                    case R.id.debug:
-                        DebugFragment fragment_debug = new DebugFragment();
-                        FragmentTransaction fragmentTransaction_debug = getFragmentManager().beginTransaction();
-                        fragmentTransaction_debug.replace(R.id.frame, fragment_debug);
-                        fragmentTransaction_debug.commit();
-                        return true;
-
-                    default:
-                        Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
-                        return true;
-
-                }
-            }
-        });
-
-        // Initializing Drawer Layout and ActionBarToggle
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-                super.onDrawerOpened(drawerView);
-            }
-        };
-
-        //Setting the actionbarToggle to drawer layout
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-
-        //calling sync state is necessay or else your hamburger icon wont show up
-        actionBarDrawerToggle.syncState();
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            // From CreateEventActivity
-            case (2): {
-                if (resultCode == CreateEventActivity.RESULT_OK) {
-                    // TODO Extract the data returned from the child Activity.
-                    data.getStringExtra("category");
-                    data.getStringExtra("type");
-                    data.getIntExtra("year", 0);
-                    data.getIntExtra("month", 0);
-                    data.getIntExtra("day", 0);
-                    data.getIntExtra("hour", 0);
-                    data.getIntExtra("minute", 0);
-                    data.getDoubleExtra("duration", 0);
-                    data.getIntExtra("minParticipants", 0);
-                    data.getIntExtra("maxParticipants", 0);
-                    data.getIntExtra("minAge", 0);
-                    data.getIntExtra("maxAge", 0);
-                    data.getIntExtra("minContribution", 0);
-                    data.getIntExtra("maxContribution", 0);
-                    data.getStringExtra("level");
-                    data.getStringExtra("place");
-                    data.getStringExtra("address");
+            // From SignInActivity
+            case (REQUEST_SIGN_IN):
+                if (resultCode == SignInActivity.RESULT_OK) {
+                    Log.d(TAG, "onActivityResult SignIn RESULT_OK");
+
+                    // get user data from session
+                    user = session.getUserDetails();
+                    // id_user
+                    id_user = Integer.valueOf(user.get(SessionManager.KEY_ID));
+
+                    Toast.makeText(getApplicationContext(), "Welcome " + user.get(SessionManager.KEY_SURNAME) + " " + user.get(SessionManager.KEY_NAME) + ", you are now logged in", Toast.LENGTH_LONG).show();
 
                     EventFragment fragment_event = new EventFragment();
-
-                    Bundle bundle = new Bundle();
-                    String category = data.getStringExtra("category");
-                    String type = data.getStringExtra("type");
-                    String date = "05/11/16";
-                    String duration = "1h";
-                    String distance = "1.2km";
-                    String place = data.getStringExtra("place");
-                    String address = data.getStringExtra("address");
-                    /*String id = data.getStringExtra("id");
-                    String phone = data.getStringExtra("phone");
-                    String website = data.getStringExtra("website");*/
-
-                    bundle.putString("category", category);
-                    bundle.putString("type", type);
-                    bundle.putString("date", date);
-                    bundle.putString("duration", duration);
-                    bundle.putString("distance", distance);
-                    bundle.putString("place", place);
-                    bundle.putString("address", address);
-                    /*bundle.putString("id", id);
-                    bundle.putString("phone", phone);
-                    bundle.putString("website", website);*/
-                    fragment_event.setArguments(bundle);
-
                     FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
                     fragmentTransaction_event.replace(R.id.frame, fragment_event);
                     fragmentTransaction_event.commit();
 
-                    // Show message on CreateEventActivity finished
-                    Snackbar snackbar = Snackbar
-                            .make(drawerLayout, "Event created successfully", Snackbar.LENGTH_LONG)
-                            .setAction("CANCEL", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    EventFragment fragment_event = new EventFragment();
-                                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                                    fragmentTransaction_event.commit();
-                                    Snackbar snackbar1 = Snackbar.make(drawerLayout, "Event has been deleted!", Snackbar.LENGTH_SHORT);
-                                    snackbar1.show();
-                                }
-                            });
-                    snackbar.show();
                 }
                 break;
-            }
-            // From FindEventActivity
-            case (3): {
-                if (resultCode == FindEventActivity.RESULT_OK) {
 
-                    EventFragment fragment_event = new EventFragment();
-                    Toast.makeText(getApplicationContext(), "Event selected", Toast.LENGTH_SHORT).show();
-                    FragmentTransaction fragmentTransaction_event = getFragmentManager().beginTransaction();
-                    fragmentTransaction_event.replace(R.id.frame, fragment_event);
-                    fragmentTransaction_event.commit();
-
-                } else if(resultCode == FindEventActivity.RESULT_CANCELED) {
-
-                    Toast.makeText(getApplicationContext(), "You already selected this event", Toast.LENGTH_SHORT).show();
-                    Intent findEvent = new Intent(getApplicationContext(), FindEventActivity.class);
-                    startActivityForResult(findEvent, REQUEST_FIND_EVENT);
+            // From SignUpActivity
+            case (REQUEST_SIGN_UP):
+                if (resultCode == SignUpActivity.RESULT_OK) {
+                    Log.d(TAG, "onActivityResult SignUp RESULT_OK");
                 }
                 break;
-            }
+
+
         }
-    }
-
-
-    public static void setGender(String gender) {
-
-        MainActivity.user_Gender = gender;
     }
 
     @Override
@@ -340,4 +310,56 @@ public class MainActivity extends AppCompatActivity {
             // permissions this app might request
         }
     }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+        Log.d(TAG, "onResume after signing in!");
+    }
+
+
+    public void Update_menu_view(TextView button_event, View underline) {
+
+        button_event.setTypeface(null, Typeface.BOLD);
+        button_event.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+
+        ViewGroup.LayoutParams params = underline.getLayoutParams();
+        params.height = 9;
+        underline.setLayoutParams(params);
+
+    }
+
+    public void reload_header_menu_display() {
+
+
+        textView_menu_my.setTypeface(null, Typeface.NORMAL);
+        textView_menu_my.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+
+        textView_menu_find.setTypeface(null, Typeface.NORMAL);
+        textView_menu_find.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+
+        textView_menu_create.setTypeface(null, Typeface.NORMAL);
+        textView_menu_create.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
+
+
+        ViewGroup.LayoutParams params_my = view_MyEvents.getLayoutParams();
+        ViewGroup.LayoutParams params_find = view_FindEvents.getLayoutParams();
+        ViewGroup.LayoutParams params_create = view_CreateEvent.getLayoutParams();
+
+        params_my.height = 6;
+        params_find.height = 6;
+        params_create.height = 6;
+
+        view_MyEvents.setLayoutParams(params_my);
+        view_FindEvents.setLayoutParams(params_find);
+        view_CreateEvent.setLayoutParams(params_create);
+
+
+    }
+
+
 }

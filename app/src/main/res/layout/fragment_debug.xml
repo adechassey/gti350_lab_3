@@ -6,7 +6,7 @@
     android:padding="3dp">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/movies_recycler_view"
+        android:id="@+id/events_recycler_view_debug"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -25,6 +25,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:support-v4:24.0.+'
     compile 'com.android.support:design:24.2.1'
     compile 'com.jakewharton:butterknife:6.1.0'
 
@@ -37,6 +38,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.+'
     compile 'com.google.android.gms:play-services-places:9.8.0'
     compile 'com.google.android.gms:play-services-maps:9.8.0'
+    compile 'com.google.android.gms:play-services-location:9.8.0'
+
     // Navigation view
     compile 'de.hdodenhof:circleimageview:2.1.0'
     // Material dialog
@@ -46,6 +49,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    // Joda Time
+    compile 'joda-time:joda-time:2.9.6'
 
     testCompile 'junit:junit:4.12'
 }

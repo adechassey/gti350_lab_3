@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.company.meetsports.Activities.MainActivity;
+import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -29,6 +29,7 @@ import static com.company.meetsports.Activities.MainActivity.PERMISSIONS_REQUEST
 import static com.company.meetsports.Activities.MainActivity.PERMISSIONS_REQUEST_GALLERY;
 import static com.company.meetsports.Activities.MainActivity.REQUEST_CAMERA;
 import static com.company.meetsports.Activities.MainActivity.REQUEST_GALLERY;
+import static com.company.meetsports.Activities.MainActivity.user;
 
 
 /**
@@ -51,12 +52,24 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     public static TextView profile_age;
     public static TextView profile_email;
 
+    public static String name_profile;
+    public static String surname_profile;
+    public static String age_profile;
+    public static String email_profile;
+
     private ImageView profile_picture;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        Log.d(TAG, "onCreate...");
+
+        name_profile = user.get(SessionManager.KEY_NAME);
+        surname_profile = user.get(SessionManager.KEY_SURNAME);
+        age_profile = user.get(SessionManager.KEY_AGE);
+        email_profile = user.get(SessionManager.KEY_EMAIL);
 
         profile_picture = (ImageView) v.findViewById(R.id.profile_picture);
         edit_name = (TextView) v.findViewById(R.id.profile_edit_name);
@@ -102,6 +115,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
             case R.id.profile_edit_gender:
                 GenderPickerDialogFragment.showAlertDialog(getActivity(), 2);
+
                 break;
 
             case R.id.profile_edit_age:
@@ -156,18 +170,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     public static void display_user_infos() {
 
-        //Update header menu infos
-        MainActivity.header_name.setText(MainActivity.user_Name + " " + MainActivity.user_Surname);
-        MainActivity.header_email.setText(MainActivity.user_Email);
-        //Update user infos
-        profile_name.setText(MainActivity.user_Name);
-        profile_surname.setText(MainActivity.user_Surname);
-        profile_gender.setText(MainActivity.user_Gender);
-        profile_age.setText(MainActivity.user_Age);
-        profile_email.setText(MainActivity.user_Email);
+        profile_name.setText(user.get(SessionManager.KEY_NAME));
+        profile_surname.setText(user.get(SessionManager.KEY_SURNAME));
+        //profile_gender.setText(user.get(SessionManager.KEY_GENDER)); // disabled le temps d'ajouter fonction pour modif genre dans la db
+        profile_gender.setText("Male");
+        profile_age.setText(user.get(SessionManager.KEY_AGE));
+        profile_email.setText(user.get(SessionManager.KEY_EMAIL));
 
     }
 
+    public static void update_user_infos(){
+
+        if(GenderPickerDialogFragment.GENDER_PICKED != "") {
+            profile_gender.setText(GenderPickerDialogFragment.GENDER_PICKED);
+        } else {
+            profile_gender.setText(GenderPickerDialogFragment.GENDER_PICKED);
+        }
+        profile_name.setText(name_profile);
+        profile_surname.setText(surname_profile);
+        profile_age.setText(age_profile);
+        profile_email.setText(email_profile);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

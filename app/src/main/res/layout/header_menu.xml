@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="15dp"
+    android:paddingBottom="2dp"
+    android:background="@color/colorDark">
+
+    <LinearLayout
+        android:id="@+id/header_menu_my_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="28dp">
+
+        <TextView
+            android:id="@+id/textview_menu_my"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="MY EVENTS"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            />
+        <View
+            android:id="@+id/view_my_events"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#ffffff"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header_menu_find_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp">
+        <TextView
+            android:id="@+id/textview_menu_find"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="FIND EVENTS"
+            android:textColor="@color/colorWhite"
+            android:textSize="13sp" />
+
+        <View
+            android:id="@+id/view_find_events"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#ffffff"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/header_menu_create_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textview_menu_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="CREATE EVENT"
+            android:textColor="@color/colorWhite"
+            android:textSize="13sp"
+            android:layout_weight="1"/>
+        <View
+            android:id="@+id/view_create_event"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#ffffff"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

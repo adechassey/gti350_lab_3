@@ -1,47 +1,72 @@
 package com.company.meetsports.Activities;
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-import android.app.ProgressDialog;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.graphics.Color;
+import android.widget.Toast;
 
+import com.company.meetsports.DataProvider.ApiClient;
+import com.company.meetsports.DataProvider.ApiInterface;
+import com.company.meetsports.Entities.User;
 import com.company.meetsports.Fragments.GenderPickerDialogFragment;
+import com.company.meetsports.Manager.SessionManager;
+import com.company.meetsports.R;
+
+import java.sql.Timestamp;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import com.company.meetsports.R;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
-    public static int SIGN_UP_SUCCESS = 0;
 
-    @InjectView(R.id.sign_up_name) EditText input_Name;
-    @InjectView(R.id.sign_up_surname) EditText input_Surname;
-    @InjectView(R.id.sign_up_age) EditText input_Age;
-    @InjectView(R.id.sign_up_email) EditText input_Email;
-    @InjectView(R.id.sign_up_pw) EditText input_Password;
-    @InjectView(R.id.sign_up_pw_confirm) EditText input_Password_confirm;
-    @InjectView(R.id.btn_confirm_sign_up) Button Btn_sign_up;
-    @InjectView(R.id.cancel_sign_up) TextView cancel_sign_up_link;
-    public static TextView Gender;
+    private SessionManager session;
+
+
+    @InjectView(R.id.sign_up_name)
+    EditText input_Name;
+    @InjectView(R.id.sign_up_surname)
+    EditText input_Surname;
+    @InjectView(R.id.sign_up_age)
+    EditText input_Age;
+    @InjectView(R.id.sign_up_email)
+    EditText input_Email;
+    @InjectView(R.id.sign_up_pw)
+    EditText input_Password;
+    @InjectView(R.id.sign_up_pw_confirm)
+    EditText input_Password_confirm;
+    @InjectView(R.id.btn_confirm_sign_up)
+    Button Btn_sign_up;
+    @InjectView(R.id.cancel_sign_up)
+    TextView cancel_sign_up_link;
+    public static TextView input_Gender;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate...");
         setContentView(R.layout.activity_sign_up);
         ButterKnife.inject(this);
+
+        // Session class instance
+        session = new SessionManager(getApplicationContext());
 
         Btn_sign_up.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Sign_up();
+                sign_Up();
             }
         });
 
@@ -52,8 +77,8 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        Gender = (TextView) findViewById(R.id.sign_up_gender);
-        Gender.setOnClickListener(new View.OnClickListener() {
+        input_Gender = (TextView) findViewById(R.id.sign_up_gender);
+        input_Gender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GenderPickerDialogFragment.showAlertDialog(SignUpActivity.this, 1);
@@ -63,8 +88,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    public void Sign_up() {
-        Log.d(TAG, "Signup");
+    public void sign_Up() {
+        Log.d(TAG, "Signing up...");
 
         if (!validate_input_sign_up()) {
             SignupFailed();
@@ -84,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                 new Runnable() {
                     public void run() {
 
-                        Create_Account();
+                        create_Account();
 
                         progressDialog.dismiss();
                     }
@@ -92,25 +117,42 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    public void Create_Account() {
+    public void create_Account() {
+
         String name = input_Name.getText().toString();
         String surname = input_Surname.getText().toString();
-        String age = input_Age.getText().toString();
+        String gender = input_Gender.getText().toString().trim();
+        Integer age = Integer.parseInt(input_Age.getText().toString());
         String email = input_Email.getText().toString();
         String password = input_Password.getText().toString();
+        Timestamp date = new Timestamp(System.currentTimeMillis());
 
-        Btn_sign_up.setEnabled(true);
-        setResult(RESULT_OK, null);
+        final User newUser = new User(null, name, surname, gender, age, email, password, null);
 
-        MainActivity.user_Name = name;
-        MainActivity.user_Surname = surname;
-        MainActivity.user_Age = age;
-        MainActivity.user_Email = email;
-        MainActivity.user_Password = password;
+        final ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> call = apiService.addUser(newUser);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                int statusCode = response.code();
+                Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                if (statusCode == 204) {
+                    Toast.makeText(getApplicationContext(), "User created successfully", Toast.LENGTH_SHORT).show();
 
-        SIGN_UP_SUCCESS = 1;
+                    Btn_sign_up.setEnabled(true);
 
-        finish();
+                    setResult(SignUpActivity.RESULT_OK);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+                Toast.makeText(getApplicationContext(), "A problem occurred while created account", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void SignupFailed() {
@@ -163,7 +205,7 @@ public class SignUpActivity extends AppCompatActivity {
             input_Password.setError(null);
         }
 
-        if (!password_confirm.equals(password) ) {
+        if (!password_confirm.equals(password)) {
             input_Password_confirm.setError("passwords don't match");
             valid = false;
         } else {
@@ -173,9 +215,9 @@ public class SignUpActivity extends AppCompatActivity {
         return valid;
     }
 
-    public static void Update_gender(String gender){
-        Gender.setText(" " + gender);
-        Gender.setTextColor(Color.rgb(255,255,255));
+    public static void Update_gender(String gender) {
+        input_Gender.setText(" " + gender);
+        input_Gender.setTextColor(Color.rgb(255, 255, 255));
     }
 }
 

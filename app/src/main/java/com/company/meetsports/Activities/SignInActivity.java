@@ -11,13 +11,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import com.company.meetsports.DataProvider.ApiClient;
+import com.company.meetsports.DataProvider.ApiInterface;
+import com.company.meetsports.Entities.User;
 import com.company.meetsports.Manager.SessionManager;
 import com.company.meetsports.R;
 
-import static com.company.meetsports.Activities.MainActivity.user_Name;
-import static com.company.meetsports.Activities.MainActivity.user_Surname;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.company.meetsports.Activities.MainActivity.REQUEST_SIGN_UP;
 
 /**
  * Created by VMabille on 31/10/2016.
@@ -28,6 +34,7 @@ public class SignInActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private SessionManager session;
+
     private String email;
     private String password;
 
@@ -43,10 +50,11 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate...");
         setContentView(R.layout.activity_sign_in);
         ButterKnife.inject(this);
 
-        // Session Manager
+        // Session class instance
         session = new SessionManager(getApplicationContext());
 
         Btn_signIn.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +71,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Start the Signup activity
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivityForResult(intent, MainActivity.REQUEST_SIGN_UP);
+                startActivityForResult(intent, REQUEST_SIGN_UP);
             }
         });
     }
@@ -94,12 +102,37 @@ public class SignInActivity extends AppCompatActivity {
                         email = input_Email.getText().toString();
                         password = input_Password.getText().toString();
 
-                        if (email.equals(MainActivity.user_Email) && password.equals(MainActivity.user_Password)
-                                || email.equals("user@ms.com") && password.equals("user")) {
-                            LoginSuccess();
-                        } else {
-                            LoginFailed();
-                        }
+                        // Set authorization default to false
+                        final Boolean[] isAuthorized = {false};
+
+                        // Requesting authorization from server
+                        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+                        Call<Boolean> call = apiService.getUserAccess(email, password);
+                        call.enqueue(new Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                int statusCode = response.code();
+                                Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                                if (statusCode == 200) {
+                                    // Remove the item on remove/button click
+                                    isAuthorized[0] = response.body();
+                                    Log.d(TAG, isAuthorized[0].toString());
+
+                                    if (isAuthorized[0]) {
+                                        LoginSuccess();
+                                    } else {
+                                        LoginFailed();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                // Log error here since request failed
+                                Log.e(TAG, t.toString());
+                                LoginFailed();
+                            }
+                        });
                         progressDialog.dismiss();
                     }
                 }, 3000);
@@ -108,13 +141,11 @@ public class SignInActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == MainActivity.REQUEST_SIGN_UP) {
-            if (resultCode == RESULT_OK) {
-
-                if (SignUpActivity.SIGN_UP_SUCCESS == 1) {
-                    // automatically loggs in the new user
-                    this.finish();
-                }
+        if (requestCode == REQUEST_SIGN_UP) {
+            if (resultCode == SignUpActivity.RESULT_OK) {
+                // automatically loggs in the new user
+                // this.finish();
+                recreate();
             }
         }
     }
@@ -127,10 +158,37 @@ public class SignInActivity extends AppCompatActivity {
 
     public void LoginSuccess() {
         // Creating user login session
-        session.createLoginSession(email);
-        Toast.makeText(getApplicationContext(), "Welcome " + user_Name + " " + user_Surname + ", you are now logged in", Toast.LENGTH_LONG).show();
-        Btn_signIn.setEnabled(true);
-        finish();
+        ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
+        Call<User> call = apiService.getUserByUsername(email);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                int statusCode = response.code();
+                Log.d(TAG, "Status code: " + String.valueOf(statusCode));
+                if (statusCode == 200) {
+                    // Remove the item on remove/button click
+                    User user = response.body();
+
+                    //session = new SessionManager(getApplicationContext());
+                    // set id_user
+                    //id_user = user.getId_user();
+
+                    // Session Manager
+                    session.createLoginSession(user);
+
+                    Btn_signIn.setEnabled(true);
+
+                    setResult(SignInActivity.RESULT_OK);
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+            }
+        });
     }
 
     public void LoginFailed() {

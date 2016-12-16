@@ -4,13 +4,14 @@
 
     <string name="btn_createEvent">Create</string>
 
-    <!-- CreateEventActivity -->
     <string name="category_prompt">Select a category</string>
     <string name="type_prompt">Select a type</string>
     <string name="level_prompt">Select a level</string>
 
     <string-array name="category_array">
+        <item>Fitness</item>
         <item>Football</item>
+        <item>Hockey</item>
         <item>Running</item>
         <item>Tennis</item>
     </string-array>
@@ -52,7 +53,6 @@
     <string name="contribution_result">textView_participants_result</string>
     <string name="level_result">textView_participants_result</string>
 
-    <!-- FindEventActivity -->
     <string name="selected_place">Last Selected Place:</string>
     <string name="place_details">
     <![CDATA[
@@ -71,5 +71,6 @@
     <!-- Navigation view -->
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
+
 
 </resources>
